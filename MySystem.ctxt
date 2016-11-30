@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=
+comment0.target=MySystem()
+comment1.params=command
+comment1.target=void\ makeConnection(java.lang.String)
+numComments=2
