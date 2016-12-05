@@ -4,16 +4,14 @@
 public class Reservation
 {
     private String SHOWID;
-    private int row;
-    private int seat;
+    private Seat seat;
 
     /**
      * Notably, the SHOWID is supposed to be a valid SHOWID from the database.
      */
-    Reservation(String SHOWID, int row, int seat)
+    Reservation(String SHOWID, Seat seat)
     {
         this.SHOWID = SHOWID;
-        this.row = row;
         this.seat = seat;
     }
 
