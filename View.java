@@ -1,4 +1,6 @@
-
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 /**
  * Write a description of class View here.
  * 
@@ -7,27 +9,39 @@
  */
 public class View
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private JFrame frame; 
 
-    /**
-     * Constructor for objects of class View
-     */
     public View()
     {
-        // initialise instance variables
-        x = 0;
+        makeFrame();
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    private void makeFrame()
     {
-        // put your code here
-        return x + y;
+        frame = new JFrame("ImageViewer");
+        Container contentPane = frame.getContentPane();
+
+        makeMenu();
+
+        JLabel label = new JLabel("I am a label. I can display some text.");
+        contentPane.add(label);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void makeMenu()
+    {
+        JMenuBar menubar = new JMenuBar();
+        frame.setJMenuBar(menubar); 
+
+        JMenuItem showsMenu = new JMenuItem("Shows");
+        menubar.add(showsMenu); 
+        JMenuItem ReservationMenu = new JMenuItem("Reserations");
+        menubar.add(ReservationMenu); 
+        JMenuItem changeMenu = new JMenuItem("Change Resevertioner");
+        menubar.add(changeMenu); 
+
+        //         JMenuItem openItem = new JMenuItem("Open");
+        //         fileMenu.add(openItem); 
     }
 }
