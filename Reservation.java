@@ -13,6 +13,7 @@ public class Reservation
     {
         this.SHOWID = SHOWID;
         this.seat = seat;
+        seat.reserveSeat();
     }
 
     /** 
