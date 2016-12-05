@@ -8,6 +8,8 @@ public class Reservation
 
     /**
      * Notably, the SHOWID is supposed to be a valid SHOWID from the database.
+     * @param  SHOWID   a valid SHOWID from the database
+     * @param  seat     A Seat in a Theater
      */
     Reservation(String SHOWID, Seat seat)
     {
