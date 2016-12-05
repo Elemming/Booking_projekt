@@ -1,5 +1,5 @@
 /**
- * Creates a reservation for a particular seat in a particular row in a particular showing.
+ * Creates a reservation for a particular seat in a particular showing.
  */
 public class Reservation
 {
