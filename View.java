@@ -2,34 +2,45 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 /**
- * Write a description of class View here.
+ * Makes a Frame with menu at top.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Emil 
+ * @version 0.1
  */
 public class View extends Frame
 {
     private JFrame frame;
     private Container contentPane;
 
+    /**
+     * A new View.
+     */
     public View()
     {
         makeFrame();
     }
 
+    /**
+     * Makes the GUI.
+     */
     private void makeFrame()
     {
         frame = new JFrame("ImageViewer");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(820,640);
+
         contentPane = frame.getContentPane();
 
         makeMenu();
-        
+
         makeShowsMenu();
-        
-        frame.pack();
+
         frame.setVisible(true);
     }
 
+    /**
+     * Makes the menu bar.
+     */
     private void makeMenu()
     {
         JMenuBar menubar = new JMenuBar();
@@ -45,10 +56,24 @@ public class View extends Frame
         //         JMenuItem openItem = new JMenuItem("Open");
         //         fileMenu.add(openItem); 
     }
-    
+
+    /**
+     * makes the show menu tab.
+     */
     private void makeShowsMenu()
     {
         JLabel label = new JLabel("I am a label. I can display some text.");
         contentPane.add(label);
+    }
+
+    /**
+     * Returns if the vindow has been closed.
+     */
+    public boolean isClosed()
+    {
+        if(frame.isDisplayable())
+            return false;
+        else 
+            return true;
     }
 }

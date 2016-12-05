@@ -1,10 +1,17 @@
 #BlueJ class context
 comment0.params=
 comment0.target=View()
+comment0.text=\r\n\ A\ new\ View.\r\n
 comment1.params=
 comment1.target=void\ makeFrame()
+comment1.text=\r\n\ Makes\ the\ GUI.\r\n
 comment2.params=
 comment2.target=void\ makeMenu()
+comment2.text=\r\n\ Makes\ the\ menu\ bar.\r\n
 comment3.params=
 comment3.target=void\ makeShowsMenu()
-numComments=4
+comment3.text=\r\n\ makes\ the\ show\ menu\ tab.\r\n
+comment4.params=
+comment4.target=boolean\ isClosed()
+comment4.text=\r\n\ Returns\ if\ the\ vindow\ has\ been\ closed.\r\n
+numComments=5

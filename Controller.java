@@ -29,7 +29,8 @@ public class Controller
         done = false;
         while(!done)
         {
-            
+            if(view.isClosed())
+                done = true;
         }
     }
 }
