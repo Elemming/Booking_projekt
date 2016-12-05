@@ -7,9 +7,10 @@ import javax.swing.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class View
+public class View extends Frame
 {
-    private JFrame frame; 
+    private JFrame frame;
+    private Container contentPane;
 
     public View()
     {
@@ -19,12 +20,12 @@ public class View
     private void makeFrame()
     {
         frame = new JFrame("ImageViewer");
-        Container contentPane = frame.getContentPane();
+        contentPane = frame.getContentPane();
 
         makeMenu();
-
-        JLabel label = new JLabel("I am a label. I can display some text.");
-        contentPane.add(label);
+        
+        makeShowsMenu();
+        
         frame.pack();
         frame.setVisible(true);
     }
@@ -43,5 +44,11 @@ public class View
 
         //         JMenuItem openItem = new JMenuItem("Open");
         //         fileMenu.add(openItem); 
+    }
+    
+    private void makeShowsMenu()
+    {
+        JLabel label = new JLabel("I am a label. I can display some text.");
+        contentPane.add(label);
     }
 }
