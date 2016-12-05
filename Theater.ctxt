@@ -1,2 +1,4 @@
 #BlueJ class context
-numComments=0
+comment0.params=row\ seat
+comment0.target=Theater(int,\ int)
+numComments=1
