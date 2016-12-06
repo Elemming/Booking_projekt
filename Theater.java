@@ -1,13 +1,17 @@
 public class Theater
 {
     private int row;
-    private int seat;
+    private int col;
     private Seat[][] theater; 
-    
-    public Theater(int row, int seat)
+
+    public Theater(int row, int col)
     {
         this.row = row;
-        this.seat = seat;
-        theater = new Seat[row][seat];
+        this.col = col;
+        theater = new Seat[row][col];
     }    
+
+    public void showTheater()
+    {
+    }		
 }
