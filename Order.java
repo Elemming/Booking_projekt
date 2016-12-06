@@ -18,9 +18,9 @@ public class Order
     /** 
      * Adds a new reservation to the order.
      */
-    public void addReservation(String SHOWID, int row, int seat)
+    public void addReservation(String SHOWID, Seat seat)
     {
-        order.add(new Reservation(SHOWID, row, seat));
+        order.add(new Reservation(SHOWID, seat));
     }
 
     /**

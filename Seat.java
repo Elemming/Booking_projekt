@@ -5,13 +5,13 @@
 public class Seat
 {
     private int seatnumber;
-    private int row;
+    private int rownumber;
     private boolean reserved;
     
     public Seat(int seatnumber, int row, boolean reserved)
     {
         this.seatnumber = seatnumber;
-        this.row = row;
+        this.rownumber = rownumber;
         this.reserved = reserved;
         reserved = false;
     }
