@@ -1,33 +1,26 @@
-
 /**
- * Write a description of class MySystem here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * The Great and Powerful Trix- er, System! Uses the Theater/Order/Reservation/Seat classes in a way
+ * that fits with the theaters and showings at EBMCinema, drawing from MyDBSystem, and feeding View.
  */
 public class MySystem
 {
-    // instance variables - replace the example below with your own
-    private int x;
 
-    /**
-     * Constructor for objects of class MySystem
-     */
-    public MySystem()
+    //Constructor
+    MySystem()
     {
-        // initialise instance variables
-        x = 0;
-    }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
     }
+    
+    /**
+     * Creates a theater by taking a TheaterID from the database and uses the matching rows and cs
+     * to create a fitting 2D array of Seats.
+     */
+//   public void createTheater(THEATERID TheaterID)
+//     {
+//         int rows = THEATERID_ROWS;
+//         int cols = THEATERID_COLS;
+//         new Theater(rows, cols);
+//     }
+    
+    
 }

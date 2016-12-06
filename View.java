@@ -46,11 +46,11 @@ public class View extends Frame
         JMenuBar menubar = new JMenuBar();
         frame.setJMenuBar(menubar); 
 
-        JMenuItem showsMenu = new JMenuItem("Shows");
+        JMenuItem showsMenu = new JMenuItem("Showings");
         menubar.add(showsMenu); 
-        JMenuItem ReservationMenu = new JMenuItem("Reserations");
+        JMenuItem ReservationMenu = new JMenuItem("Reservations");
         menubar.add(ReservationMenu); 
-        JMenuItem changeMenu = new JMenuItem("Change Resevertioner");
+        JMenuItem changeMenu = new JMenuItem("Change Reservations");
         menubar.add(changeMenu); 
 
         //         JMenuItem openItem = new JMenuItem("Open");
@@ -82,7 +82,7 @@ public class View extends Frame
     }
 
     /**
-     * Returns if the vindow has been closed.
+     * Returns if the window has been closed.
      */
     public boolean isClosed()
     {
