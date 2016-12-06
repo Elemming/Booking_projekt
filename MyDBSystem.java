@@ -16,9 +16,13 @@ public final class MyDBSystem{
     private static final String DB_URL = "jdbc:mysql://mydb.itu.dk/" + MYDB;
     private static MyDBSystem SingleDB = null;
 
-    private MyDBSystem() 
-    throws SQLException{
+    private MyDBSystem(){
+       try{
         makeConnection();
+       }
+       catch(SQLException e){
+           e.printStackTrace();
+       }
     }
 
     public static void makeConnection() 
@@ -31,7 +35,6 @@ public final class MyDBSystem{
     throws SQLException{
         try {
             makeConnection();
-
             if(command.equals("mailinglist"))
             {
                 String sql = "SELECT * FROM mailing_list"; // implicit semi-colon!
@@ -62,8 +65,7 @@ public final class MyDBSystem{
         connection = null;
     }
 
-    public static MyDBSystem getInstance()
-    throws SQLException{
+    public static MyDBSystem getInstance(){
         if (SingleDB == null) {
             SingleDB = new MyDBSystem();
         }
