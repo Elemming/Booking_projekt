@@ -10,7 +10,7 @@ import javax.swing.*;
 public class View extends Frame
 {
     private JFrame frame;
-    private Container contentPane;
+    private Container contentPanel;
 
     /**
      * A new View.
@@ -29,7 +29,7 @@ public class View extends Frame
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(820,640);
 
-        contentPane = frame.getContentPane();
+        contentPanel = frame.getContentPane();
 
         makeMenu();
 
@@ -62,8 +62,23 @@ public class View extends Frame
      */
     private void makeShowsMenu()
     {
-        JLabel label = new JLabel("I am a label. I can display some text.");
-        contentPane.add(label);
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
+    }
+    
+    private void makeShow(String showName, String showTime)
+    {
+        Panel showPanel = new Panel();
+        contentPanel.add(showPanel);
+        showPanel.setLayout(new GridLayout(1, 0));
+        JLabel show = new JLabel("Title: " + showName + ".");
+        showPanel.add(show);
+        JLabel time = new JLabel("Time: " + showTime);
+        showPanel.add(time);
     }
 
     /**
