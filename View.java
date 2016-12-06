@@ -21,7 +21,7 @@ public class View extends Frame
     }
 
     /**
-     * Makes the GUI.
+     * Makes the GUI. 
      */
     private void makeFrame()
     {
@@ -63,6 +63,9 @@ public class View extends Frame
     private void makeShowsMenu()
     {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
+        makeShow("Star Wars", "2016-12-14 19:00");
         makeShow("Star Wars", "2016-12-14 19:00");
         makeShow("Star Wars", "2016-12-14 19:00");
         makeShow("Star Wars", "2016-12-14 19:00");
