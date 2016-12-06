@@ -7,7 +7,7 @@ import javax.swing.*;
  * @author Emil 
  * @version 0.1
  */
-public class View extends Frame
+public class View extends Frame implements ActionListener
 {
     private JFrame frame;
     private Container contentPanel;
@@ -47,11 +47,14 @@ public class View extends Frame
         frame.setJMenuBar(menubar); 
 
         JMenuItem showsMenu = new JMenuItem("Showings");
+        showsMenu.addActionListener(this);
         menubar.add(showsMenu); 
-        JMenuItem ReservationMenu = new JMenuItem("Reservations");
-        menubar.add(ReservationMenu); 
-        JMenuItem changeMenu = new JMenuItem("Change Reservations");
-        menubar.add(changeMenu); 
+        JMenuItem reservationMenu = new JMenuItem("Reservations");
+        reservationMenu.addActionListener(this);
+        menubar.add(reservationMenu); 
+        JMenuItem myReservationsMenu = new JMenuItem("Change Reservations");
+        myReservationsMenu.addActionListener(this);
+        menubar.add(myReservationsMenu); 
 
         //         JMenuItem openItem = new JMenuItem("Open");
         //         fileMenu.add(openItem); 
@@ -62,18 +65,25 @@ public class View extends Frame
      */
     private void makeShowsMenu()
     {
+        contentPanel.removeAll();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
-        makeShow("Star Wars", "2016-12-14 19:00");
+        
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        
+        contentPanel.validate();
     }
-    
-    private void makeShow(String showName, String showTime)
+
+    /**
+     * makes the shows in the show tab.
+     */
+    private void makeShow(String showName, String showTime, String showPlace)
     {
         Panel showPanel = new Panel();
         contentPanel.add(showPanel);
@@ -82,6 +92,26 @@ public class View extends Frame
         showPanel.add(show);
         JLabel time = new JLabel("Time: " + showTime);
         showPanel.add(time);
+        JLabel place = new JLabel("Theater: " + showPlace);
+        showPanel.add(place);
+    }
+
+    /**
+     * makes the reservation menu tab.
+     */
+    private void makeReservationMenu()
+    {
+        contentPanel.removeAll();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+    }
+
+    /**
+     * makes the myreservation menu tab.
+     */
+    private void makeMyReservationsMenu()
+    {
+        contentPanel.removeAll();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
     }
 
     /**
@@ -93,5 +123,15 @@ public class View extends Frame
             return false;
         else 
             return true;
+    }
+
+    public void actionPerformed(ActionEvent event)
+    {
+        if(event.getActionCommand().equals("Showings"))
+            makeShowsMenu();
+        if(event.getActionCommand().equals("Reservations"))
+            makeReservationMenu();
+        if(event.getActionCommand().equals("Change Reservations"))
+            makeMyReservationsMenu();
     }
 }
