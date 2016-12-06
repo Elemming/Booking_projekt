@@ -4,11 +4,13 @@
  */
 public class MySystem
 {
+    private Order order;
+    private MyDBSystem mydb;
 
     //Constructor
     MySystem()
     {
-
+        mydb = MyDBSystem.getInstance();
     }
     
     /**
@@ -22,5 +24,14 @@ public class MySystem
 //         new Theater(rows, cols);
 //     }
     
+   public void createOrder(String name, int phone)
+    {
+        order = new Order(name, phone);
+    }
     
+    public void addReservation(Reservation reservation)
+    {
+        order.addReservation(reservation);
+    }
+
 }
