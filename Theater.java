@@ -10,4 +10,8 @@ public class Theater
         this.seat = seat;
         theater = new Seat[row][seat];
     }    
+    
+    public void showTheater()
+    {
+    }		
 }
