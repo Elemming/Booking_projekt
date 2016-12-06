@@ -5,6 +5,12 @@ public class Start
 {
     public static void main(String[] args)
     {
-        new Controller();
+        try{
+            new Controller();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
