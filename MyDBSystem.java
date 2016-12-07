@@ -4,6 +4,7 @@
 //Singleton design was implemented as we only wish a single connection at any time.
 
 import java.sql.*;
+import java.time.*;
 
 public final class MyDBSystem{
     private static final String MYDB = "EBMCinema";
@@ -98,7 +99,7 @@ public final class MyDBSystem{
         try{
             String[][] allShows = null;
             ResultSet rs = selectQuery("* FROM Showings");
-            createArrayofShows(rs);
+            allShows = createArrayofShows(rs);
             return allShows;
         }catch(SQLException e){
             e.printStackTrace();        
@@ -110,9 +111,11 @@ public final class MyDBSystem{
     public String[][] getRelevantShows(){
         try{
             String[][] RelevantShows = null;
-            
-            ResultSet rs = selectQuery("* FROM Showings WHEN Dato = '" + " AND Time = '");
-            createArrayofShows(rs);
+            LocalDate date = LocalDate.now();
+            date.toString();
+            LocalTime time = LocalTime.now();
+            ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()");
+            RelevantShows = createArrayofShows(rs);
             return RelevantShows;
         }catch(SQLException e){
             e.printStackTrace();        
@@ -137,5 +140,10 @@ public final class MyDBSystem{
             Shows[i][4]= rs.getString("Tid");
         }
         return Shows;
+    }
+
+    public void test(){
+        LocalDate date = LocalDate.now();
+        System.out.println(date.toString());
     }
 }
