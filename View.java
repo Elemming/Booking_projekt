@@ -9,6 +9,7 @@ import javax.swing.*;
  */
 public class View extends Frame implements ActionListener
 {
+    private MySystem mySystem;
     private JFrame frame;
     private Container contentPanel;
     private ShowsTab showsTab; 
@@ -18,8 +19,9 @@ public class View extends Frame implements ActionListener
     /**
      * A new View.
      */
-    public View()
+    public View(MySystem mySystem)
     {
+        this.mySystem = mySystem;
         makeFrame();
     }
 
@@ -63,9 +65,6 @@ public class View extends Frame implements ActionListener
         JMenuItem myReservationsMenu = new JMenuItem("Change Reservations");
         myReservationsMenu.addActionListener(this);
         menubar.add(myReservationsMenu); 
-
-        //         JMenuItem openItem = new JMenuItem("Open");
-        //         fileMenu.add(openItem); 
     }
 
     /**
@@ -106,6 +105,9 @@ public class View extends Frame implements ActionListener
             return true;
     }
 
+    /**
+     * Makes the buttons work.
+     */
     public void actionPerformed(ActionEvent event)
     {
         if(event.getActionCommand().equals("Showings"))
