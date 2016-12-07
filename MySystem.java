@@ -18,7 +18,7 @@ public class MySystem
     /**
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
-     * Update: It probably also needs to
+     * It then checks the seat reservations to that showing and make the appropiate seats reserved.
      */
     //   public void createTheater(SHOWID ShowID)
     //     {
