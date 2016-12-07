@@ -98,24 +98,44 @@ public final class MyDBSystem{
         try{
             String[][] allShows = null;
             ResultSet rs = selectQuery("* FROM Showings");
-
-            rs.last();
-            allShows = new String[rs.getRow()][5];
-            rs.beforeFirst(); 
-            for(int i=0; rs.next(); i++)
-            {
-                allShows[i][0]= rs.getString("ShowID");
-                allShows[i][1]= rs.getString("FIlm");
-                allShows[i][2]= rs.getString("TheaterID");
-                allShows[i][3]= rs.getString("Dato");
-                allShows[i][4]= rs.getString("Tid");
-            }
-
+            createArrayofShows(rs);
             return allShows;
         }catch(SQLException e){
             e.printStackTrace();        
             System.out.println("owned");
             return null;
         }
+    }
+
+    public String[][] getRelevantShows(){
+        try{
+            String[][] RelevantShows = null;
+            
+            ResultSet rs = selectQuery("* FROM Showings WHEN Dato = '" + " AND Time = '");
+            createArrayofShows(rs);
+            return RelevantShows;
+        }catch(SQLException e){
+            e.printStackTrace();        
+            System.out.println("owned");
+            return null;
+        }
+
+    }
+
+    private String[][] createArrayofShows(ResultSet rs)
+    throws SQLException
+    {
+        rs.last();
+        String[][] Shows = new String[rs.getRow()][5];
+        rs.beforeFirst(); 
+        for(int i=0; rs.next(); i++)
+        {
+            Shows[i][0]= rs.getString("ShowID");
+            Shows[i][1]= rs.getString("Film");
+            Shows[i][2]= rs.getString("TheaterID");
+            Shows[i][3]= rs.getString("Dato");
+            Shows[i][4]= rs.getString("Tid");
+        }
+        return Shows;
     }
 }
