@@ -28,7 +28,7 @@ public class View extends Frame implements ActionListener
      */
     private void makeFrame()
     {
-        frame = new JFrame("ImageViewer");
+        frame = new JFrame("Booking System");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(820,640);
 
