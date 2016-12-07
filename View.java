@@ -73,7 +73,7 @@ public class View extends Frame implements ActionListener
     private void makeShowsMenu()
     {
         contentPanel.removeAll();
-        showsTab.createTab(mySystem.getAllShows());
+        showsTab.createTab(mySystem.getRelevantShows());
     }
     
     /**
