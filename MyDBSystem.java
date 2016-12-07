@@ -13,16 +13,15 @@ public final class MyDBSystem{
     private static Statement statement;
     private static final String DB_URL = "jdbc:mysql://mydb.itu.dk/" + MYDB;
     private static MyDBSystem SingleDB = null;
-    
+
     //
     private MyDBSystem(){
-       try{
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        connection = DriverManager.getConnection(DB_URL, USER, PASS);
-       }
-       catch(SQLException e){
-           e.printStackTrace();
-       }
+        try{
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public static void closeConnection()
@@ -47,8 +46,7 @@ public final class MyDBSystem{
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT " + select_query);
             return rs;
-        }
-        catch(SQLException e){
+        }catch(SQLException e){
             e.printStackTrace();
             System.out.println("owned");     
             return null;
@@ -65,7 +63,7 @@ public final class MyDBSystem{
             System.out.println("owned");
         }      
     }
-    
+
     public void insertCustomer(String name, int phone){
         try{
             statement = connection.createStatement();
@@ -75,6 +73,34 @@ public final class MyDBSystem{
             System.out.println("owned");
         }   
     }
-    
-    
+
+    public ResultSet getTheater(String theater){
+        try{
+            return selectQuery("R, Col FROM Theaters WHERE TheaterID = '" + theater + "'");
+        }catch(SQLException e){
+            e.printStackTrace();        
+            System.out.println("owned");
+            return null;
+        }
+    }
+
+    public ResultSet getShowing(String film, String date, String theater, String time){
+        try{
+            return selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = '" + theater +"' AND Dato = " + date + "' AND Tid = '" + time + "' AND Film = '" + film + "'");
+        }catch(SQLException e){
+            e.printStackTrace();        
+            System.out.println("owned");
+            return null;
+        }
+    }
+
+    public ResultSet getAllShows(){
+        try{
+            return selectQuery("* FROM Showings");
+        }catch(SQLException e){
+            e.printStackTrace();        
+            System.out.println("owned");
+            return null;
+        }
+    }
 }
