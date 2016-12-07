@@ -37,6 +37,12 @@ public class MySystem
         String[][] allShows = mydb.getAllShows();
         return allShows;
     }
+    
+    public String[][] getRelevantShows()
+    {
+        String[][] relevantShows = mydb.getRelevantShows();
+        return relevantShows;
+    }
 
     public void addReservation(Reservation reservation)
     {
