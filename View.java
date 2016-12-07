@@ -12,6 +12,8 @@ public class View extends Frame implements ActionListener
     private JFrame frame;
     private Container contentPanel;
     private ShowsTab showsTab; 
+    private ReservationTab reservationTab;
+    private MyReservationsTab myReservationsTab;
 
     /**
      * A new View.
@@ -26,7 +28,7 @@ public class View extends Frame implements ActionListener
      */
     private void makeFrame()
     {
-        frame = new JFrame("ImageViewer");
+        frame = new JFrame("Booking System");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(820,640);
 
@@ -35,6 +37,8 @@ public class View extends Frame implements ActionListener
         makeMenu();
 
         showsTab = new ShowsTab(contentPanel);
+        reservationTab = new ReservationTab(contentPanel);
+        myReservationsTab = new MyReservationsTab(contentPanel);
         makeShowsMenu();
 
         frame.setVisible(true);
@@ -69,48 +73,17 @@ public class View extends Frame implements ActionListener
      */
     private void makeShowsMenu()
     {
-        
         contentPanel.removeAll();
         showsTab.createTab();
-        
-//         contentPanel.removeAll();
-//         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-//         
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         makeShow("Star Wars", "2016-12-14 19:00", "A");
-//         
-//         contentPanel.validate();
     }
-
-//     /**
-//      * makes the shows in the show tab.
-//      */
-//     private void makeShow(String showName, String showTime, String showPlace)
-//     {
-//         Panel showPanel = new Panel();
-//         contentPanel.add(showPanel);
-//         showPanel.setLayout(new GridLayout(1, 0));
-//         JLabel show = new JLabel("Title: " + showName + ".");
-//         showPanel.add(show);
-//         JLabel time = new JLabel("Time: " + showTime);
-//         showPanel.add(time);
-//         JLabel place = new JLabel("Theater: " + showPlace);
-//         showPanel.add(place);
-//     }
-
+    
     /**
      * makes the reservation menu tab.
      */
     private void makeReservationMenu()
     {
         contentPanel.removeAll();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        reservationTab.createTab();
     }
 
     /**
@@ -119,7 +92,7 @@ public class View extends Frame implements ActionListener
     private void makeMyReservationsMenu()
     {
         contentPanel.removeAll();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        myReservationsTab.createTab();
     }
 
     /**
