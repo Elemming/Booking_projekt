@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=panel
+comment0.target=Tab(java.awt.Container)
+comment1.params=
+comment1.target=void\ createTab()
+comment2.params=
+comment2.target=java.awt.Container\ getContentPanel()
+numComments=3
