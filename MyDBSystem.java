@@ -14,6 +14,9 @@ public final class MyDBSystem{
     private static final String DB_URL = "jdbc:mysql://mydb.itu.dk/" + MYDB;
     private static MyDBSystem SingleDB = null;
 
+    
+    
+    
     //
     private MyDBSystem(){
         try{
