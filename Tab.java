@@ -8,7 +8,7 @@ public abstract class Tab
     
     public Tab(Container panel)
     {
-        Container contentPanel = panel;
+        contentPanel = panel;
     }
     
     public void createTab()

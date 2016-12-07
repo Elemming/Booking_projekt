@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=View()
+comment0.params=mySystem
+comment0.target=View(MySystem)
 comment0.text=\r\n\ A\ new\ View.\r\n
 comment1.params=
 comment1.target=void\ makeFrame()
@@ -22,4 +22,5 @@ comment6.target=boolean\ isClosed()
 comment6.text=\r\n\ Returns\ if\ the\ window\ has\ been\ closed.\r\n
 comment7.params=event
 comment7.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment7.text=\r\n\ Makes\ the\ buttons\ work.\r\n
 numComments=8

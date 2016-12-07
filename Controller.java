@@ -16,8 +16,8 @@ public class Controller
      */
     public Controller()
     {
-        view = new View();
         mySystem = new MySystem();
+        view = new View(mySystem);
         run();
     }
 
