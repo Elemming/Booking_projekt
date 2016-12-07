@@ -1,8 +1,9 @@
 #BlueJ class context
 comment0.params=
 comment0.target=MySystem()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ MySystem\r\n
-comment1.params=y
-comment1.target=int\ sampleMethod(int)
-comment1.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\ \r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\ \r\n
-numComments=2
+comment1.params=name\ phone
+comment1.target=void\ createOrder(java.lang.String,\ int)
+comment1.text=\r\n\ Creates\ a\ theater\ by\ taking\ a\ TheaterID\ from\ the\ database\ and\ uses\ the\ matching\ rows\ and\ cols\r\n\ to\ create\ a\ fitting\ 2D\ array\ of\ Seats.\r\n\ Update\:\ It\ probably\ also\ needs\ to\r\n
+comment2.params=reservation
+comment2.target=void\ addReservation(Reservation)
+numComments=3

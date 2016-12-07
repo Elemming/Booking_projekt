@@ -12,23 +12,24 @@ public class MySystem
     {
         mydb = MyDBSystem.getInstance();
     }
-    
+
     /**
-     * Creates a theater by taking a TheaterID from the database and uses the matching rows and cs
+     * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
+     * Update: It probably also needs to
      */
-//   public void createTheater(THEATERID TheaterID)
-//     {
-//         int rows = THEATERID_ROWS;
-//         int cols = THEATERID_COLS;
-//         new Theater(rows, cols);
-//     }
-    
-   public void createOrder(String name, int phone)
+    //   public void createTheater(SHOWID ShowID)
+    //     {
+    //         int rows = THEATERID_ROWS;
+    //         int cols = THEATERID_COLS;
+    //         new Theater(rows, cols);
+    //     }
+
+    public void createOrder(String name, int phone)
     {
         order = new Order(name, phone);
     }
-    
+
     public void addReservation(Reservation reservation)
     {
         order.addReservation(reservation);

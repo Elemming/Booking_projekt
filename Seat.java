@@ -8,6 +8,13 @@ public class Seat
     private int rownumber;
     private boolean reserved;
     
+    public Seat(int seatnumber, int row)
+    {
+        this.seatnumber = seatnumber;
+        this.rownumber = rownumber;
+        reserved = false;
+    }
+    
     public Seat(int seatnumber, int row, boolean reserved)
     {
         this.seatnumber = seatnumber;

@@ -1,4 +1,6 @@
 #BlueJ class context
-comment0.params=row\ seat
+comment0.params=row\ col
 comment0.target=Theater(int,\ int)
-numComments=1
+comment1.params=
+comment1.target=void\ showTheater()
+numComments=2
