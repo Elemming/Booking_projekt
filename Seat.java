@@ -8,7 +8,7 @@ public class Seat
     private int rownumber;
     private boolean reserved;
     
-    public Seat(int seatnumber, int row)
+    public Seat(int seatnumber, int rownumber)
     {
         this.seatnumber = seatnumber;
         this.rownumber = rownumber;

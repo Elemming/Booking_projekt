@@ -14,9 +14,10 @@ public class Theater
         for (int rows = 0; rows < theater.length; rows++) {
             for (int cols = 0; cols < theater[rows].length; cols++) {   
                 theater[rows][cols] = new Seat(x, y);
-                x = x + 1;
+                x++;
             }
-            y = y + 1;
+            y++;
+            x = 1;
         }
     }    
 

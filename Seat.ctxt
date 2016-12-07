@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.params=seatnumber\ row
+comment0.params=seatnumber\ rownumber
 comment0.target=Seat(int,\ int)
 comment1.params=seatnumber\ row\ reserved
 comment1.target=Seat(int,\ int,\ boolean)
