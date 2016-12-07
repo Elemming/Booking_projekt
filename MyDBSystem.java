@@ -85,9 +85,9 @@ public final class MyDBSystem{
         }
     }
 
-    public ResultSet getShowing(String film, String date, String theater, String time){
+    public ResultSet getShowing(String theater, String film, String date, String time){
         try{
-            return selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = '" + theater +"' AND Dato = " + date + "' AND Tid = '" + time + "' AND Film = '" + film + "'");
+            return selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = '" + theater + "' AND Film = '" + film + "' AND Dato = '" + date + "' AND Tid = '" + time + "'");
         }catch(SQLException e){
             e.printStackTrace();        
             System.out.println("owned");
