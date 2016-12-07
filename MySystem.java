@@ -18,7 +18,7 @@ public class MySystem
     /**
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
-     * It then checks the seat reservations to that showing and make the appropiate seats reserved.
+     * Update: It probably also needs to
      */
     //   public void createTheater(SHOWID ShowID)
     //     {
@@ -34,23 +34,7 @@ public class MySystem
 
     public String[][] getAllShows()
     {
-        ResultSet rs = mydb.getAllShows();
-        String[][] allShows = null;
-        try{
-            rs.last();
-            allShows = new String[rs.getRow()][5];
-            rs.beforeFirst(); 
-            for(int i=0; rs.next(); i++)
-            {
-                allShows[i][0]= rs.getString("ShowID");
-                allShows[i][1]= rs.getString("FIlm");
-                allShows[i][2]= rs.getString("TheaterID");
-                allShows[i][3]= rs.getString("Dato");
-                allShows[i][4]= rs.getString("Tid");
-            }
-        }
-        catch(Exception e){}
-
+        String[][] allShows = mydb.getAllShows();
         return allShows;
     }
 

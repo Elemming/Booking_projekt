@@ -14,9 +14,6 @@ public final class MyDBSystem{
     private static final String DB_URL = "jdbc:mysql://mydb.itu.dk/" + MYDB;
     private static MyDBSystem SingleDB = null;
 
-    
-    
-    
     //
     private MyDBSystem(){
         try{
@@ -97,9 +94,24 @@ public final class MyDBSystem{
         }
     }
 
-    public ResultSet getAllShows(){
+    public String[][] getAllShows(){
         try{
-            return selectQuery("* FROM Showings");
+            String[][] allShows = null;
+            ResultSet rs = selectQuery("* FROM Showings");
+
+            rs.last();
+            allShows = new String[rs.getRow()][5];
+            rs.beforeFirst(); 
+            for(int i=0; rs.next(); i++)
+            {
+                allShows[i][0]= rs.getString("ShowID");
+                allShows[i][1]= rs.getString("FIlm");
+                allShows[i][2]= rs.getString("TheaterID");
+                allShows[i][3]= rs.getString("Dato");
+                allShows[i][4]= rs.getString("Tid");
+            }
+
+            return allShows;
         }catch(SQLException e){
             e.printStackTrace();        
             System.out.println("owned");

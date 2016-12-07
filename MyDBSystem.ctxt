@@ -16,5 +16,5 @@ comment6.target=java.sql.ResultSet\ getTheater(java.lang.String)
 comment7.params=film\ date\ theater\ time
 comment7.target=java.sql.ResultSet\ getShowing(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
 comment8.params=
-comment8.target=java.sql.ResultSet\ getAllShows()
+comment8.target=java.lang.String[][]\ getAllShows()
 numComments=9
