@@ -48,5 +48,14 @@ public class MySystem
     {
         order.addReservation(reservation);
     }
-
+    
+     public void removeOrder(String name, int phone)
+    {
+        
+    }
+    
+    public void removeReservation(Reservation reservation)
+    {
+        
+    }	
 }
