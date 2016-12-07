@@ -9,32 +9,30 @@ public class ShowsTab extends Tab
         super(panel);
     }
     
-    public void createTab()
+    public void createTab(String[][] shows)
     {
         super.getContentPanel().setLayout(new BoxLayout(super.getContentPanel(), BoxLayout.Y_AXIS));
         
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
-        makeShow("Star Wars", "2016-12-14 19:00", "A");
+        for(String[] show : shows)
+        {
+            makeShow(show[1], show[2], show[3], show[4]);
+        }
         
         super.getContentPanel().validate();
     }
     
-    private void makeShow(String showName, String showTime, String showPlace)
+    private void makeShow(String showFilm, String showTheater, String showDate, String showTime)
     {
         Panel showPanel = new Panel();
         super.getContentPanel().add(showPanel);
-        showPanel.setLayout(new GridLayout(1, 0));
-        JLabel show = new JLabel("Title: " + showName + ".");
-        showPanel.add(show);
+        showPanel.setLayout(new GridLayout(1, 4));
+        JLabel film = new JLabel("Title: " + showFilm + ".");
+        showPanel.add(film);
+        JLabel date = new JLabel("Date: " + showDate + ".");
+        showPanel.add(date);
+        JLabel theater = new JLabel("Theater: " + showTheater);
+        showPanel.add(theater);
         JLabel time = new JLabel("Time: " + showTime);
         showPanel.add(time);
-        JLabel place = new JLabel("Theater: " + showPlace);
-        showPanel.add(place);
     }
 }

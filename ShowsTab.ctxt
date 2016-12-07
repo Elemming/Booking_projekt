@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=panel
 comment0.target=ShowsTab(java.awt.Container)
-comment1.params=
-comment1.target=void\ createTab()
-comment2.params=showName\ showTime\ showPlace
-comment2.target=void\ makeShow(java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.params=shows
+comment1.target=void\ createTab(java.lang.String[][])
+comment2.params=showFilm\ showTheater\ showDate\ showTime
+comment2.target=void\ makeShow(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
 numComments=3
