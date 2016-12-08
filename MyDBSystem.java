@@ -53,28 +53,34 @@ public final class MyDBSystem{
             return null;
         }
     }
-
-    public void insertReservation(int CustomerID, int SeatID)
-    throws SQLException{
+    
+    private void insertQuery(String insertQuery){
         try{
             statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Reservations (CustomerID, SeatID) VALUES (" + CustomerID + ", " + SeatID + " )");
+            statement.executeUpdate("INSERT INTO " + insertQuery);
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("owned");
         }      
     }
-
-    public void insertCustomer(String name, int phone){
-        try{
-            statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Customers (Name, Phone) VALUES ('" + name + "', " + phone + " )");
-        }catch(SQLException e){
-            e.printStackTrace();
-            System.out.println("owned");
-        }   
+    
+    public void insertReservation(int CustomerID, int SeatID)
+    throws SQLException{
+        insertQuery("Reservations (CustomerID, SeatID) VALUES (" + CustomerID + ", " + SeatID + " )");
+    }
+    
+    public void insertCustomer(String name, int phone)
+    throws SQLException
+    {
+        insertQuery("Customers (Name, Phone) VALUES ('" + name + "', " + phone + " )");
     }
 
+    public void insertSeatReservation(int showID, int seatRow, int seatCol)
+    throws SQLException
+    {
+        insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
+    }
+    
     public ResultSet getTheater(String theater){
         try{
             return selectQuery("R, Col FROM Theaters WHERE TheaterID = '" + theater + "'");
@@ -124,7 +130,27 @@ public final class MyDBSystem{
         }
 
     }
-
+    
+    private int[][] create2DArrayofInt(ResultSet rs)
+    throws SQLException
+    {
+        ResultSetMetaData rsmetadata = rs.getMetaData();
+        int numofcolumns = rsmetadata.getColumnCount();
+        rs.last();
+        int[][] array2D = new int[rs.getRow()][numofcolumns];
+        for(int i = 0; rs.next(); i++)
+        {
+            for(int n = 0; n < numofcolumns ; n++)
+            {
+                int col = 1;
+                while (col >= numofcolumns){ 
+                    array2D[i][n] = rs.getInt(rsmetadata.getColumnLabel(col));
+                }
+            }
+        }
+        return array2D;
+    }
+    
     private String[][] createArrayofShows(ResultSet rs)
     throws SQLException
     {
@@ -153,14 +179,15 @@ public final class MyDBSystem{
         return selectQuery("* FROM Customers WHERE Name = '" + name + "' AND Phone = '" + phone + "'");
     }
     
-    public void insertSeatReservation(int showID, int seatRow, int seatCol)
-    throws SQLException{
-        try{
-            statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
-        }catch(SQLException e){
-            e.printStackTrace();
-            System.out.println("owned");
-        }      
+    public ResultSet getShowfromID(int showID)
+    throws SQLException
+    {
+        return selectQuery("* FROM Showings WHERE ShowID = '" + showID + "'");
+    }
+    
+    public void getReservationsfromShow()
+    throws SQLException
+    {
+        
     }
 }
