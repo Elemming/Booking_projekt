@@ -5,6 +5,7 @@
 
 import java.sql.*;
 import java.time.*;
+import java.util.Arrays;
 
 public final class MyDBSystem{
     private static final String MYDB = "EBMCinema";
@@ -53,7 +54,7 @@ public final class MyDBSystem{
             return null;
         }
     }
-    
+
     private void insertQuery(String insertQuery){
         try{
             statement = connection.createStatement();
@@ -63,12 +64,12 @@ public final class MyDBSystem{
             System.out.println("owned");
         }      
     }
-    
+
     public void insertReservation(int CustomerID, int SeatID)
     throws SQLException{
         insertQuery("Reservations (CustomerID, SeatID) VALUES (" + CustomerID + ", " + SeatID + " )");
     }
-    
+
     public void insertCustomer(String name, int phone)
     throws SQLException
     {
@@ -80,7 +81,7 @@ public final class MyDBSystem{
     {
         insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
     }
-    
+
     public ResultSet getTheater(String theater){
         try{
             return selectQuery("R, Col FROM Theaters WHERE TheaterID = '" + theater + "'");
@@ -130,27 +131,24 @@ public final class MyDBSystem{
         }
 
     }
-    
-    private int[][] create2DArrayofInt(ResultSet rs)
+
+    private int[][] create2DArrayofInt(ResultSet rs, String firstcol, String secondcol)
     throws SQLException
     {
-        ResultSetMetaData rsmetadata = rs.getMetaData();
-        int numofcolumns = rsmetadata.getColumnCount();
+        //ResultSetMetaData rsmetadata = rs.getMetaData();
+        //int numofcolumns = rsmetadata.getColumnCount();
         rs.last();
-        int[][] array2D = new int[rs.getRow()][numofcolumns];
+        int[][] array2D = new int[2][rs.getRow()];
+        System.out.println(rs.getRow());
+        rs.beforeFirst();
         for(int i = 0; rs.next(); i++)
         {
-            for(int n = 0; n < numofcolumns ; n++)
-            {
-                int col = 1;
-                while (col >= numofcolumns){ 
-                    array2D[i][n] = rs.getInt(rsmetadata.getColumnLabel(col));
-                }
-            }
+            array2D[0][i] = rs.getInt(firstcol);
+            array2D[1][i] = rs.getInt(secondcol);
         }
         return array2D;
     }
-    
+
     private String[][] createArrayofShows(ResultSet rs)
     throws SQLException
     {
@@ -172,22 +170,23 @@ public final class MyDBSystem{
         LocalDate date = LocalDate.now();
         System.out.println(date.toString());
     }
-    
+
     public ResultSet getCustomer(String name, int phone)
     throws SQLException
     {
         return selectQuery("* FROM Customers WHERE Name = '" + name + "' AND Phone = '" + phone + "'");
     }
-    
+
     public ResultSet getShowfromID(int showID)
     throws SQLException
     {
         return selectQuery("* FROM Showings WHERE ShowID = '" + showID + "'");
     }
-    
-    public void getReservationsfromShow()
+
+    public int[][] getReservationsfromShow(int showID)
     throws SQLException
-    {
-        
+    {          
+        ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation WHERE ShowID = '" + showID + "'");
+        return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
     }
-}
+}    
