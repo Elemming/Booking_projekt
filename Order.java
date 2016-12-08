@@ -26,7 +26,7 @@ public class Order
     /**
      * Returns the order.
      */
-    public ArrayList display()
+    public ArrayList getOrder()
     {
         return order;
     }

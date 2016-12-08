@@ -1,10 +1,14 @@
 #BlueJ class context
-comment0.params=SHOWID\ row\ seat
-comment0.target=Reservation(java.lang.String,\ int,\ int)
-comment0.text=\r\n\ Notably,\ the\ SHOWID\ is\ supposed\ to\ be\ a\ valid\ SHOWID\ from\ the\ database.\r\n
+comment0.params=SHOWID\ seat
+comment0.target=Reservation(int,\ Seat)
+comment0.text=\r\n\ Notably,\ the\ SHOWID\ is\ supposed\ to\ be\ a\ valid\ SHOWID\ from\ the\ database.\r\n\ @param\ \ SHOWID\ \ \ a\ valid\ SHOWID\ from\ the\ database\r\n\ @param\ \ seat\ \ \ \ \ A\ Seat\ in\ a\ Theater\r\n
 comment1.params=
-comment1.target=java.lang.String\ getShowingInfo()
-comment1.text=\ \r\n\ Gets\ information\ about\ the\ showing\ the\ reservation\ is\ for\ through\ the\ database.\r\n\ (Should\ be\ the\ info\ the\ fits\ with\ the\ particular\ SHOWID\ used\ in\ the\ constructor\ somehow.)\r\n
+comment1.target=Seat\ getSeat()
 comment2.params=
-comment2.target=void\ show()
-numComments=3
+comment2.target=int\ getShowID()
+comment3.params=
+comment3.target=java.lang.String\ getShowingInfo()
+comment3.text=\ \r\n\ Gets\ information\ about\ the\ showing\ the\ reservation\ is\ for\ through\ the\ database.\r\n\ (Should\ be\ the\ info\ the\ fits\ with\ the\ particular\ SHOWID\ used\ in\ the\ constructor\ somehow.)\r\n
+comment4.params=
+comment4.target=void\ show()
+numComments=5

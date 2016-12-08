@@ -23,6 +23,16 @@ public class Seat
         reserved = false;
     }
     
+    public int getSeatnumber()
+    {
+        return seatnumber;
+    }
+    
+    public int getRownumber()
+    {
+        return rownumber;
+    }
+    
     public void reserveSeat()
     {
         reserved = true;

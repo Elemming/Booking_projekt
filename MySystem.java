@@ -74,10 +74,26 @@ public class MySystem
         return relevantShows;
     }
 
+    /**
+     * Adds a reservation to the order.
+     */
     public void addReservation(Reservation reservation)
     {
         order.addReservation(reservation);
     }
+    
+    /**
+     * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
+     * Work in Progress
+     */
+//     public void finishOrder()
+//     {
+//         for (int i = 0; i < order.getOrder().size(); i++) 
+//         {
+//             order.getOrder().getSeat();
+//             insertSeatReservation(ShowID, SeatRow, SeatCol);
+//         }
+//     }
 
     public void removeOrder(String name, int phone)
     {
@@ -88,5 +104,10 @@ public class MySystem
     {
 
     }   
+    
+    public void getShowID()
+    {
+        
+    }
 }
 

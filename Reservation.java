@@ -3,7 +3,7 @@
  */
 public class Reservation
 {
-    private String SHOWID;
+    private int ShowID;
     private Seat seat;
 
     /**
@@ -11,11 +11,21 @@ public class Reservation
      * @param  SHOWID   a valid SHOWID from the database
      * @param  seat     A Seat in a Theater
      */
-    Reservation(String SHOWID, Seat seat)
+    Reservation(int SHOWID, Seat seat)
     {
-        this.SHOWID = SHOWID;
+        this.ShowID = ShowID;
         this.seat = seat;
         seat.reserveSeat();
+    }
+    
+    public Seat getSeat()
+    {
+        return seat;
+    }
+    
+    public int getShowID()
+    {
+        return ShowID;
     }
 
     /** 
