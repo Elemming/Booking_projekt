@@ -146,4 +146,21 @@ public final class MyDBSystem{
         LocalDate date = LocalDate.now();
         System.out.println(date.toString());
     }
+    
+    public ResultSet getCustomer(String name, int phone)
+    throws SQLException
+    {
+        return selectQuery("* FROM Customers WHERE Name = '" + name + "' AND Phone = '" + phone + "'");
+    }
+    
+    public void insertSeatReservation(int showID, int seatRow, int seatCol)
+    throws SQLException{
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("owned");
+        }      
+    }
 }
