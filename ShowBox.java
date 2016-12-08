@@ -1,8 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 
-public class ShowBox implements ActionListener
+public class ShowBox extends JComponent implements ActionListener
 {
     private Container contentPanel;
     private String[] show;
@@ -28,7 +29,7 @@ public class ShowBox implements ActionListener
     {
         Panel showPanel = new Panel();
         contentPanel.add(showPanel);
-        showPanel.setLayout(new GridLayout(1, 5));
+        showPanel.setLayout(new GridLayout(1, show.length));
         JLabel film = new JLabel(showFilm);
         showPanel.add(film);
         JLabel theater = new JLabel(showTheater);
@@ -44,6 +45,30 @@ public class ShowBox implements ActionListener
 
     public void actionPerformed(ActionEvent event)
     {
-        getShowID();
+        buttonPressed();
+    }
+
+    public void addChangeListener(ChangeListener listener) 
+    {
+        listenerList.add(ChangeListener.class, listener);
+    }
+
+    /**
+     * happens when the button is pressed
+     * 
+     * copied and altered from http://stackoverflow.com/questions/20153868/using-changelistener-to-fire-changes-in-java-swing
+     * 12/8/2016
+     */
+    private void buttonPressed() 
+    {
+        ChangeListener[] listeners = listenerList.getListeners(ChangeListener.class);
+        if (listeners != null && listeners.length > 0)
+        {
+            ChangeEvent evt = new ChangeEvent(this);
+            for (ChangeListener listener : listeners)
+            {
+                listener.stateChanged(evt);
+            }
+        }
     }
 }

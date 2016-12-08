@@ -1,13 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 /**
  * Makes a Frame with menu at top.
  * 
  * @author Emil 
  * @version 0.1
  */
-public class View extends Frame implements ActionListener
+public class View extends Frame implements ActionListener, ChangeListener
 {
     private MySystem mySystem;
     private JFrame frame;
@@ -56,6 +57,7 @@ public class View extends Frame implements ActionListener
 
         JMenuItem showsMenu = new JMenuItem("Showings");
         showsMenu.addActionListener(this);
+        showsMenu.addChangeListener(this);
         menubar.add(showsMenu); 
         
         JMenuItem reservationMenu = new JMenuItem("Reservations");
@@ -116,5 +118,10 @@ public class View extends Frame implements ActionListener
             makeReservationMenu();
         if(event.getActionCommand().equals("Change Reservations"))
             makeMyReservationsMenu();
+    }
+    
+    public void stateChanged(ChangeEvent event)
+    {
+        makeReservationMenu();
     }
 }
