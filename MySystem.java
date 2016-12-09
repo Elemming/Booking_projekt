@@ -23,19 +23,24 @@ public class MySystem
     public void createTheater(int ShowID)
     throws SQLException
     {
-        ResultSet rs = mydb.getShowfromID(ShowID);
-        String theaterID = null;
-        while(rs.next()){
-            theaterID = rs.getString("TheaterID");
-        }
-        ResultSet theater = mydb.getTheater(theaterID);
-
         int rows = 0;
         int cols = 0;
-        while(theater.next()){        
+        try 
+        {
+            ResultSet rs = mydb.getShowfromID(ShowID);
+            String theaterID = null;
+            while(rs.next()){
+                theaterID = rs.getString("TheaterID");
+            }
+            ResultSet theater = mydb.getTheater(theaterID);
+            while(theater.next()){        
 
-            rows = theater.getInt("R");
-            cols = theater.getInt("Col");
+                rows = theater.getInt("R");
+                cols = theater.getInt("Col");
+            }
+        }
+        catch(Exception e) 
+        {
         }
         new Theater(rows, cols);
     }
@@ -111,12 +116,12 @@ public class MySystem
 
     public void removeOrder(String name, int phone)
     {
-        
+
     }
 
     public void removeReservation(Reservation reservation)
     {
-        
+
     } 
 
     /**
@@ -137,8 +142,7 @@ public class MySystem
         {
             return 0;
         }
-        //         return mydb.getCustomer(name, phone);
-        return 1;
+        return mydb.getCustomer(name, phone);
     }
 
     /**
