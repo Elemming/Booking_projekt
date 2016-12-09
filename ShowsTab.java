@@ -6,6 +6,8 @@ import javax.swing.event.*;
 public class ShowsTab extends Tab implements ChangeListener 
 {
     private String[][] shows;
+    private ShowBox clickedBox;
+    private Panel showPanel;
     
     public ShowsTab(Container panel)
     {
@@ -16,8 +18,11 @@ public class ShowsTab extends Tab implements ChangeListener
     {
         this.shows = shows;
         
-        super.getContentPanel().setLayout(new BoxLayout(super.getContentPanel(), BoxLayout.Y_AXIS));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         
+        showPanel = new Panel();
+        contentPanel.add(showPanel);
+        showPanel.setLayout(new GridLayout(1, 5));
         createTopBox();
         
         for(String[] show : shows)
@@ -25,7 +30,7 @@ public class ShowsTab extends Tab implements ChangeListener
             makeShow(show);
         }
         
-        super.getContentPanel().validate();
+        contentPanel.validate();
     }
     
     private void makeShow(String[] show)
@@ -36,9 +41,6 @@ public class ShowsTab extends Tab implements ChangeListener
     
     private void createTopBox()
     {
-        Panel showPanel = new Panel();
-        super.getContentPanel().add(showPanel);
-        showPanel.setLayout(new GridLayout(1, 5));
         JLabel film = new JLabel("Movie");
         showPanel.add(film);
         JLabel theater = new JLabel("Theater");
@@ -51,8 +53,14 @@ public class ShowsTab extends Tab implements ChangeListener
         showPanel.add(button);
     }
     
+    public String getShowID()
+    {
+        return clickedBox.getShowID();
+    }
+    
     public void stateChanged(ChangeEvent event)
     {
+        clickedBox = (ShowBox)event.getSource();
         buttonPressed();
     }
 
