@@ -46,7 +46,6 @@ public class MySystem
      * the name and phone number.
      */
     public void createOrder(String name, int phone)
-    throws SQLException
     {
         createCustomer(name, phone);
         order = new Order(name, phone);
@@ -56,7 +55,6 @@ public class MySystem
      * Creates a customer in the database if the customer does not already exist.
      */
     public void createCustomer(String name, int phone)
-    throws SQLException
     {
         if (mydb.getCustomer(name, phone) == null)
         {
@@ -89,17 +87,20 @@ public class MySystem
      * Work in Progress
      */
     public void finishOrder()
-    throws SQLException
     {
         for (int i = 0; i < order.getOrder().size(); i++) 
         {
-            order.getOrder().get(i) = reservation;
-            reservation.getSeat() = seat;
-            reservation.getShowID() = ShowID;
-            seat.getSeatnumber = SeatCol;
-            seat.getRownumber = SeatRow;
-            insertSeatReservation(ShowID, SeatRow, SeatCol);
+            Reservation reservation = order.getOrder().get(i);
+            Seat seat = reservation.getSeat();
+            int ShowID = reservation.getShowID();
+            int SeatCol = seat.getSeatnumber();
+            int SeatRow = seat.getRownumber();
+            mydb.insertSeatReservation(ShowID, SeatRow, SeatCol);
         }
+        String name = order.getName();
+        int phone = order.getPhone();
+//         int CustomerID = mydb.getCustomer(name, phone);
+//         mydb.insertReservation(CustomerID, SeatID);
     }
 
     public void removeOrder(String name, int phone)
@@ -111,7 +112,7 @@ public class MySystem
     {
 
     } 
-    
+
     /**
      * Unadds/deselects an reservation already added to the order.
      */

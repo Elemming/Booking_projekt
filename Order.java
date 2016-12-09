@@ -30,6 +30,22 @@ public class Order
     {
         order.remove(reservation);
     }
+    
+    /**
+     * Returns the name of the order's "owner".
+     */
+    public String getName()
+    {
+        return name;
+    }
+    
+     /**
+     * Returns the phone number of the order's "owner".
+     */
+    public int getPhone()
+    {
+        return phone;
+    }
 
     /**
      * Returns the order.
