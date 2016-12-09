@@ -3,11 +3,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class ReservationTab extends Tab implements ActionListener
+public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
-    private String customerName, customerPhone;
+    private String customerName;
+    private int customerPhone;
     private Panel logInPanel;
     private JTextField nameField, phoneField;
+    private JButton logInButton;
 
     public ReservationTab(Container panel)
     {
@@ -43,7 +45,6 @@ public class ReservationTab extends Tab implements ActionListener
         nameLabel.setPreferredSize(new Dimension(100, 20));
         namePanel.add(nameLabel);
         nameField = new JFormattedTextField("Name");
-        nameField.addActionListener(this);
         namePanel.add(nameField);
 
         //creats phone Panel        
@@ -51,12 +52,12 @@ public class ReservationTab extends Tab implements ActionListener
         phoneLabel.setMinimumSize(new Dimension(100, 20));
         phoneLabel.setPreferredSize(new Dimension(100, 20));
         phonePanel.add(phoneLabel);
-        phoneField = new JFormattedTextField("Phone");
-        phoneField.addActionListener(this);
+        phoneField = new JFormattedTextField(new Integer("88888888"));
+        phoneField.setColumns(8);
         phonePanel.add(phoneField);
-        
+
         //create Log in Button
-        JButton logInButton = new JButton("Check Customer");
+        logInButton = new JButton("Check Customer");
         logInButton.addActionListener(this);
 
         //adds Panels
@@ -66,14 +67,65 @@ public class ReservationTab extends Tab implements ActionListener
         logInPanel.add(logInButton);
     }
 
-    public void actionPerformed(ActionEvent event)
+    public String getCustomerName()
     {
-        
+        return customerName;
     }
 
-    public Dimension getMaximumSize()
+    public int getCustomerPhone()
     {
-        Dimension size = getPreferredSize();
-        return size;
+        return customerPhone;
+    }
+
+    public void actionPerformed(ActionEvent event)
+    {
+        if(event.getSource().equals(logInButton))
+        {
+            try{
+
+                if(nameField.getText() != "Name" || nameField.getText() != null)
+                    customerName = nameField.getText();
+                else
+                    throw new Exception("no name");
+                if(phoneField.getText() != "Name" || phoneField.getText() != null)
+                    customerPhone = Integer.parseInt(phoneField.getText());
+                else
+                    throw new Exception("no name");
+                buttonPressed();
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void stateChanged(ChangeEvent event)
+    {
+
+    }
+
+    public void addChangeListener(ChangeListener changeListener) 
+    {
+        listenerList.add(ChangeListener.class, changeListener);
+    }
+
+    /**
+     * happens when the button is pressed
+     * 
+     * copied and altered from http://stackoverflow.com/questions/20153868/using-changelistener-to-fire-changes-in-java-swing
+     * 12/8/2016
+     */
+    private void buttonPressed() 
+    {
+        ChangeListener[] changeListeners = listenerList.getListeners(ChangeListener.class);
+        if (changeListeners != null && changeListeners.length > 0)
+        {
+            ChangeEvent evt = new ChangeEvent(this);
+            for (ChangeListener changeListener : changeListeners)
+            {
+                changeListener.stateChanged(evt);
+            }
+        }
     }
 }
