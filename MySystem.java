@@ -132,6 +132,7 @@ public class MySystem
      */
     public int getCustomerID(String name, int phone)
     {
+        createCustomer(name, phone);
         if (mydb.getCustomer(name, phone) == 0)
         {
             return 0;
