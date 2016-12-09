@@ -7,11 +7,11 @@ public class Reservation
     private Seat seat;
 
     /**
-     * Notably, the SHOWID is supposed to be a valid SHOWID from the database.
-     * @param  SHOWID   a valid SHOWID from the database
+     * Notably, the ShowID is supposed to be a valid ShowID from the database.
+     * @param  ShowID   a valid ShowID from the database
      * @param  seat     A Seat in a Theater
      */
-    Reservation(int SHOWID, Seat seat)
+    Reservation(int ShowID, Seat seat)
     {
         this.ShowID = ShowID;
         this.seat = seat;
