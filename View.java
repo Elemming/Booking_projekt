@@ -86,6 +86,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     {
         contentPanel.removeAll();
         reservationTab.createTab();
+        reservationTab.addChangeListener(this);
     }
 
     /**
