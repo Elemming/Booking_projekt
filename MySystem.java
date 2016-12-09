@@ -19,7 +19,6 @@ public class MySystem
     /**
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
-     * It also changes the Seats in the Theater so their rownumbers and seatnumbers are appropiate.
      */
     public void createTheater(int ShowID)
     throws SQLException
@@ -99,8 +98,8 @@ public class MySystem
         }
         String name = order.getName();
         int phone = order.getPhone();
-//         int CustomerID = mydb.getCustomer(name, phone);
-//         mydb.insertReservation(CustomerID, SeatID);
+        //         int CustomerID = mydb.getCustomer(name, phone);
+        //         mydb.insertReservation(CustomerID, SeatID);
     }
 
     public void removeOrder(String name, int phone)
@@ -119,11 +118,27 @@ public class MySystem
     public void unaddReservation(Reservation reservation)
     {
         order.unaddReservation(reservation);
-    }	
+    }   
 
-    public void getShowID()
+    /**
+     * Returns the CustomerID that matches the given name and phone number. (WIP)
+     */
+    public int getCustomerID(String name, int phone)
     {
+        if (mydb.getCustomer(name, phone) == null)
+        {
+            return 0;
+        }
+        //         return mydb.getCustomer(name, phone);
+        return 1;
+    }
 
+    /**
+     * Needed?
+     */
+    public int getShowID()
+    {
+        return 300;
     }
 }
 
