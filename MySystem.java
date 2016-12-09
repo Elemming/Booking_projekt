@@ -61,12 +61,19 @@ public class MySystem
         }
     }
 
+    /**
+     * Gets ALL the shows!
+     */
     public String[][] getAllShows()
     {
         String[][] allShows = mydb.getAllShows();
         return allShows;
     }
 
+    /**
+     * Gets ALL the shows? 
+     * (No, only the relevant ones.)
+     */
     public String[][] getRelevantShows()
     {
         String[][] relevantShows = mydb.getRelevantShows();
@@ -83,10 +90,12 @@ public class MySystem
 
     /**
      * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
-     * Work in Progress
      */
     public void finishOrder()
     {
+        String name = order.getName();
+        int phone = order.getPhone();
+        int CustomerID = mydb.getCustomer(name, phone);
         for (int i = 0; i < order.getOrder().size(); i++) 
         {
             Reservation reservation = order.getOrder().get(i);
@@ -95,11 +104,9 @@ public class MySystem
             int SeatCol = seat.getSeatnumber();
             int SeatRow = seat.getRownumber();
             mydb.insertSeatReservation(ShowID, SeatRow, SeatCol);
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            mydb.insertReservation(CustomerID, SeatID);
         }
-        String name = order.getName();
-        int phone = order.getPhone();
-        //         int CustomerID = mydb.getCustomer(name, phone);
-        //         mydb.insertReservation(CustomerID, SeatID);
     }
 
     public void removeOrder(String name, int phone)
@@ -121,7 +128,7 @@ public class MySystem
     }   
 
     /**
-     * Returns the CustomerID that matches the given name and phone number. (WIP)
+     * Returns the CustomerID that matches the given name and phone number. 
      */
     public int getCustomerID(String name, int phone)
     {
