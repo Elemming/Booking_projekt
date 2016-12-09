@@ -34,7 +34,7 @@ public class Order
     /**
      * Returns the order.
      */
-    public ArrayList getOrder()
+    public ArrayList<Reservation> getOrder()
     {
         return order;
     }
