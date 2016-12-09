@@ -55,7 +55,7 @@ public class MySystem
      */
     public void createCustomer(String name, int phone)
     {
-        if (mydb.getCustomer(name, phone) == null)
+        if (mydb.getCustomer(name, phone) == 0)
         {
             mydb.insertCustomer(name, phone);
         }
@@ -125,12 +125,11 @@ public class MySystem
      */
     public int getCustomerID(String name, int phone)
     {
-        if (mydb.getCustomer(name, phone) == null)
+        if (mydb.getCustomer(name, phone) == 0)
         {
             return 0;
         }
-        //         return mydb.getCustomer(name, phone);
-        return 1;
+        return mydb.getCustomer(name, phone);
     }
 
     /**
