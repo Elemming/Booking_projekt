@@ -22,6 +22,14 @@ public class Order
     {
         order.add(reservation);
     }
+    
+    /**
+     * Removes a reservation from the order.
+     */
+    public void unaddReservation(Reservation reservation)
+    {
+        order.remove(reservation);
+    }
 
     /**
      * Returns the order.

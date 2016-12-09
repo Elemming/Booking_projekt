@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * The Great and Powerful Trix- er, System! Uses the Theater/Order/Reservation/Seat classes in a way
@@ -18,6 +19,7 @@ public class MySystem
     /**
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
+     * It also changes the Seats in the Theater so their rownumbers and seatnumbers are appropiate.
      */
     public void createTheater(int ShowID)
     throws SQLException
@@ -53,9 +55,9 @@ public class MySystem
     /**
      * Creates a customer in the database if the customer does not already exist.
      */
-  public void createCustomer(String name, int phone)
+    public void createCustomer(String name, int phone)
     throws SQLException
-   {
+    {
         if (mydb.getCustomer(name, phone) == null)
         {
             mydb.insertCustomer(name, phone);
@@ -81,19 +83,24 @@ public class MySystem
     {
         order.addReservation(reservation);
     }
-    
+
     /**
      * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
      * Work in Progress
      */
-//     public void finishOrder()
-//     {
-//         for (int i = 0; i < order.getOrder().size(); i++) 
-//         {
-//             order.getOrder().getSeat();
-//             insertSeatReservation(ShowID, SeatRow, SeatCol);
-//         }
-//     }
+    public void finishOrder()
+    throws SQLException
+    {
+        for (int i = 0; i < order.getOrder().size(); i++) 
+        {
+            order.getOrder().get(i) = reservation;
+            reservation.getSeat() = seat;
+            reservation.getShowID() = ShowID;
+            seat.getSeatnumber = SeatCol;
+            seat.getRownumber = SeatRow;
+            insertSeatReservation(ShowID, SeatRow, SeatCol);
+        }
+    }
 
     public void removeOrder(String name, int phone)
     {
@@ -103,11 +110,19 @@ public class MySystem
     public void removeReservation(Reservation reservation)
     {
 
-    }   
+    } 
     
+    /**
+     * Unadds/deselects an reservation already added to the order.
+     */
+    public void unaddReservation(Reservation reservation)
+    {
+        order.unaddReservation(reservation);
+    }	
+
     public void getShowID()
     {
-        
+
     }
 }
 
