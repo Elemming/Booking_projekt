@@ -57,7 +57,6 @@ public class View extends Frame implements ActionListener, ChangeListener
 
         JMenuItem showsMenu = new JMenuItem("Showings");
         showsMenu.addActionListener(this);
-        showsMenu.addChangeListener(this);
         menubar.add(showsMenu); 
         
         JMenuItem reservationMenu = new JMenuItem("Reservations");
@@ -76,6 +75,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     {
         contentPanel.removeAll();
         showsTab.createTab(mySystem.getRelevantShows());
+        showsTab.addChangeListener(this);
     }
     
     /**
