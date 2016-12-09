@@ -3,4 +3,6 @@ comment0.params=panel
 comment0.target=ReservationTab(java.awt.Container)
 comment1.params=
 comment1.target=void\ createTab()
-numComments=2
+comment2.params=
+comment2.target=void\ createLogInTab()
+numComments=3
