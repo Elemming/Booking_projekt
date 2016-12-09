@@ -54,21 +54,24 @@ public final class MyDBSystem{
         return SingleDB;
     }
 
-    //     /**
-    //      * A method only acccesible by this class that is designated to run a SELECT query
-    //      */
-    //     private ResultSet selectQuery(String selectQuery, Hashtable mapper){
-    //         try{            
-    //             PreparedStatement statement = connection.prepareStatement("SELECT " + selectQuery);
-    //             statement.setString(1, mapper.get("1"));
-    //             ResultSet rs = statement.executeUpdate("SELECT " + selectQuery);
-    //             return rs;
-    //         }catch(SQLException e){
-    //             e.printStackTrace();
-    //             System.out.println("owned");     
-    //             return null;
-    //         }
-    //     }
+    /**
+     * A method only acccesible by this class that is designated to be the main SELECT query.
+     */
+    private ResultSet selectQuery(String selectQuery, Hashtable<Integer, String> mapper){
+        try{            
+            String updateString = ("SELECT " + selectQuery);
+            PreparedStatement statement = connection.prepareStatement(updateString);
+            for(int i = 1; i <= mapper.size(); i++){
+                statement.setString(i, mapper.get(i));
+            }                    
+            ResultSet rs = statement.executeQuery();
+            return rs;
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("owned");     
+            return null;
+        }
+    }
 
     private ResultSet selectQuery(String selectQuery){
         try{
@@ -81,12 +84,6 @@ public final class MyDBSystem{
             return null;
         }
     }
-
-    //     //public ResultSet getTheater(String theater){
-    //         Hashtable<String, String> inputmapping = new Hashtable<String, String>(); 
-    //         inputmapping.put("1", theater);
-    //         return selectQuery("R, Col FROM Theaters WHERE TheaterID = ?", inputmapping);       
-    //     }
 
     private void insertQuery(String insertQuery){
         try{
@@ -111,16 +108,53 @@ public final class MyDBSystem{
         insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
     }
 
-    public ResultSet getTheater(String theater){
-        return selectQuery("R, Col FROM Theaters WHERE TheaterID = '" + theater + "'");
+    //     public ResultSet getTheater(String theater){
+    //         return selectQuery("R, Col FROM Theaters WHERE TheaterID = '" + theater + "'");
+    //     }
+
+    public ResultSet getTheater(String theaterID){
+        Hashtable<Integer, String> inputmapping = new Hashtable<Integer, String>(); 
+        inputmapping.put(1, theaterID);
+        return selectQuery("R, Col FROM Theaters WHERE TheaterID = ?", inputmapping);       
     }
 
-    public ResultSet getShowing(String theater, String film, String date, String time){
-        return selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = '" + theater + "' AND Film = '" + film + "' AND Dato = '" + date + "' AND Tid = '" + time + "'");
+    //     public int getSeatID(int showID, int seatRow, int seatCol){
+    //         try{
+    //             Hashtable<Integer, String> inputmapping = new Hashtable<Integer, String>();
+    //             inputmapping.put(1, Integer.parseInt(showID));
+    //             inputmapping.put(2, seatRow);
+    //             inputmapping.put(3, seatCol);
+    //             ResultSet rs = selectQuery("SeatID FROM SeatReservation WHERE ShowID = ? AND Seatrow = ? AND Seatcol = ?", inputmapping);
+    //         }catch(SQLException e){
+    //             e.printStackTrace();
+    //             System.out.println("SeatID not found/retrieved");
+    //             return 0;
+    //         }
+    //     }
+
+    public int getSeatID(int showID, int seatRow, int seatCol){
+        try{
+            ResultSet rs = selectQuery(" SeatID FROM SeatReservation WHERE ShowID = '" + showID + "' AND Seatrow =" + seatRow + "' AND Seatcol = '" + seatCol + "'");
+            return rs.getInt("SeatID");
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("SeatID not found/retrieved");
+            return 0;
+        }
+    }
+
+    public int[][] getShowing(String theater, String film, String date, String time){
+        Hashtable<Integer, String> inputmapper = new Hashtable<Integer, String>();
+        inputmapper.put(1, theater);
+        inputmapper.put(2, film);
+        inputmapper.put(3, date);
+        inputmapper.put(4, time);
+        ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = ? AND Film = ? AND Dato = ? AND Tid = ?");
+        int[][] array2D = create2DArrayofInt(rs, "Seatrow", "Seatcol");
+        return array2D;
     }
 
     public String[][] getAllShows(){
-
         String[][] allShows = null;
         ResultSet rs = selectQuery("* FROM Showings");
         allShows = createArrayofShows(rs);
@@ -160,18 +194,18 @@ public final class MyDBSystem{
 
     private String[][] createArrayofShows(ResultSet rs){
         try{
-        rs.last();
-        String[][] Shows = new String[rs.getRow()][5];
-        rs.beforeFirst(); 
-        for(int i=0; rs.next(); i++)
-        {
-            Shows[i][0]= rs.getString("ShowID");
-            Shows[i][1]= rs.getString("Film");
-            Shows[i][2]= rs.getString("TheaterID");
-            Shows[i][3]= rs.getString("Dato");
-            Shows[i][4]= rs.getString("Tid");
-        }
-        return Shows;
+            rs.last();
+            String[][] Shows = new String[rs.getRow()][5];
+            rs.beforeFirst(); 
+            for(int i=0; rs.next(); i++)
+            {
+                Shows[i][0]= rs.getString("ShowID");
+                Shows[i][1]= rs.getString("Film");
+                Shows[i][2]= rs.getString("TheaterID");
+                Shows[i][3]= rs.getString("Dato");
+                Shows[i][4]= rs.getString("Tid");
+            }
+            return Shows;
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("owned");
@@ -179,8 +213,16 @@ public final class MyDBSystem{
         }
     }
 
-    public ResultSet getCustomer(String name, int phone){
-        return selectQuery("CustomerID FROM Customers WHERE Name = '" + name + "' AND Phone = '" + phone + "'");
+    public int getCustomer(String name, int phone){
+        try{
+            ResultSet rs = selectQuery("CustomerID FROM Customers WHERE Name = '" + name + "' AND Phone = '" + phone + "'");
+            rs.first();
+            return rs.getInt("CustomerID");
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("There was no CustomerID retrieved");
+            return 0;
+        }
     }
 
     public ResultSet getShowfromID(int showID){
@@ -190,6 +232,18 @@ public final class MyDBSystem{
     public int[][] getReservationsfromShow(int showID){          
         ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation WHERE ShowID = '" + showID + "'");
         return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
+    }
+
+    public int getResID(int customerID, int seatID){
+        try{
+            ResultSet rs = selectQuery("ResID FROM Reservations WHERE CustomerID = '" + customerID + "' AND SeatID = '" + seatID + "'");
+            rs.first();
+            return rs.getInt("CustomerID");
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("ResID not found/retrieved");
+            return 0;
+        }        
     }
 
     public void deleteCustomer(String name, int phone){
