@@ -9,6 +9,7 @@ public class MySystem
 {
     private Order order;
     private MyDBSystem mydb;
+    private Theater theater;
 
     //Constructor
     MySystem()
@@ -20,7 +21,7 @@ public class MySystem
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
      */
-    public Theater createTheater(int ShowID)
+    public void createTheater(int ShowID)
     {
         int rows = 0;
         int cols = 0;
@@ -41,8 +42,7 @@ public class MySystem
         catch(Exception e) 
         {
         }
-        Theater theater = new Theater(rows, cols);
-        return theater;
+        theater = new Theater(rows, cols);
     }
 
     /**
@@ -176,7 +176,7 @@ public class MySystem
     /**
      * Calls a Theater's getTheater() method.
      */
-    public void getTheater(Theater theater)
+    public void getTheater()
     {
         theater.getTheater();
     }
