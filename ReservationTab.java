@@ -11,7 +11,7 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     private int customerPhone, customerID;
     private Panel logInPanel;
     private JTextField nameField, phoneField;
-    private JButton logInButton;
+    private JButton logInButton, seatButton;
     private NumberFormat nf;
 
     public ReservationTab(Container panel)
@@ -91,6 +91,12 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             for( Seat seat : theater[i])
             {
                 JButton seatButton = new JButton();
+                if(seat.isReseved())
+                {
+                    seatButton.setBackground(Color.RED);
+                    seatButton.setForeground(Color.RED);
+                }
+                seatButton.addActionListener(this);
                 theaterPanel.add(seatButton);
             }
         }
@@ -143,6 +149,14 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
 
                 e.printStackTrace();
             }
+        }
+
+        else if(event.getSource() instanceof JButton)
+        {
+            this.seatButton = (JButton)event.getSource();
+            this.seatButton.setBackground(Color.MAGENTA);
+            this.seatButton.setForeground(Color.MAGENTA);
+            contentPanel.validate();
         }
     }
 

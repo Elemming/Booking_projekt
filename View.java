@@ -89,7 +89,6 @@ public class View extends Frame implements ActionListener, ChangeListener
         {
             if(showsTab.getShowID() != 0)
             {
-                mySystem.createTheater(showsTab.getShowID());
                 reservationTab.createTab(mySystem.getTheater());
             }
             else
@@ -136,7 +135,10 @@ public class View extends Frame implements ActionListener, ChangeListener
     public void stateChanged(ChangeEvent event)
     {
         if(event.getSource() instanceof ShowsTab)
+        {
+            mySystem.createTheater(showsTab.getShowID());
             makeReservationMenu();
+        }
         if(event.getSource() instanceof ReservationTab)
         {
             contentPanel.removeAll();
