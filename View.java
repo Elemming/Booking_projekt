@@ -17,7 +17,6 @@ public class View extends Frame implements ActionListener, ChangeListener
     private ReservationTab reservationTab;
     private MyReservationsTab myReservationsTab;
     private int customerID;
-    private Theater theater;
 
     /**
      * A new View.
@@ -88,9 +87,7 @@ public class View extends Frame implements ActionListener, ChangeListener
         contentPanel.removeAll();
         if(reservationTab.getCustomerID()!=0)
         {
-            int ID = showsTab.getShowID();
-            theater = mySystem.createTheater(ID);
-            reservationTab.createTab();
+            reservationTab.createTab(mySystem.getTheater());
         }
         else
             reservationTab.createTab();
