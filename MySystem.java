@@ -41,8 +41,8 @@ public class MySystem
         catch(Exception e) 
         {
         }
-         Theater theater = new Theater(rows, cols);
-		return theater;
+        Theater theater = new Theater(rows, cols);
+        return theater;
     }
 
     /**
@@ -114,8 +114,25 @@ public class MySystem
         }
     }
 
-    public void removeOrder(String name, int phone)
+    /**
+     * Removes an entire order.
+     */  
+    public void removeOrder()
     {
+        String name = order.getName();
+        int phone = order.getPhone();
+        int CustomerID = mydb.getCustomer(name, phone);
+        for (int i = 0; i < order.getOrder().size(); i++) 
+        {
+            Reservation reservation = order.getOrder().get(i);
+            Seat seat = reservation.getSeat();
+            int ShowID = reservation.getShowID();
+            int SeatCol = seat.getSeatnumber();
+            int SeatRow = seat.getRownumber();
+            mydb.insertSeatReservation(ShowID, SeatRow, SeatCol);
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            mydb.insertReservation(CustomerID, SeatID);
+        }
 
     }
 
@@ -155,6 +172,15 @@ public class MySystem
         }
         return mydb.getCustomer(name, phone);
     }
+    
+    /**
+     * Calls a Theater's getTheater() method.
+     */
+    public void getTheater(Theater theater)
+    {
+        theater.getTheater();
+    }
+    
 
     /**
      * Needed?
