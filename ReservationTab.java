@@ -93,8 +93,8 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                 JButton seatButton = new JButton();
                 if(seat.isReserved())
                 {
-                    seatButton.setBackground(Color.RED);
-                    seatButton.setForeground(Color.RED);
+                    seatButton.setBackground(new Color(255, 0, 0));
+                    seatButton.setForeground(new Color(255, 0, 0));
                 }
                 seatButton.addActionListener(this);
                 theaterPanel.add(seatButton);
@@ -154,8 +154,8 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         else if(event.getSource() instanceof JButton)
         {
             this.seatButton = (JButton)event.getSource();
-            this.seatButton.setBackground(Color.MAGENTA);
-            this.seatButton.setForeground(Color.MAGENTA);
+            this.seatButton.setBackground(new Color(255, 0, 255));
+            this.seatButton.setForeground(new Color(255, 0, 255));
             contentPanel.validate();
         }
     }
