@@ -8,37 +8,37 @@ public class ShowsTab extends Tab implements ChangeListener
     private String[][] shows;
     private ShowBox clickedBox;
     private Panel showPanel;
-    
+
     public ShowsTab(Container panel)
     {
         super(panel);
     }
-    
+
     public void createTab(String[][] shows)
     {
         this.shows = shows;
-        
+
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        
+
         showPanel = new Panel();
         contentPanel.add(showPanel);
         showPanel.setLayout(new GridLayout(1, 5));
         createTopBox();
-        
+
         for(String[] show : shows)
         {
             makeShow(show);
         }
-        
+
         contentPanel.validate();
     }
-    
+
     private void makeShow(String[] show)
     {
         ShowBox box = new ShowBox(super.getContentPanel(), show);
         box.addChangeListener(this);
     }
-    
+
     private void createTopBox()
     {
         JLabel film = new JLabel("Movie");
@@ -52,12 +52,18 @@ public class ShowsTab extends Tab implements ChangeListener
         JLabel button = new JLabel("Reseve Button");
         showPanel.add(button);
     }
-    
-    public String getShowID()
+
+    public int getShowID()
     {
-        return clickedBox.getShowID();
+        try
+        {
+            return clickedBox.getShowID();
+        } catch(Exception e)
+        {
+            return 0;
+        }
     }
-    
+
     public void stateChanged(ChangeEvent event)
     {
         clickedBox = (ShowBox)event.getSource();

@@ -9,6 +9,7 @@ public class MySystem
 {
     private Order order;
     private MyDBSystem mydb;
+    private Theater theater;
 
     //Constructor
     MySystem()
@@ -21,23 +22,27 @@ public class MySystem
      * to create a fitting 2D array of Seats.
      */
     public void createTheater(int ShowID)
-    throws SQLException
     {
-        ResultSet rs = mydb.getShowfromID(ShowID);
-        String theaterID = null;
-        while(rs.next()){
-            theaterID = rs.getString("TheaterID");
-        }
-        ResultSet theater = mydb.getTheater(theaterID);
-
         int rows = 0;
         int cols = 0;
-        while(theater.next()){        
+        try 
+        {
+            ResultSet rs = mydb.getShowfromID(ShowID);
+            String theaterID = null;
+            while(rs.next()){
+                theaterID = rs.getString("TheaterID");
+            }
+            ResultSet theater = mydb.getTheater(theaterID);
+            while(theater.next()){        
 
-            rows = theater.getInt("R");
-            cols = theater.getInt("Col");
+                rows = theater.getInt("R");
+                cols = theater.getInt("Col");
+            }
         }
-        new Theater(rows, cols);
+        catch(Exception e) 
+        {
+        }
+        theater = new Theater(rows, cols);
     }
 
     /**
@@ -55,18 +60,25 @@ public class MySystem
      */
     public void createCustomer(String name, int phone)
     {
-        if (mydb.getCustomer(name, phone) == null)
+        if (mydb.getCustomer(name, phone) == 0)
         {
             mydb.insertCustomer(name, phone);
         }
     }
 
+    /**
+     * Gets ALL the shows!
+     */
     public String[][] getAllShows()
     {
         String[][] allShows = mydb.getAllShows();
         return allShows;
     }
 
+    /**
+     * Gets ALL the shows? 
+     * (No, only the relevant ones.)
+     */
     public String[][] getRelevantShows()
     {
         String[][] relevantShows = mydb.getRelevantShows();
@@ -83,10 +95,12 @@ public class MySystem
 
     /**
      * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
-     * Work in Progress
      */
     public void finishOrder()
     {
+        String name = order.getName();
+        int phone = order.getPhone();
+        int CustomerID = mydb.getCustomer(name, phone);
         for (int i = 0; i < order.getOrder().size(); i++) 
         {
             Reservation reservation = order.getOrder().get(i);
@@ -95,21 +109,47 @@ public class MySystem
             int SeatCol = seat.getSeatnumber();
             int SeatRow = seat.getRownumber();
             mydb.insertSeatReservation(ShowID, SeatRow, SeatCol);
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            mydb.insertReservation(CustomerID, SeatID);
         }
+    }
+
+    /**
+     * Removes an entire order.
+     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
+     */  
+    public void removeOrder()
+    {
         String name = order.getName();
         int phone = order.getPhone();
-        //         int CustomerID = mydb.getCustomer(name, phone);
-        //         mydb.insertReservation(CustomerID, SeatID);
+        int CustomerID = mydb.getCustomer(name, phone);
+        for (int i = 0; i < order.getOrder().size(); i++) 
+        {
+            Reservation reservation = order.getOrder().get(i);
+            Seat seat = reservation.getSeat();
+            int ShowID = reservation.getShowID();
+            int SeatCol = seat.getSeatnumber();
+            int SeatRow = seat.getRownumber();
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            mydb.deleteSeatReservation(SeatID);
+        }
+
     }
 
-    public void removeOrder(String name, int phone)
-    {
-
-    }
-
+    /**
+     * Removes a chosen reservation from the order and the database.    
+     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
+     */
     public void removeReservation(Reservation reservation)
-    {
-
+    {   
+        order.getOrder().remove(reservation);
+        int ShowID = reservation.getShowID();
+        Seat seat = reservation.getSeat();
+        int SeatCol = seat.getSeatnumber();
+        int SeatRow = seat.getRownumber();
+        int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+        mydb.deleteSeatReservation(SeatID);
+        seat.unreserveSeat();  
     } 
 
     /**
@@ -121,17 +161,26 @@ public class MySystem
     }   
 
     /**
-     * Returns the CustomerID that matches the given name and phone number. (WIP)
+     * Returns the CustomerID that matches the given name and phone number. 
      */
     public int getCustomerID(String name, int phone)
     {
-        if (mydb.getCustomer(name, phone) == null)
+        if (mydb.getCustomer(name, phone) == 0)
         {
-            return 0;
+            createCustomer(name, phone);
+            getCustomerID(name, phone);
         }
-        //         return mydb.getCustomer(name, phone);
-        return 1;
+        return mydb.getCustomer(name, phone);
     }
+    
+    /**
+     * Calls a Theater's getTheater() method.
+     */
+    public Seat[][] getTheater()
+    {
+        return theater.getTheater();
+    }
+    
 
     /**
      * Needed?

@@ -1,12 +1,20 @@
 #BlueJ class context
 comment0.params=seatnumber\ rownumber
 comment0.target=Seat(int,\ int)
-comment1.params=seatnumber\ row\ reserved
-comment1.target=Seat(int,\ int,\ boolean)
+comment0.text=\r\n\ Creates\ a\ Seat.\r\n
+comment1.params=
+comment1.target=int\ getSeatnumber()
+comment1.text=\r\n\ Gets\ the\ Seat's\ seatnumber.\r\n
 comment2.params=
-comment2.target=int\ getSeatnumber()
+comment2.target=int\ getRownumber()
+comment2.text=\r\n\ Gets\ the\ Seat's\ rownumber.\r\n
 comment3.params=
-comment3.target=int\ getRownumber()
+comment3.target=boolean\ isReseved()
+comment3.text=\r\n\ Tells\ if\ the\ seat\ is\ reseved\r\n
 comment4.params=
 comment4.target=void\ reserveSeat()
-numComments=5
+comment4.text=\r\n\ Makes\ the\ Seat\ indicate\ that\ it\ is\ reserved.\r\n
+comment5.params=
+comment5.target=void\ unreserveSeat()
+comment5.text=\r\n\ Makes\ the\ Seat\ indicate\ that\ it\ is\ no\ longer\ reserved.\r\n
+numComments=6

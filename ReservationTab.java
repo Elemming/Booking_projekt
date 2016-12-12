@@ -2,22 +2,33 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import java.text.*;
+import java.lang.Math.*;
 
-public class ReservationTab extends Tab implements ActionListener
+public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
-    private String customerName, customerPhone;
+    private String customerName;
+    private int customerPhone, customerID;
     private Panel logInPanel;
     private JTextField nameField, phoneField;
+    private JButton logInButton;
+    private NumberFormat nf;
 
     public ReservationTab(Container panel)
     {
         super(panel);
+        customerID = 0;
         createTab();
     }
 
-    public void createTab()
+    public void createTab(Seat[][] theater)
     {
-        createLogInTab();
+        if(customerID == 0)
+            createLogInTab();
+        else 
+        {
+            createTheater(theater);
+        }
 
         contentPanel.validate();
     }
@@ -43,20 +54,25 @@ public class ReservationTab extends Tab implements ActionListener
         nameLabel.setPreferredSize(new Dimension(100, 20));
         namePanel.add(nameLabel);
         nameField = new JFormattedTextField("Name");
-        nameField.addActionListener(this);
         namePanel.add(nameField);
+
+        //NumberFormat set up
+        nf = NumberFormat.getIntegerInstance();
+        nf.setMaximumIntegerDigits(8);
+        nf.setMinimumIntegerDigits(8);
+        //         nf.setDecimalSeparatorAlwaysShown(false);
 
         //creats phone Panel        
         JLabel phoneLabel = new JLabel("Phonenumber: ");
         phoneLabel.setMinimumSize(new Dimension(100, 20));
         phoneLabel.setPreferredSize(new Dimension(100, 20));
         phonePanel.add(phoneLabel);
-        phoneField = new JFormattedTextField("Phone");
-        phoneField.addActionListener(this);
+        phoneField = new JFormattedTextField(nf);
+        phoneField.setColumns(8);
         phonePanel.add(phoneField);
-        
+
         //create Log in Button
-        JButton logInButton = new JButton("Check Customer");
+        logInButton = new JButton("Check Customer");
         logInButton.addActionListener(this);
 
         //adds Panels
@@ -66,14 +82,96 @@ public class ReservationTab extends Tab implements ActionListener
         logInPanel.add(logInButton);
     }
 
-    public void actionPerformed(ActionEvent event)
+    public void createTheater(Seat[][] theater)
     {
-        
+        Panel theaterPanel = new Panel();
+        theaterPanel.setLayout(new GridLayout(theater.length, theater[0].length));
+        for( int i = 0; i < theater.length; i++)
+        {
+            for( Seat seat : theater[i])
+            {
+                JButton seatButton = new JButton();
+                theaterPanel.add(seatButton);
+            }
+        }
+        contentPanel.add(theaterPanel);
     }
 
-    public Dimension getMaximumSize()
+    public void setCustomerID(int ID)
     {
-        Dimension size = getPreferredSize();
-        return size;
+        customerID = ID;
+    }
+
+    public int getCustomerID()
+    {
+        return customerID;
+    }
+
+    public String getCustomerName()
+    {
+        return customerName;
+    }
+
+    public int getCustomerPhone()
+    {
+        return customerPhone;
+    }
+
+    public void actionPerformed(ActionEvent event)
+    {
+        if(event.getSource().equals(logInButton))
+        {
+            try{
+
+                if(nameField.getText() != "Name" || nameField.getText() != null)
+                    customerName = nameField.getText();
+                else
+                    throw new Exception("no name");
+                if(phoneField.getText() != null)
+                {
+                    int number = nf.parse(phoneField.getText()).intValue();
+                    customerPhone = number;
+                }
+                else
+                    throw new Exception("no phone");
+                buttonPressed();
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+                System.out.println("Mistake");
+
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void stateChanged(ChangeEvent event)
+    {
+
+    }
+
+    public void addChangeListener(ChangeListener changeListener) 
+    {
+        listenerList.add(ChangeListener.class, changeListener);
+    }
+
+    /**
+     * happens when the button is pressed
+     * 
+     * copied and altered from http://stackoverflow.com/questions/20153868/using-changelistener-to-fire-changes-in-java-swing
+     * 12/8/2016
+     */
+    private void buttonPressed() 
+    {
+        ChangeListener[] changeListeners = listenerList.getListeners(ChangeListener.class);
+        if (changeListeners != null && changeListeners.length > 0)
+        {
+            ChangeEvent evt = new ChangeEvent(this);
+            for (ChangeListener changeListener : changeListeners)
+            {
+                changeListener.stateChanged(evt);
+            }
+        }
     }
 }

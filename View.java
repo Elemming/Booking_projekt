@@ -16,6 +16,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     private ShowsTab showsTab; 
     private ReservationTab reservationTab;
     private MyReservationsTab myReservationsTab;
+    private int customerID;
 
     /**
      * A new View.
@@ -58,11 +59,11 @@ public class View extends Frame implements ActionListener, ChangeListener
         JMenuItem showsMenu = new JMenuItem("Showings");
         showsMenu.addActionListener(this);
         menubar.add(showsMenu); 
-        
+
         JMenuItem reservationMenu = new JMenuItem("Reservations");
         reservationMenu.addActionListener(this);
         menubar.add(reservationMenu); 
-        
+
         JMenuItem myReservationsMenu = new JMenuItem("Change Reservations");
         myReservationsMenu.addActionListener(this);
         menubar.add(myReservationsMenu); 
@@ -77,14 +78,26 @@ public class View extends Frame implements ActionListener, ChangeListener
         showsTab.createTab(mySystem.getRelevantShows());
         showsTab.addChangeListener(this);
     }
-    
+
     /**
      * makes the reservation menu tab.
      */
     private void makeReservationMenu()
     {
         contentPanel.removeAll();
-        reservationTab.createTab();
+        if(reservationTab.getCustomerID()!=0)
+        {
+            if(showsTab.getShowID() != 0)
+            {
+                mySystem.createTheater(showsTab.getShowID());
+                reservationTab.createTab(mySystem.getTheater());
+            }
+            else
+                makeShowsMenu();
+        }
+        else
+            reservationTab.createTab(new Seat[0][0]);
+        reservationTab.addChangeListener(this);
     }
 
     /**
@@ -119,9 +132,17 @@ public class View extends Frame implements ActionListener, ChangeListener
         if(event.getActionCommand().equals("Change Reservations"))
             makeMyReservationsMenu();
     }
-    
+
     public void stateChanged(ChangeEvent event)
     {
-        makeReservationMenu();
+        if(event.getSource() instanceof ShowsTab)
+            makeReservationMenu();
+        if(event.getSource() instanceof ReservationTab)
+        {
+            contentPanel.removeAll();
+            customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
+            reservationTab.setCustomerID(customerID);
+            reservationTab.createTab();
+        }
     }
 }
