@@ -87,10 +87,16 @@ public class View extends Frame implements ActionListener, ChangeListener
         contentPanel.removeAll();
         if(reservationTab.getCustomerID()!=0)
         {
-            reservationTab.createTab(mySystem.getTheater());
+            if(showsTab.getShowID() != 0)
+            {
+                mySystem.createTheater(showsTab.getShowID());
+                reservationTab.createTab(mySystem.getTheater());
+            }
+            else
+                makeShowsMenu();
         }
         else
-            reservationTab.createTab();
+            reservationTab.createTab(new Seat[0][0]);
         reservationTab.addChangeListener(this);
     }
 
@@ -133,8 +139,10 @@ public class View extends Frame implements ActionListener, ChangeListener
             makeReservationMenu();
         if(event.getSource() instanceof ReservationTab)
         {
+            contentPanel.removeAll();
             customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
             reservationTab.setCustomerID(customerID);
+            reservationTab.createTab();
         }
     }
 }

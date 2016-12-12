@@ -2,15 +2,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import java.text.*;
+import java.lang.Math.*;
 
 public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
     private String customerName;
-    private int customerPhone;
-    private int customerID;
+    private int customerPhone, customerID;
     private Panel logInPanel;
     private JTextField nameField, phoneField;
     private JButton logInButton;
+    private NumberFormat nf;
 
     public ReservationTab(Container panel)
     {
@@ -54,12 +56,18 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         nameField = new JFormattedTextField("Name");
         namePanel.add(nameField);
 
+        //NumberFormat set up
+        nf = NumberFormat.getIntegerInstance();
+        nf.setMaximumIntegerDigits(8);
+        nf.setMinimumIntegerDigits(8);
+        //         nf.setDecimalSeparatorAlwaysShown(false);
+
         //creats phone Panel        
         JLabel phoneLabel = new JLabel("Phonenumber: ");
         phoneLabel.setMinimumSize(new Dimension(100, 20));
         phoneLabel.setPreferredSize(new Dimension(100, 20));
         phonePanel.add(phoneLabel);
-        phoneField = new JFormattedTextField(new Integer("88888888"));
+        phoneField = new JFormattedTextField(nf);
         phoneField.setColumns(8);
         phonePanel.add(phoneField);
 
@@ -73,17 +81,27 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         logInPanel.add(phonePanel);
         logInPanel.add(logInButton);
     }
-    
+
     public void createTheater(Seat[][] theater)
     {
-        
+        Panel theaterPanel = new Panel();
+        theaterPanel.setLayout(new GridLayout(theater.length, theater[0].length));
+        for( int i = 0; i < theater.length; i++)
+        {
+            for( Seat seat : theater[i])
+            {
+                JButton seatButton = new JButton();
+                theaterPanel.add(seatButton);
+            }
+        }
+        contentPanel.add(theaterPanel);
     }
 
     public void setCustomerID(int ID)
     {
         customerID = ID;
     }
-    
+
     public int getCustomerID()
     {
         return customerID;
@@ -109,15 +127,21 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                     customerName = nameField.getText();
                 else
                     throw new Exception("no name");
-                if(phoneField.getText() != "Name" || phoneField.getText() != null)
-                    customerPhone = Integer.parseInt(phoneField.getText());
+                if(phoneField.getText() != null)
+                {
+                    int number = nf.parse(phoneField.getText()).intValue();
+                    customerPhone = number;
+                }
                 else
-                    throw new Exception("no name");
+                    throw new Exception("no phone");
                 buttonPressed();
             }
             catch(Exception e)
             {
                 System.out.println(e.getMessage());
+                System.out.println("Mistake");
+
+                e.printStackTrace();
             }
         }
     }
