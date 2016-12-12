@@ -2,7 +2,7 @@
 comment0.params=panel\ show
 comment0.target=ShowBox(java.awt.Container,\ java.lang.String[])
 comment1.params=
-comment1.target=java.lang.String\ getShowID()
+comment1.target=int\ getShowID()
 comment2.params=
 comment2.target=void\ addShowBox()
 comment3.params=event

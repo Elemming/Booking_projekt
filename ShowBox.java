@@ -20,9 +20,9 @@ public class ShowBox extends JComponent implements ActionListener
         addShowBox();
     }
 
-    public String getShowID()
+    public int getShowID()
     {
-        return show[0];
+        return Integer.parseInt(show[0]);
     }
 
     private void addShowBox()

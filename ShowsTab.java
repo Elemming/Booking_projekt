@@ -53,7 +53,7 @@ public class ShowsTab extends Tab implements ChangeListener
         showPanel.add(button);
     }
     
-    public String getShowID()
+    public int getShowID()
     {
         return clickedBox.getShowID();
     }
