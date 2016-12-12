@@ -116,6 +116,7 @@ public class MySystem
 
     /**
      * Removes an entire order.
+     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
      */  
     public void removeOrder()
     {
@@ -129,9 +130,8 @@ public class MySystem
             int ShowID = reservation.getShowID();
             int SeatCol = seat.getSeatnumber();
             int SeatRow = seat.getRownumber();
-            mydb.insertSeatReservation(ShowID, SeatRow, SeatCol);
             int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
-            mydb.insertReservation(CustomerID, SeatID);
+            mydb.deleteSeatReservation(SeatID);
         }
 
     }
