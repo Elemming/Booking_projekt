@@ -165,10 +165,10 @@ public class MySystem
      */
     public int getCustomerID(String name, int phone)
     {
-        createCustomer(name, phone);
         if (mydb.getCustomer(name, phone) == 0)
         {
-            return 0;
+            createCustomer(name, phone);
+            getCustomerID(name, phone);
         }
         return mydb.getCustomer(name, phone);
     }
