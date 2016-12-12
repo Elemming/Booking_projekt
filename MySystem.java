@@ -10,7 +10,6 @@ public class MySystem
     private Order order;
     private MyDBSystem mydb;
     private Theater theater;
-    private Seat seat;
 
     //Constructor
     MySystem()
@@ -41,16 +40,11 @@ public class MySystem
         {
         }
         theater = new Theater(rows, cols);
-//        for (rows = 0; rows < theater.length; rows++) 
-//          {
-//             for (cols = 0; cols < theater[rows].length; cols++) 
-//             {   
-//                 if (theater[rows][cols].getSeat().getSeatrow()= null) 
-//                 {
-//                     theater[rows][cols].reserveSeat();
-//                 }
-//             }
-//     }
+        int[][] reservations = mydb.getReservationsfromShow(ShowID);
+        for(int i=0; i<reservations.length; i++)
+        {
+            theater.getTheater()[reservations[i][0]][reservations[i][1]].reserveSeat();
+        }
     }
 
     /**
@@ -188,11 +182,12 @@ public class MySystem
     {
         return theater.getTheater();
     }
-    
+
     /**
      * Calls a Seat's isReserved() method.
+     * Needed?
      */
-    public boolean isReserved()
+    public boolean isReserved(Seat seat)
     {
         return seat.isReserved();
     }
