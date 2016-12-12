@@ -118,7 +118,6 @@ public class MySystem
 
     /**
      * Removes an entire order.
-     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
      */  
     public void removeOrder()
     {
@@ -133,24 +132,30 @@ public class MySystem
             int SeatCol = seat.getSeatnumber();
             int SeatRow = seat.getRownumber();
             int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            int ResID = mydb.getResID(CustomerID, SeatID);
             mydb.deleteSeatReservation(SeatID);
+            mydb.deleteReservation(ResID);
         }
 
     }
 
     /**
-     * Removes a chosen reservation from the order and the database.    
-     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
+     * Removes a chosen reservation from the order and the database (both Reservation and SeatReservation).    
      */
     public void removeReservation(Reservation reservation)
     {   
+        String name = order.getName();
+        int phone = order.getPhone();
+        int CustomerID = mydb.getCustomer(name, phone);
         order.getOrder().remove(reservation);
         int ShowID = reservation.getShowID();
         Seat seat = reservation.getSeat();
         int SeatCol = seat.getSeatnumber();
         int SeatRow = seat.getRownumber();
         int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+        int ResID = mydb.getResID(CustomerID, SeatID);
         mydb.deleteSeatReservation(SeatID);
+        mydb.deleteReservation(ResID);
         seat.unreserveSeat();  
     } 
 
