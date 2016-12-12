@@ -7,6 +7,7 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
 {
     private String customerName;
     private int customerPhone;
+    private int customerID;
     private Panel logInPanel;
     private JTextField nameField, phoneField;
     private JButton logInButton;
@@ -14,12 +15,18 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     public ReservationTab(Container panel)
     {
         super(panel);
+        customerID = 0;
         createTab();
     }
 
-    public void createTab()
+    public void createTab(Seat[][] theater)
     {
-        createLogInTab();
+        if(customerID == 0)
+            createLogInTab();
+        else 
+        {
+            createTheater(theater);
+        }
 
         contentPanel.validate();
     }
@@ -65,6 +72,21 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         logInPanel.add(namePanel);
         logInPanel.add(phonePanel);
         logInPanel.add(logInButton);
+    }
+    
+    public void createTheater(Seat[][] theater)
+    {
+        
+    }
+
+    public void setCustomerID(int ID)
+    {
+        customerID = ID;
+    }
+    
+    public int getCustomerID()
+    {
+        return customerID;
     }
 
     public String getCustomerName()
