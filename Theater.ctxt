@@ -2,6 +2,8 @@
 comment0.params=row\ col
 comment0.target=Theater(int,\ int)
 comment1.params=
-comment1.target=void\ showTheater()
-comment1.text=\r\n\ Shows\ the\ rows\ and\ columns\ in\ the\ theater,\ representing\ seats\ as\ "[Seat]".\ \r\n
-numComments=2
+comment1.target=Seat[][]\ getTheater()
+comment2.params=
+comment2.target=void\ showTheater()
+comment2.text=\r\n\ Shows\ the\ rows\ and\ columns\ in\ the\ theater,\ representing\ seats\ as\ "[Seat]".\ \r\n
+numComments=3

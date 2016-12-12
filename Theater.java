@@ -19,18 +19,23 @@ public class Theater
             y++;
             x = 1;
         }
-    }    
+    }
+    
+    public Seat[][] getTheater()
+    {
+        return theater;
+    }
 
     /**
      * Shows the rows and columns in the theater, representing seats as "[Seat]". 
      */
     public void showTheater()
     {
-       for (int rows = 0; rows < theater.length; rows++) {
+        for (int rows = 0; rows < theater.length; rows++) {
             for (int cols = 0; cols < theater[rows].length; cols++) {   
                 System.out.print("[Seat]");
             } 
             System.out.println();
-    }     
-}
+        }     
+    }
 }
