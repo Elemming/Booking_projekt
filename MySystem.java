@@ -20,7 +20,7 @@ public class MySystem
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
      * to create a fitting 2D array of Seats.
      */
-    public void createTheater(int ShowID)
+    public Theater createTheater(int ShowID)
     throws SQLException
     {
         int rows = 0;
@@ -42,7 +42,8 @@ public class MySystem
         catch(Exception e) 
         {
         }
-        new Theater(rows, cols);
+         Theater theater = new Theater(rows, cols);
+		return theater;
     }
 
     /**
@@ -119,9 +120,20 @@ public class MySystem
 
     }
 
+    /**
+     * Removes a chosen reservation from the order and the database.    
+     * Check to see if deleting Seat Reservation also deletes Reservation.
+     */
     public void removeReservation(Reservation reservation)
-    {
-
+    {   
+        order.getOrder().remove(reservation);
+        int ShowID = reservation.getShowID();
+        Seat seat = reservation.getSeat();
+        int SeatCol = seat.getSeatnumber();
+        int SeatRow = seat.getRownumber();
+        int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+        mydb.deleteSeatReservation(SeatID);
+        seat.unreserveSeat();  
     } 
 
     /**

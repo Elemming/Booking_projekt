@@ -2,7 +2,7 @@
 comment0.params=
 comment0.target=MySystem()
 comment1.params=ShowID
-comment1.target=void\ createTheater(int)
+comment1.target=Theater\ createTheater(int)
 comment1.text=\r\n\ Creates\ a\ theater\ by\ taking\ a\ TheaterID\ from\ the\ database\ and\ uses\ the\ matching\ rows\ and\ cols\r\n\ to\ create\ a\ fitting\ 2D\ array\ of\ Seats.\r\n
 comment10.params=reservation
 comment10.target=void\ unaddReservation(Reservation)
@@ -35,4 +35,5 @@ comment8.params=name\ phone
 comment8.target=void\ removeOrder(java.lang.String,\ int)
 comment9.params=reservation
 comment9.target=void\ removeReservation(Reservation)
+comment9.text=\r\n\ Removes\ a\ chosen\ reservation\ from\ the\ order\ and\ the\ database.\ \ \ \ \r\n\ Check\ to\ see\ if\ deleting\ Seat\ Reservation\ also\ deletes\ Reservation.\r\n
 numComments=13

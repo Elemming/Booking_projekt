@@ -37,5 +37,13 @@ public class Seat
     {
         reserved = true;
     }
+    
+    public void unreserveSeat()
+    {
+        if (reserved = true)
+        {
+            reserved = false;
+        }
+    }
        
 }
