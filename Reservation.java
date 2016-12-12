@@ -18,11 +18,17 @@ public class Reservation
         seat.reserveSeat();
     }
     
+    /**
+     * Gets the Reservation's Seat.
+     */
     public Seat getSeat()
     {
         return seat;
     }
     
+    /**
+     * Gets the Reservation's ShowID.
+     */
     public int getShowID()
     {
         return ShowID;

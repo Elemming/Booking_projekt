@@ -8,6 +8,9 @@ public class Seat
     private int rownumber;
     private boolean reserved;
     
+    /**
+     * Creates a Seat.
+     */
     public Seat(int seatnumber, int rownumber)
     {
         this.seatnumber = seatnumber;
@@ -15,29 +18,33 @@ public class Seat
         reserved = false;
     }
     
-    public Seat(int seatnumber, int row, boolean reserved)
-    {
-        this.seatnumber = seatnumber;
-        this.rownumber = rownumber;
-        this.reserved = reserved;
-        reserved = false;
-    }
-    
+    /**
+     * Gets the Seat's seatnumber.
+     */
     public int getSeatnumber()
     {
         return seatnumber;
     }
     
+    /**
+     * Gets the Seat's rownumber.
+     */
     public int getRownumber()
     {
         return rownumber;
     }
     
+    /**
+     * Makes the Seat indicate that it is reserved.
+     */
     public void reserveSeat()
     {
         reserved = true;
     }
     
+    /**
+     * Makes the Seat indicate that it is no longer reserved.
+     */
     public void unreserveSeat()
     {
         if (reserved = true)
