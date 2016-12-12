@@ -35,9 +35,9 @@ public class Seat
     }
     
     /**
-     * Tells if the seat is reseved
+     * Tells if the seat is reserved.
      */
-    public boolean isReseved()
+    public boolean isReserved()
     {
         return reserved;
     }

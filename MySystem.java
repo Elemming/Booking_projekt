@@ -10,6 +10,7 @@ public class MySystem
     private Order order;
     private MyDBSystem mydb;
     private Theater theater;
+    private Seat seat;
 
     //Constructor
     MySystem()
@@ -32,17 +33,24 @@ public class MySystem
             while(rs.next()){
                 theaterID = rs.getString("TheaterID");
             }
-            ResultSet theater = mydb.getTheater(theaterID);
-            while(theater.next()){        
-
-                rows = theater.getInt("R");
-                cols = theater.getInt("Col");
-            }
+            int[] theater = mydb.getTheater(theaterID);
+            rows = theater[0];
+            cols = theater[1];
         }
         catch(Exception e) 
         {
         }
         theater = new Theater(rows, cols);
+//        for (rows = 0; rows < theater.length; rows++) 
+//          {
+//             for (cols = 0; cols < theater[rows].length; cols++) 
+//             {   
+//                 if (theater[rows][cols].getSeat().getSeatrow()= null) 
+//                 {
+//                     theater[rows][cols].reserveSeat();
+//                 }
+//             }
+//     }
     }
 
     /**
@@ -172,7 +180,7 @@ public class MySystem
         }
         return mydb.getCustomer(name, phone);
     }
-    
+
     /**
      * Calls a Theater's getTheater() method.
      */
@@ -181,6 +189,13 @@ public class MySystem
         return theater.getTheater();
     }
     
+    /**
+     * Calls a Seat's isReserved() method.
+     */
+    public boolean isReserved()
+    {
+        return seat.isReserved();
+    }
 
     /**
      * Needed?
