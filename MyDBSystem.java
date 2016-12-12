@@ -60,7 +60,6 @@ public final class MyDBSystem{
     private ResultSet selectQuery(String selectQuery, HashMap<Integer, String> map){
         try{            
             String updateString = ("SELECT " + selectQuery);
-            System.out.println(updateString);
             PreparedStatement statement = connection.prepareStatement(updateString);
             for(int i = 1; i <= map.size(); i++){
                 statement.setString(i, map.get(i));
@@ -157,7 +156,7 @@ public final class MyDBSystem{
         LocalDate date = LocalDate.now();
         date.toString();
         LocalTime time = LocalTime.now();
-        ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()", null);
+        ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()");
         RelevantShows = createArrayofShows(rs);
         return RelevantShows;
     }
@@ -168,7 +167,6 @@ public final class MyDBSystem{
             //int numofcolumns = rsmetadata.getColumnCount();
             rs.last();
             int[][] array2D = new int[2][rs.getRow()];
-            System.out.println(rs.getRow());
             rs.beforeFirst();
             for(int i = 0; rs.next(); i++)
             {
