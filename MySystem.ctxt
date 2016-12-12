@@ -35,5 +35,5 @@ comment8.params=name\ phone
 comment8.target=void\ removeOrder(java.lang.String,\ int)
 comment9.params=reservation
 comment9.target=void\ removeReservation(Reservation)
-comment9.text=\r\n\ Removes\ a\ chosen\ reservation\ from\ the\ order\ and\ the\ database.\ \ \ \ \r\n\ Check\ to\ see\ if\ deleting\ Seat\ Reservation\ also\ deletes\ Reservation.\r\n
+comment9.text=\r\n\ Removes\ a\ chosen\ reservation\ from\ the\ order\ and\ the\ database.\ \ \ \ \r\n\ IMPORANT\:\ Check\ to\ see\ if\ deleting\ Seat\ Reservation\ also\ deletes\ Reservation.\ (REMOVE\ THIS\ ONCE\ CHECKED)\r\n
 numComments=13

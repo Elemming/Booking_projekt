@@ -21,7 +21,6 @@ public class MySystem
      * to create a fitting 2D array of Seats.
      */
     public Theater createTheater(int ShowID)
-    throws SQLException
     {
         int rows = 0;
         int cols = 0;
@@ -122,7 +121,7 @@ public class MySystem
 
     /**
      * Removes a chosen reservation from the order and the database.    
-     * Check to see if deleting Seat Reservation also deletes Reservation.
+     * IMPORANT: Check to see if deleting Seat Reservation also deletes Reservation. (REMOVE THIS ONCE CHECKED)
      */
     public void removeReservation(Reservation reservation)
     {   
