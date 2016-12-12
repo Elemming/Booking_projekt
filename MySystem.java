@@ -176,9 +176,9 @@ public class MySystem
     /**
      * Calls a Theater's getTheater() method.
      */
-    public void getTheater()
+    public Seat[][] getTheater()
     {
-        theater.getTheater();
+        return theater.getTheater();
     }
     
 
