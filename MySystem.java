@@ -42,9 +42,9 @@ public class MySystem
         theater = new Theater(rows, cols);
         int[][] reservations = mydb.getReservationsfromShow(ShowID);
         try {
-        for(int i=0; i<reservations.length; i++)
+        for (int i = 0; i < reservations.length; i++)
         {
-            theater.getTheater()[reservations[i][0]+1][reservations[i][1]].reserveSeat();
+            theater.getTheater()[reservations[i][0]+1][reservations[i][1]+1].reserveSeat();
         }
     }
     
