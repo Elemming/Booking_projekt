@@ -199,15 +199,6 @@ public class MySystem
     }
 
     /**
-     * Returns the database.
-     * Needed?
-     */
-    public MyDBSystem getDB()
-    {
-        return mydb;
-    }
-
-    /**
      * Calls the database's closeConnection method.
      */
     public void closeConnection()
@@ -229,23 +220,6 @@ public class MySystem
     public ArrayList<Reservation> getOrderlist()
     {
        return order.getOrder();
-    }
-
-    /**
-     * Calls a Seat's isReserved() method.
-     * Needed?
-     */
-    public boolean isReserved(Seat seat)
-    {
-        return seat.isReserved();
-    }
-
-    /**
-     * Needed?
-     */
-    public int getShowID()
-    {
-        return 300;
-    }
+    }	
 }
 
