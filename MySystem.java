@@ -188,9 +188,20 @@ public class MySystem
         return theater.getTheater();
     }
     
-    public MyDBSystem GetDB()
+    /**
+     * Returns the database.
+     */
+    public MyDBSystem getDB()
     {
         return mydb;
+    }
+    
+    /**
+     * Calls the database's closeConnection method.
+     */
+    public void closeConnection()
+    {
+        mydb.closeConnection();
     }
 
     /**
