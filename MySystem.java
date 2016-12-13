@@ -45,7 +45,7 @@ public class MySystem
         try {
             for (int i = 0; i < reservations.length; i++)
             {
-                theater.getTheater()[reservations[i][0]+1][reservations[i][1]+1].reserveSeat();
+                theater.getTheater()[reservations[i][0]-1][reservations[i][1]-1].reserveSeat();
             }
         }
 
