@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=panel
-comment0.target=ShowsTab(java.awt.Container)
+comment0.params=frame
+comment0.target=ShowsTab(javax.swing.JFrame)
 comment1.params=shows
 comment1.target=void\ createTab(java.lang.String[][])
 comment2.params=show

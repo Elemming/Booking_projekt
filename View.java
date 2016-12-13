@@ -40,9 +40,9 @@ public class View extends Frame implements ActionListener, ChangeListener
 
         makeMenu();
 
-        showsTab = new ShowsTab(contentPanel);
-        reservationTab = new ReservationTab(contentPanel);
-        myReservationsTab = new MyReservationsTab(contentPanel);
+        showsTab = new ShowsTab(frame);
+        reservationTab = new ReservationTab(frame);
+        myReservationsTab = new MyReservationsTab(frame);
         makeShowsMenu();
 
         frame.setVisible(true);
