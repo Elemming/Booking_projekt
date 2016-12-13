@@ -6,6 +6,7 @@ import java.util.*;
  *Creates a connection for a set amount of time before closing the connection to the database.
  *MySystem pulls information from the database through this class and redistributes accordingly.
  *Singleton design was implemented as we only wish a single connection at any time.
+ *Prepared statements are used for the security it provides.
  **/
 
 public final class MyDBSystem{
@@ -18,7 +19,7 @@ public final class MyDBSystem{
     private static MyDBSystem SingleDB = null;
 
     /**
-     * Connection to database is made here
+     * Connection to database is made here.
      */
     private MyDBSystem(){
         try{
@@ -30,7 +31,7 @@ public final class MyDBSystem{
     }
 
     /**
-     * Checks if connection is closed, if not, closes connection.
+     * Checks if connection is closed, if not, closes connection. 
      */
     public static void closeConnection(){
         try{
@@ -46,10 +47,11 @@ public final class MyDBSystem{
 
     /**
      * Singleton design where the single instance is stored and can be retrieved by this method.
+     * Reconnects if last connection timed out.
      */
     public static MyDBSystem getInstance(){
         try{
-            if (SingleDB == null || connection.isClosed()) {
+            if (SingleDB == null || !connection.isValid(0)) {
                 SingleDB = new MyDBSystem();
             }
             return SingleDB;
@@ -60,13 +62,19 @@ public final class MyDBSystem{
 
     /**
      * A method only acccesible by this class that is designated to be the main SELECT query.
+     * Takes a specified query string and a HashMap that maps values as paramaters to the prepared statement.
+     * 
+     * @return A ResultSet with the desired data from the database.
      */
-    private ResultSet selectQuery(String selectQuery, HashMap<Integer, String> map){
+    private ResultSet selectQuery(String selectQuery, HashMap<Integer, String> mapper){
         try{            
+            if(!connection.isValid(0)){
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            }
             String updateString = ("SELECT " + selectQuery);
             PreparedStatement statement = connection.prepareStatement(updateString);
-            for(int i = 1; i <= map.size(); i++){
-                statement.setString(i, map.get(i));
+            for(int i = 1; i <= mapper.size(); i++){
+                statement.setString(i, mapper.get(i));
             }
             ResultSet rs = statement.executeQuery();
             return rs;
@@ -78,31 +86,73 @@ public final class MyDBSystem{
     }
 
     /**
-     *  
+     * Main INSERT query method. All specific INSERT methods runs through this method.    
      */
-    private void insertQuery(String insertQuery){
+    private void insertQuery(String insertQuery, HashMap<Integer, String> mapper){
         try{
-            statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO " + insertQuery);
-        }catch(SQLException e){
+            if(!connection.isValid(0)){
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            }
+            String updateString = ("INSERT INTO " + insertQuery);
+            PreparedStatement statement = connection.prepareStatement(updateString);
+            for(int i = 1; i <= mapper.size(); i++){
+                statement.setString(i, mapper.get(i));
+            }
+            statement.executeUpdate();
+        }catch(Exception e){
             e.printStackTrace();
             System.out.println("owned");
         }      
     }
 
-    public void insertReservation(int CustomerID, int SeatID){
-        String Mapname = "Reservations";
-        insertQuery("Reservations (CustomerID, SeatID) VALUES (" + CustomerID + ", " + SeatID + " )");
+    /**
+     * Creates a new reservation record in the database with the given parameters.
+     */
+    public void insertReservation(int customerID, int seatID){
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(customerID));
+            inputMap.put(2, String.valueOf(seatID));
+            insertQuery("Reservations (CustomerID, SeatID) VALUES (?, ?)", inputMap);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Creates a new customer record in the database with the given parameters.
+     */
     public void insertCustomer(String name, int phone){
-        insertQuery("Customers (Name, Phone) VALUES ('" + name + "', " + phone + " )");
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, name);
+            inputMap.put(2, String.valueOf(phone));
+            insertQuery("Customers (Name, Phone) VALUES (?,?)", inputMap);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Creates a new seat reservation record in the database with the given paramaters.
+     */
     public void insertSeatReservation(int showID, int seatRow, int seatCol){
-        insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (" + showID + ", " + seatRow + ", " + seatCol + ")");
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(showID));
+            inputMap.put(2, String.valueOf(seatRow));
+            inputMap.put(3, String.valueOf(seatCol));
+            insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (?, ?, ?)", inputMap);
+        }catch(Exception e){
+            e.printStackTrace();      
+        }
     }
 
+    /**
+     * Retrieves the number of rows and columns of a given theater
+     * 
+     * @return An array of size 2 with number of rows and columns
+     */
     public int[] getTheater(String theaterID){
         try{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>(); 
@@ -120,7 +170,10 @@ public final class MyDBSystem{
             return null;
         }
     }    
-
+    
+    /**
+     * Retrieves the seatID of a 
+     */
     public int getSeatID(int showID, int seatRow, int seatCol){
         try{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
@@ -138,31 +191,46 @@ public final class MyDBSystem{
     }
 
     public int[][] getShowing(String theater, String film, String date, String time){
-        HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
-        inputMap.put(1, theater);
-        inputMap.put(2, film);
-        inputMap.put(3, date);
-        inputMap.put(4, time);
-        ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = ? AND Film = ? AND Dato = ? AND Tid = ?", inputMap);
-        int[][] array2D = create2DArrayofInt(rs, "Seatrow", "Seatcol");
-        return array2D;
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, theater);
+            inputMap.put(2, film);
+            inputMap.put(3, date);
+            inputMap.put(4, time);
+            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = ? AND Film = ? AND Dato = ? AND Tid = ?", inputMap);
+            int[][] array2D = create2DArrayofInt(rs, "Seatrow", "Seatcol");
+            return array2D;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String[][] getAllShows(){
-        String[][] allShows = null;
-        ResultSet rs = selectQuery("* FROM Showings", null);
-        allShows = createArrayofShows(rs);
-        return allShows;
+        try{
+            String[][] allShows = null;
+            ResultSet rs = selectQuery("* FROM Showings", null);
+            allShows = createArrayofShows(rs);
+            return allShows;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String[][] getRelevantShows(){
-        String[][] RelevantShows = null;
-        LocalDate date = LocalDate.now();
-        date.toString();
-        LocalTime time = LocalTime.now();
-        ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()");
-        RelevantShows = createArrayofShows(rs);
-        return RelevantShows;
+        try{
+            String[][] RelevantShows = null;
+            LocalDate date = LocalDate.now();
+            date.toString();
+            LocalTime time = LocalTime.now();
+            ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()");
+            RelevantShows = createArrayofShows(rs);
+            return RelevantShows;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private int[][] create2DArrayofInt(ResultSet rs, String firstcol, String secondcol){
@@ -234,14 +302,26 @@ public final class MyDBSystem{
     }
 
     public ResultSet getShowfromID(int showID){
-        return selectQuery("* FROM Showings WHERE ShowID = '" + showID + "'");
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(showID));
+            return selectQuery("* FROM Showings WHERE ShowID = ?", inputMap);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public int[][] getReservationsfromShow(int showID){         
-        HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
-        inputMap.put(1, String.valueOf(showID));
-        ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation WHERE ShowID = ? ", inputMap);
-        return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
+    public int[][] getReservationsfromShow(int showID){   
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(showID));
+            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation WHERE ShowID = ? ", inputMap);
+            return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public int getResID(int customerID, int seatID){
@@ -261,6 +341,9 @@ public final class MyDBSystem{
 
     public void deleteCustomer(String name, int phone){
         try{
+            if(!connection.isValid(0)){
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM Customers WHERE Name = ? AND Phone = ?");
             statement.setString(1, name);
             statement.setInt(2, phone);
@@ -273,6 +356,9 @@ public final class MyDBSystem{
 
     public void deleteReservation(int resID){
         try{
+            if(!connection.isValid(0)){
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM Reservations WHERE ResID = ?");
             statement.setInt(1, resID);
             statement.executeUpdate();
@@ -284,6 +370,9 @@ public final class MyDBSystem{
 
     public void deleteSeatReservation(int seatResID){
         try{
+            if(!connection.isValid(0)){
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM SeatReservation WHERE SeatID = ?");
             statement.setInt(1, seatResID);
             statement.executeUpdate();
