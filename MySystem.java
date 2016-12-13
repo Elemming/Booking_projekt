@@ -222,6 +222,14 @@ public class MySystem
     {
         return order;
     }
+    
+    /**
+     * Returns an Order's getOrder() method.
+     */
+    public ArrayList<Reservation> getOrderlist()
+    {
+       return order.getOrder();
+    }
 
     /**
      * Calls a Seat's isReserved() method.
