@@ -3,7 +3,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.text.*;
-import java.lang.Math.*;
 
 public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
@@ -85,12 +84,13 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     public void createTheater(Seat[][] theater)
     {
         Panel theaterPanel = new Panel();
-        theaterPanel.setLayout(new GridLayout(theater.length, theater[0].length));
+        theaterPanel.setLayout(new GridLayout(theater.length, getMaxLength(theater)));
         for( int i = 0; i < theater.length; i++)
         {
+            int n = 0;
             for( Seat seat : theater[i])
             {
-                JButton seatButton = new JButton();
+                JButton seatButton = new JButton(i + ", " + n);
                 if(seat.isReserved())
                 {
                     seatButton.setBackground(new Color(255, 0, 0));
@@ -98,11 +98,14 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                 }
                 seatButton.addActionListener(this);
                 theaterPanel.add(seatButton);
+                n++;
             }
         }
         contentPanel.add(theaterPanel);
     }
 
+    //small methods
+    
     public void setCustomerID(int ID)
     {
         customerID = ID;
@@ -122,6 +125,22 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     {
         return customerPhone;
     }
+
+    private int getMaxLength(Seat[][] theater)
+    {
+        int max = 0;
+        if(theater == null)
+            return 0;
+            
+        for(int i = 0; i < theater.length; i++)
+        {
+            if (theater[i].length > max)
+                max = theater[i].length;
+        }
+        return max;
+    }
+
+    //Event stuff
 
     public void actionPerformed(ActionEvent event)
     {
@@ -157,6 +176,7 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             this.seatButton.setBackground(new Color(255, 0, 255));
             this.seatButton.setForeground(new Color(255, 0, 255));
             contentPanel.validate();
+
         }
     }
 

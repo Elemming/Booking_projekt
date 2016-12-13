@@ -49,7 +49,7 @@ public class ShowsTab extends Tab implements ChangeListener
         showPanel.add(date);
         JLabel time = new JLabel("Time");
         showPanel.add(time);
-        JLabel button = new JLabel("Reseve Button");
+        JLabel button = new JLabel("Reserve Button");
         showPanel.add(button);
     }
 
