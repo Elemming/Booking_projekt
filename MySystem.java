@@ -19,7 +19,7 @@ public class MySystem
 
     /**
      * Creates a theater by taking a TheaterID from the database and uses the matching rows and cols
-     * to create a fitting 2D array of Seats.
+     * to create a fitting 2D array of Seats. Then it fills in the reservations.
      */
     public void createTheater(int ShowID)
     {
@@ -41,11 +41,17 @@ public class MySystem
         }
         theater = new Theater(rows, cols);
         int[][] reservations = mydb.getReservationsfromShow(ShowID);
+        try {
         for(int i=0; i<reservations.length; i++)
         {
             theater.getTheater()[reservations[i][0]+1][reservations[i][1]].reserveSeat();
         }
     }
+    
+    catch (Exception e) {
+    }
+    }
+    
 
     /**
      * Takes a name and phone number, calls the createCustomer method, and then creates a new order with
@@ -96,7 +102,7 @@ public class MySystem
     }
 
     /**
-     * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
+     * Adds the reservations in an order to the SeatReservation table and Reservation table.
      */
     public void finishOrder()
     {
@@ -190,6 +196,7 @@ public class MySystem
     
     /**
      * Returns the database.
+     * Needed?
      */
     public MyDBSystem getDB()
     {

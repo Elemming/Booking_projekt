@@ -36,13 +36,16 @@ public class Reservation
 
     /** 
      * Gets information about the showing the reservation is for through the database.
-     * (Should be the info the fits with the particular SHOWID used in the constructor somehow.)
+     * ´Needed?
      */
     public String getShowingInfo()
     {
         return "MOVIE TITLE" + ": " + "DATE" + " at " + "TIME" + " in " + "THEATER X";
     }
 
+    /**
+     * Needed?
+     */
     public void show()
     {
 
