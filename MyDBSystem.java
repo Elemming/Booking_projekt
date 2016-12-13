@@ -82,7 +82,14 @@ public final class MyDBSystem{
             e.printStackTrace();
             System.out.println("owned");     
             return null;
+        }finally{
+            try{
+                statement.close();
+            }catch(Exception e){
+
+            }
         }
+
     }
 
     /**
@@ -102,7 +109,13 @@ public final class MyDBSystem{
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("owned");
-        }      
+        }finally{
+            try{
+                statement.close();
+            }catch(Exception e){
+
+            }
+        }
     }
 
     /**
@@ -170,7 +183,7 @@ public final class MyDBSystem{
             return null;
         }
     }    
-    
+
     /**
      * Retrieves the seatID of a 
      */
@@ -351,6 +364,12 @@ public final class MyDBSystem{
         }catch(SQLException e){
             e.printStackTrace();        
             System.out.println("Customer was not removed from the database");            
+        }finally{
+            try{
+                statement.close();
+            }catch(Exception e){
+
+            }
         }
     }
 
@@ -365,6 +384,12 @@ public final class MyDBSystem{
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("Reservation was not deleted");
+        }finally{
+            try{
+                statement.close();
+            }catch(Exception e){
+
+            }
         }
     }
 
@@ -379,6 +404,12 @@ public final class MyDBSystem{
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("Seat was not deleted");
+        }finally{
+            try{
+                statement.close();
+            }catch(Exception e){
+
+            }
         }
     }
 }    
