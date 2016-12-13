@@ -187,6 +187,11 @@ public class MySystem
     {
         return theater.getTheater();
     }
+    
+    public MyDBSystem GetDB()
+    {
+        return mydb;
+    }
 
     /**
      * Calls a Seat's isReserved() method.
