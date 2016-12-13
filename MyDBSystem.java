@@ -48,10 +48,14 @@ public final class MyDBSystem{
      * Singleton design where the single instance is stored and can be retrieved by this method.
      */
     public static MyDBSystem getInstance(){
-        if (SingleDB == null) {
-            SingleDB = new MyDBSystem();
+        try{
+            if (SingleDB == null || connection.isClosed()) {
+                SingleDB = new MyDBSystem();
+            }
+            return SingleDB;
+        }catch(Exception e){
+            return null;
         }
-        return SingleDB;
     }
 
     /**
@@ -166,12 +170,12 @@ public final class MyDBSystem{
             //ResultSetMetaData rsmetadata = rs.getMetaData();
             //int numofcolumns = rsmetadata.getColumnCount();
             rs.last();
-            int[][] array2D = new int[2][rs.getRow()];
+            int[][] array2D = new int[rs.getRow()][2];
             rs.beforeFirst();
             for(int i = 0; rs.next(); i++)
             {
-                array2D[0][i] = rs.getInt(firstcol);
-                array2D[1][i] = rs.getInt(secondcol);
+                array2D[i][0] = rs.getInt(firstcol);
+                array2D[i][1] = rs.getInt(secondcol);
             }
             return array2D;
         }catch(SQLException e){
