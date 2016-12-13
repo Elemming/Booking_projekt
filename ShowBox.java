@@ -38,7 +38,7 @@ public class ShowBox extends JComponent implements ActionListener
         showPanel.add(date);
         JLabel time = new JLabel(showTime);
         showPanel.add(time);
-        Button button = new Button("Reseve");
+        Button button = new Button("Reserve");
         button.addActionListener(this);
         showPanel.add(button);
     }

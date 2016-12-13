@@ -32,5 +32,6 @@ public class Controller
             if(view.isClosed())
                 done = true;
         }
+        mySystem.closeConnection();
     }
 }
