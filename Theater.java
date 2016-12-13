@@ -21,6 +21,9 @@ public class Theater
         }
     }
     
+    /**
+     * Returns the Theater.
+     */
     public Seat[][] getTheater()
     {
         return theater;

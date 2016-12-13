@@ -96,7 +96,7 @@ public class MySystem
     }
 
     /**
-     * Adds the reservations in an order to the SeatReservation table and adds the whole order to Reservation.
+     * Adds the reservations in an order to the SeatReservation table and Reservation table.
      */
     public void finishOrder()
     {
@@ -190,6 +190,7 @@ public class MySystem
     
     /**
      * Returns the database.
+     * Needed?
      */
     public MyDBSystem getDB()
     {
