@@ -10,6 +10,7 @@ public class MySystem
     private Order order;
     private MyDBSystem mydb;
     private Theater theater;
+    private Reservation reservation;
 
     //Constructor
     MySystem()
@@ -42,16 +43,15 @@ public class MySystem
         theater = new Theater(rows, cols);
         int[][] reservations = mydb.getReservationsfromShow(ShowID);
         try {
-        for (int i = 0; i < reservations.length; i++)
-        {
-            theater.getTheater()[reservations[i][0]+1][reservations[i][1]+1].reserveSeat();
+            for (int i = 0; i < reservations.length; i++)
+            {
+                theater.getTheater()[reservations[i][0]+1][reservations[i][1]+1].reserveSeat();
+            }
+        }
+
+        catch (Exception e) {
         }
     }
-    
-    catch (Exception e) {
-    }
-    }
-    
 
     /**
      * Takes a name and phone number, calls the createCustomer method, and then creates a new order with
@@ -96,8 +96,10 @@ public class MySystem
     /**
      * Adds a reservation to the order.
      */
-    public void addReservation(Reservation reservation)
+    public void addReservation(int ShowID, int SeatRow, int SeatCol)
     {
+        Seat seat = new Seat(SeatCol, SeatRow);
+        Reservation reservation = new Reservation(ShowID, seat); 
         order.addReservation(reservation);
     }
 
@@ -183,6 +185,8 @@ public class MySystem
             createCustomer(name, phone);
             getCustomerID(name, phone);
         }
+        {
+        }
         return mydb.getCustomer(name, phone);
     }
 
@@ -193,16 +197,7 @@ public class MySystem
     {
         return theater.getTheater();
     }
-    
-    /**
-     * Returns the database.
-     * Needed?
-     */
-    public MyDBSystem getDB()
-    {
-        return mydb;
-    }
-    
+
     /**
      * Calls the database's closeConnection method.
      */
@@ -210,22 +205,21 @@ public class MySystem
     {
         mydb.closeConnection();
     }
-
+    
     /**
-     * Calls a Seat's isReserved() method.
-     * Needed?
-     */
-    public boolean isReserved(Seat seat)
+     * Returns an Order.
+     */ 
+    public Order getOrder()
     {
-        return seat.isReserved();
+        return order;
     }
-
+    
     /**
-     * Needed?
+     * Returns an Order's getOrder() method.
      */
-    public int getShowID()
+    public ArrayList<Reservation> getOrderlist()
     {
-        return 300;
-    }
+       return order.getOrder();
+    }	
 }
 

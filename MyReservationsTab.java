@@ -4,9 +4,9 @@ import javax.swing.*;
 
 public class MyReservationsTab extends Tab
 {
-    public MyReservationsTab(Container panel)
+    public MyReservationsTab(JFrame frame)
     {
-        super(panel);
+        super(frame);
     }
 
     public void createTab()

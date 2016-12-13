@@ -9,9 +9,9 @@ public class ShowsTab extends Tab implements ChangeListener
     private ShowBox clickedBox;
     private Panel showPanel;
 
-    public ShowsTab(Container panel)
+    public ShowsTab(JFrame frame)
     {
-        super(panel);
+        super(frame);
     }
 
     public void createTab(String[][] shows)

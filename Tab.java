@@ -4,11 +4,13 @@ import javax.swing.*;
 
 public abstract class Tab extends JComponent
 {
-    public Container contentPanel;
+    protected JFrame frame;
+    protected Container contentPanel;
     
-    public Tab(Container panel)
+    public Tab(JFrame frame)
     {
-        contentPanel = panel;
+        this.frame = frame;
+        contentPanel = frame.getContentPane();
     }
     
     public void createTab()

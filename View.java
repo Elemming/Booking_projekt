@@ -40,9 +40,9 @@ public class View extends Frame implements ActionListener, ChangeListener
 
         makeMenu();
 
-        showsTab = new ShowsTab(contentPanel);
-        reservationTab = new ReservationTab(contentPanel);
-        myReservationsTab = new MyReservationsTab(contentPanel);
+        showsTab = new ShowsTab(frame);
+        reservationTab = new ReservationTab(frame);
+        myReservationsTab = new MyReservationsTab(frame);
         makeShowsMenu();
 
         frame.setVisible(true);
@@ -141,10 +141,28 @@ public class View extends Frame implements ActionListener, ChangeListener
         }
         if(event.getSource() instanceof ReservationTab)
         {
-            contentPanel.removeAll();
-            customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
-            reservationTab.setCustomerID(customerID);
-            reservationTab.createTab();
+            switch (reservationTab.getButtonChoice())
+            {
+                case 1: 
+                contentPanel.removeAll();
+                customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
+                reservationTab.setCustomerID(customerID);
+                reservationTab.createTab();
+                break;
+
+                case 2: 
+                if(mySystem.getOrder() == null)
+                    mySystem.createOrder(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
+                mySystem.addReservation(showsTab.getShowID(), reservationTab.getSeatRow(), reservationTab.getSeatCol());
+                break;
+
+                case 3:
+                if(mySystem.getOrder() == null)
+                    mySystem.createOrder(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
+                mySystem.addReservation(showsTab.getShowID(), reservationTab.getSeatRow(), reservationTab.getSeatCol());
+                makeMyReservationsMenu();
+                break;
+            }
         }
     }
 }

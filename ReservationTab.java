@@ -7,15 +7,16 @@ import java.text.*;
 public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
     private String customerName;
-    private int customerPhone, customerID;
-    private Panel logInPanel;
+    private int customerPhone, customerID, row, col, buttonChoice;
+    private JPanel logInPanel, theaterPanel;
     private JTextField nameField, phoneField;
-    private JButton logInButton, seatButton;
+    private JButton logInButton, seatButton, addButton, checkOutButton;
     private NumberFormat nf;
+    private Seat[][] theater;
 
-    public ReservationTab(Container panel)
+    public ReservationTab(JFrame frame)
     {
-        super(panel);
+        super(frame);
         customerID = 0;
         createTab();
     }
@@ -26,7 +27,8 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             createLogInTab();
         else 
         {
-            createTheater(theater);
+            this.theater = theater;
+            createTheaterTab(theater);
         }
 
         contentPanel.validate();
@@ -36,7 +38,7 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     {
         //Ceates Panels        
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        logInPanel = new Panel();
+        logInPanel = new JPanel();
         logInPanel.setLayout(new BoxLayout(logInPanel, BoxLayout.Y_AXIS));
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
@@ -81,9 +83,31 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         logInPanel.add(logInButton);
     }
 
-    public void createTheater(Seat[][] theater)
+    public void createTheaterTab(Seat[][] theater)
     {
-        Panel theaterPanel = new Panel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        createTheater(theater, contentPanel);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        addButton = new JButton("Add Reservesion");
+        addButton.addActionListener(this);
+        buttonPanel.add(addButton);
+
+        checkOutButton = new JButton("Check out");
+        checkOutButton.addActionListener(this);
+        buttonPanel.add(checkOutButton);
+
+        contentPanel.add(buttonPanel);
+    }
+
+    public void createTheater(Seat[][] theater, Container panel)
+    {
+        row = -1;
+
+        theaterPanel = new JPanel();
         theaterPanel.setLayout(new GridLayout(theater.length, getMaxLength(theater)));
         for( int i = 0; i < theater.length; i++)
         {
@@ -91,6 +115,8 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             for( Seat seat : theater[i])
             {
                 JButton seatButton = new JButton(i + ", " + n);
+                seatButton.setBackground(new Color(0, 255, 0));
+                seatButton.setForeground(new Color(0, 255, 0));
                 if(seat.isReserved())
                 {
                     seatButton.setBackground(new Color(255, 0, 0));
@@ -101,11 +127,23 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                 n++;
             }
         }
-        contentPanel.add(theaterPanel);
+        panel.add(theaterPanel);
     }
 
-    //small methods
-    
+    private void pickSeat()
+    throws Exception
+    {
+        if(row != -1)
+        {
+            theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(new Color(255, 0, 0));
+            theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(new Color(255, 0, 0));
+        }
+        else
+            throw new Exception("You have not picked a seat");
+    }
+
+    //return methods
+
     public void setCustomerID(int ID)
     {
         customerID = ID;
@@ -126,18 +164,40 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         return customerPhone;
     }
 
+    public int getSeatRow()
+    {
+        return row;
+    }
+
+    public int getSeatCol()
+    {
+        return col;
+    }
+
     private int getMaxLength(Seat[][] theater)
     {
         int max = 0;
         if(theater == null)
             return 0;
-            
+
         for(int i = 0; i < theater.length; i++)
         {
             if (theater[i].length > max)
                 max = theater[i].length;
         }
         return max;
+    }
+
+    public int getRow(String placement)
+    {
+        String[] rowCol = placement.split(",");
+        return Integer.parseInt(rowCol[0].trim());
+    }
+
+    private int getCol(String placement)
+    {
+        String[] rowCol = placement.split(",");
+        return Integer.parseInt(rowCol[1].trim());
     }
 
     //Event stuff
@@ -147,7 +207,6 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         if(event.getSource().equals(logInButton))
         {
             try{
-
                 if(nameField.getText() != "Name" || nameField.getText() != null)
                     customerName = nameField.getText();
                 else
@@ -159,6 +218,7 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                 }
                 else
                     throw new Exception("no phone");
+                buttonChoice = 1;
                 buttonPressed();
             }
             catch(Exception e)
@@ -169,14 +229,46 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
                 e.printStackTrace();
             }
         }
-
+        else if(event.getSource().equals(addButton))
+        {
+            try
+            {
+                pickSeat();
+                buttonChoice = 2;
+                buttonPressed();
+            } catch(Exception e)
+            {
+                JLabel mistakLabe = new JLabel(e.getMessage());
+                contentPanel.add(mistakLabe);
+            }
+        }
+        else if(event.getSource().equals(checkOutButton))
+        {
+            try
+            {
+                pickSeat();
+                buttonChoice = 3;
+                buttonPressed();
+            } catch(Exception e)
+            {
+                JLabel mistakLabe = new JLabel(e.getMessage());
+                contentPanel.add(mistakLabe);
+            }
+        }
         else if(event.getSource() instanceof JButton)
         {
+            if(row != -1)
+            {
+                theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(new Color(0, 255, 0));
+                theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(new Color(0, 255, 0));
+            }
+
             this.seatButton = (JButton)event.getSource();
             this.seatButton.setBackground(new Color(255, 0, 255));
             this.seatButton.setForeground(new Color(255, 0, 255));
             contentPanel.validate();
-
+            row = getRow(this.seatButton.getText());
+            col = getCol(this.seatButton.getText());
         }
     }
 
@@ -188,6 +280,11 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     public void addChangeListener(ChangeListener changeListener) 
     {
         listenerList.add(ChangeListener.class, changeListener);
+    }
+
+    public int getButtonChoice()
+    {
+        return buttonChoice;
     }
 
     /**
