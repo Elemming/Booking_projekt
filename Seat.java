@@ -1,6 +1,5 @@
 /**
- * Creates a seat which has a seatnumber (the same as Theater's seat), the row it is in, and knows
- * whether it is reserved.
+ * Creates a Seat which has a seatnumber, a rownumber, and which knows whether it is reserved.
  */
 public class Seat
 {
@@ -35,7 +34,7 @@ public class Seat
     }
     
     /**
-     * Tells if the seat is reserved.
+     * Tells if the Seat is reserved.
      */
     public boolean isReserved()
     {
