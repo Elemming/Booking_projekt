@@ -181,6 +181,9 @@ public class View extends Frame implements ActionListener, ChangeListener
             {
                 case 1: 
                 mySystem.finishOrder();
+                reservationTab.logOut();
+                customerID = 0;
+                makeReservationMenu();
                 break;
                 
                 case 2:

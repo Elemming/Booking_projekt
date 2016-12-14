@@ -199,6 +199,13 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         String[] rowCol = placement.split(",");
         return Integer.parseInt(rowCol[1].trim());
     }
+    
+    public void logOut()
+    {
+        customerName = null;
+        customerPhone = 0;
+        customerID = 0;
+    }
 
     //Event stuff
 
