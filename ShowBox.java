@@ -5,13 +5,13 @@ import javax.swing.event.*;
 
 public class ShowBox extends JComponent implements ActionListener
 {
-    private Container contentPanel;
+    private JPanel showsPanel;
     private String[] show;
     private String showFilm, showDate, showTheater, showTime;
 
-    public ShowBox(Container panel, String[] show)
+    public ShowBox(JPanel panel, String[] show)
     {
-        contentPanel = panel;
+        showsPanel = panel;
         this.show = show;
         showFilm = show[1];
         showTheater = show[2];
@@ -27,9 +27,9 @@ public class ShowBox extends JComponent implements ActionListener
 
     private void addShowBox()
     {
-        Panel showPanel = new Panel();
-        contentPanel.add(showPanel);
+        JPanel showPanel = new JPanel();
         showPanel.setLayout(new GridLayout(1, show.length));
+        showsPanel.add(showPanel);
         JLabel film = new JLabel(showFilm);
         showPanel.add(film);
         JLabel theater = new JLabel(showTheater);

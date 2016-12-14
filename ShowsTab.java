@@ -7,7 +7,8 @@ public class ShowsTab extends Tab implements ChangeListener
 {
     private String[][] shows;
     private ShowBox clickedBox;
-    private Panel showPanel;
+    private JPanel showPanel, showsPanel;
+    private JScrollPane showsScrollPanel;
 
     public ShowsTab(JFrame frame)
     {
@@ -20,22 +21,30 @@ public class ShowsTab extends Tab implements ChangeListener
 
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-        showPanel = new Panel();
+        showPanel = new JPanel();
         contentPanel.add(showPanel);
         showPanel.setLayout(new GridLayout(1, 5));
         createTopBox();
 
+        
+        showsPanel = new JPanel();
+        showsPanel.setLayout(new BoxLayout(showsPanel, BoxLayout.Y_AXIS));
+        showsScrollPanel = new JScrollPane(showsPanel);
+        showsScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        showsScrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
         for(String[] show : shows)
         {
             makeShow(show);
         }
+        contentPanel.add(showsScrollPanel);
 
         contentPanel.validate();
     }
 
     private void makeShow(String[] show)
     {
-        ShowBox box = new ShowBox(super.getContentPanel(), show);
+        ShowBox box = new ShowBox(showsPanel, show);
         box.addChangeListener(this);
     }
 
