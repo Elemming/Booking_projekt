@@ -115,12 +115,12 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             for( Seat seat : theater[i])
             {
                 JButton seatButton = new JButton(i + ", " + n);
-                seatButton.setBackground(new Color(0, 255, 0));
-                seatButton.setForeground(new Color(0, 255, 0));
+                seatButton.setBackground(Color.GREEN);
+                seatButton.setForeground(Color.GREEN);
                 if(seat.isReserved())
                 {
-                    seatButton.setBackground(new Color(255, 0, 0));
-                    seatButton.setForeground(new Color(255, 0, 0));
+                    seatButton.setBackground(Color.RED);
+                    seatButton.setForeground(Color.RED);
                 }
                 seatButton.addActionListener(this);
                 theaterPanel.add(seatButton);
@@ -135,8 +135,8 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     {
         if(row != -1)
         {
-            theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(new Color(255, 0, 0));
-            theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(new Color(255, 0, 0));
+            theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(Color.RED);
+            theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(Color.RED);
         }
         else
             throw new Exception("You have not picked a seat");
@@ -207,26 +207,35 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         if(event.getSource().equals(logInButton))
         {
             try{
-                if(nameField.getText() != "Name" || nameField.getText() != null)
-                    customerName = nameField.getText();
+                String name;
+                int phone;
+                if(!(nameField.getText().endsWith("Name") )|| nameField.getText() != null || nameField.getText() != "")
+                    name = nameField.getText();
                 else
                     throw new Exception("no name");
-                if(phoneField.getText() != null)
+                if(phoneField.getText() != null || !(phoneField.getText().startsWith("0")) || phoneField.getText() != "")
                 {
                     int number = nf.parse(phoneField.getText()).intValue();
-                    customerPhone = number;
+                    phone = number;
                 }
                 else
                     throw new Exception("no phone");
-                buttonChoice = 1;
-                buttonPressed();
+                if(name != null && phone > 0)
+                {
+                    customerName = name;
+                    customerPhone = phone;
+                    buttonChoice = 1;
+                    buttonPressed();
+                }
             }
             catch(Exception e)
             {
-                System.out.println(e.getMessage());
-                System.out.println("Mistake");
-
-                e.printStackTrace();
+                JLabel errorLabel = new JLabel( "error: " + e.getMessage());
+                if(logInPanel.getComponentCount() < 4)
+                {
+                    logInPanel.add(errorLabel);
+                    logInPanel.validate();
+                }
             }
         }
         else if(event.getSource().equals(addButton))
@@ -257,18 +266,26 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         }
         else if(event.getSource() instanceof JButton)
         {
-            if(row != -1)
-            {
-                theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(new Color(0, 255, 0));
-                theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(new Color(0, 255, 0));
-            }
-
             this.seatButton = (JButton)event.getSource();
-            this.seatButton.setBackground(new Color(255, 0, 255));
-            this.seatButton.setForeground(new Color(255, 0, 255));
-            contentPanel.validate();
-            row = getRow(this.seatButton.getText());
-            col = getCol(this.seatButton.getText());
+            if(this.seatButton.getBackground() != Color.RED)
+            {
+                if(!(row == -1))
+                {
+                    if(theaterPanel.getComponent(row*getMaxLength(theater) + col).getBackground() != Color.RED)
+                    {
+                        theaterPanel.getComponent(row*getMaxLength(theater) + col).setBackground(new Color(0, 255, 0));
+                        theaterPanel.getComponent(row*getMaxLength(theater) + col).setForeground(new Color(0, 255, 0));
+                    }
+                }
+                if(this.seatButton.getBackground() != Color.RED)
+                {
+                    this.seatButton.setBackground(Color.MAGENTA);
+                    this.seatButton.setForeground(Color.MAGENTA);
+                    contentPanel.validate();
+                    row = getRow(this.seatButton.getText());
+                    col = getCol(this.seatButton.getText());
+                }
+            }
         }
     }
 
