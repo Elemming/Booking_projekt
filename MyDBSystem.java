@@ -68,7 +68,7 @@ public final class MyDBSystem{
      */
     private ResultSet selectQuery(String selectQuery, HashMap<Integer, String> mapper){
         try{            
-            if(!connection.isValid(0)){
+            if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
             String updateString = ("SELECT " + selectQuery);
@@ -97,7 +97,7 @@ public final class MyDBSystem{
      */
     private void insertQuery(String insertQuery, HashMap<Integer, String> mapper){
         try{
-            if(!connection.isValid(0)){
+            if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
             String updateString = ("INSERT INTO " + insertQuery);
@@ -354,7 +354,7 @@ public final class MyDBSystem{
 
     public void deleteCustomer(String name, int phone){
         try{
-            if(!connection.isValid(0)){
+            if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM Customers WHERE Name = ? AND Phone = ?");
@@ -375,7 +375,7 @@ public final class MyDBSystem{
 
     public void deleteReservation(int resID){
         try{
-            if(!connection.isValid(0)){
+            if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM Reservations WHERE ResID = ?");
@@ -395,7 +395,7 @@ public final class MyDBSystem{
 
     public void deleteSeatReservation(int seatResID){
         try{
-            if(!connection.isValid(0)){
+            if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
             PreparedStatement statement = connection.prepareStatement("DELETE FROM SeatReservation WHERE SeatID = ?");
