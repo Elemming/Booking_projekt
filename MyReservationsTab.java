@@ -5,21 +5,28 @@ import java.util.ArrayList;
 
 public class MyReservationsTab extends Tab implements ActionListener
 {
-    private JPanel orderPanel, topPanel;
+    private JPanel orderPanel, topPanel, buttonPanel;
+    private JButton finishOrder;
+    private String customerName;
 
     public MyReservationsTab(JFrame frame)
     {
         super(frame);
-        createTab();
     }
 
-    public void createTab(ArrayList<Reservation> order)
+    public void createTab(ArrayList<Reservation> order, String customerName)
     {
+        this.customerName = customerName;
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         orderPanel = new JPanel();
-        contentPanel.add(orderPanel);
         orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+        
+        contentPanel.add(buttonPanel);
+        contentPanel.add(orderPanel);
+        
         createTopBox();
 
         for(Reservation reservation : order)
@@ -32,6 +39,16 @@ public class MyReservationsTab extends Tab implements ActionListener
 
     private void createTopBox()
     {
+        //Creats the overview and buttons
+        
+        JLabel name = new JLabel("Customer: " + customerName);
+        buttonPanel.add(name);
+        finishOrder = new JButton("Reserve");
+        finishOrder.addActionListener(this); 
+        buttonPanel.add(finishOrder);
+        
+        //top part of the reservations
+        
         topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(1, 6));
 

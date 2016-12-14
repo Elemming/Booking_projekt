@@ -105,7 +105,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     private void makeMyReservationsMenu()
     {
         contentPanel.removeAll();
-        myReservationsTab.createTab(mySystem.getOrderlist());
+        myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName());
     }
 
     /**

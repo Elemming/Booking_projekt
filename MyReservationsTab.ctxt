@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=frame
 comment0.target=MyReservationsTab(javax.swing.JFrame)
-comment1.params=order
-comment1.target=void\ createTab(java.util.ArrayList)
+comment1.params=order\ customerName
+comment1.target=void\ createTab(java.util.ArrayList,\ java.lang.String)
 comment2.params=
 comment2.target=void\ createTopBox()
 comment3.params=reservation
