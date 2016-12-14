@@ -1,13 +1,17 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.util.ArrayList;
 
-public class MyReservationsTab extends Tab implements ActionListener
+public class MyReservationsTab extends Tab implements ActionListener, ChangeListener
 {
     private JPanel orderPanel, topPanel, buttonPanel;
     private JButton finishOrder;
     private String customerName;
+    private String[] show;
+    private int buttonChoice;
+    private Reservation removeRes;
 
     public MyReservationsTab(JFrame frame)
     {
@@ -23,10 +27,10 @@ public class MyReservationsTab extends Tab implements ActionListener
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         orderPanel = new JPanel();
         orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
-        
+
         contentPanel.add(buttonPanel);
         contentPanel.add(orderPanel);
-        
+
         createTopBox();
 
         for(Reservation reservation : order)
@@ -40,15 +44,15 @@ public class MyReservationsTab extends Tab implements ActionListener
     private void createTopBox()
     {
         //Creats the overview and buttons
-        
+
         JLabel name = new JLabel("Customer: " + customerName);
         buttonPanel.add(name);
         finishOrder = new JButton("Reserve");
         finishOrder.addActionListener(this); 
         buttonPanel.add(finishOrder);
-        
+
         //top part of the reservations
-        
+
         topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(1, 6));
 
@@ -74,26 +78,96 @@ public class MyReservationsTab extends Tab implements ActionListener
         JPanel resPanel = new JPanel();
         resPanel.setLayout(new GridLayout(1, 6));
 
-        JLabel film = new JLabel("Moive");
+        show = getShow();
+
+        JLabel film = new JLabel(show[0]);
         resPanel.add(film);
-        JLabel theater = new JLabel("Theater");
+        JLabel theater = new JLabel(show[1]);
         resPanel.add(theater);
-        JLabel date = new JLabel("Date");
+        JLabel date = new JLabel(show[2]);
         resPanel.add(date);
-        JLabel time = new JLabel("Time");
+        JLabel time = new JLabel(show[3]);
         resPanel.add(time);
-        JLabel seat = new JLabel("Seat");
+        JLabel seat = new JLabel(reservation.getSeatPlacement());
         resPanel.add(seat);
 
-        JButton button = new JButton("Unreserve Button");
+        ObjektButton button = new ObjektButton();
+        button.setName("Unreserve Button");
+        button.setObject(reservation);
         button.addActionListener(this);
         resPanel.add(button);
+
+        orderPanel.add(resPanel);
+    }
+
+    //small methods
+
+    private String[] getShow()
+    {
+        buttonChoice = 2;
+        buttonPressed();
+        return show;
+    }
+
+    public void setShow(String[] show)
+    {
+        this.show = show;
     }
     
+    public Reservation getRemoveRes()
+    {
+        return removeRes;
+    }
+
     //event Handeling
-    
+
     public void actionPerformed(ActionEvent event)
     {
-        
+        if(event.getSource().equals(finishOrder))
+        {
+            buttonChoice = 1;
+            buttonPressed();
+        }
+        if(event.getSource() instanceof ObjektButton)
+        {
+            ObjektButton button = (ObjektButton)event.getSource();
+            removeRes = (Reservation)button.getObject();
+            buttonChoice = 3;
+            buttonPressed();
+        }
+    }
+
+    public void stateChanged(ChangeEvent event)
+    {
+
+    }
+
+    public void addChangeListener(ChangeListener changeListener) 
+    {
+        listenerList.add(ChangeListener.class, changeListener);
+    }
+
+    public int getButtonChoice()
+    {
+        return buttonChoice;
+    }
+
+    /**
+     * happens when the button is pressed
+     * 
+     * copied and altered from http://stackoverflow.com/questions/20153868/using-changelistener-to-fire-changes-in-java-swing
+     * 12/8/2016
+     */
+    private void buttonPressed() 
+    {
+        ChangeListener[] changeListeners = listenerList.getListeners(ChangeListener.class);
+        if (changeListeners != null && changeListeners.length > 0)
+        {
+            ChangeEvent evt = new ChangeEvent(this);
+            for (ChangeListener changeListener : changeListeners)
+            {
+                changeListener.stateChanged(evt);
+            }
+        }
     }
 }

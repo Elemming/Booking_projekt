@@ -41,8 +41,14 @@ public class View extends Frame implements ActionListener, ChangeListener
         makeMenu();
 
         showsTab = new ShowsTab(frame);
+        
         reservationTab = new ReservationTab(frame);
+        if(reservationTab.getListeners(ChangeListener.class).length == 0)
+            reservationTab.addChangeListener(this);
+        
         myReservationsTab = new MyReservationsTab(frame);
+        if(myReservationsTab.getListeners(ChangeListener.class).length == 0)
+            myReservationsTab.addChangeListener(this);
         makeShowsMenu();
 
         frame.setVisible(true);
@@ -96,7 +102,6 @@ public class View extends Frame implements ActionListener, ChangeListener
         }
         else
             reservationTab.createTab(new Seat[0][0]);
-        reservationTab.addChangeListener(this);
     }
 
     /**
@@ -106,6 +111,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     {
         contentPanel.removeAll();
         myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName());
+        
     }
 
     /**
@@ -158,7 +164,7 @@ public class View extends Frame implements ActionListener, ChangeListener
                 case 2: 
                 if(mySystem.getOrder() == null)
                     mySystem.createOrder(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
-                mySystem.addReservation(showsTab.getShowID(), reservationTab.getSeatRow(), reservationTab.getSeatCol());
+                mySystem.addReservation(showsTab.getShowID(), reservationTab.getSeatRow()+1, reservationTab.getSeatCol()+1);
                 break;
 
                 case 3:
@@ -169,6 +175,23 @@ public class View extends Frame implements ActionListener, ChangeListener
                 break;
             }
             contentPanel.validate();
+        }
+        if(event.getSource() instanceof MyReservationsTab)
+        {
+            switch (myReservationsTab.getButtonChoice())
+            {
+                case 1: 
+                mySystem.finishOrder();
+                break;
+                
+                case 2:
+                myReservationsTab.setShow(mySystem.getShowingInfo(showsTab.getShowID()));
+                break;
+                
+                case 3: 
+                mySystem.removeReservation(myReservationsTab.getRemoveRes());
+                break;
+            }
         }
     }
 }

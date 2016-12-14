@@ -26,6 +26,11 @@ public class Reservation
         return seat;
     }
     
+    public String getSeatPlacement()
+    {
+        return "Row: " + seat.getRownumber() + "\n" + "Number: " + seat.getSeatnumber();
+    }
+    
     /**
      * Gets the Reservation's ShowID.
      */
