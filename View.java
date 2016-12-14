@@ -64,7 +64,7 @@ public class View extends Frame implements ActionListener, ChangeListener
         reservationMenu.addActionListener(this);
         menubar.add(reservationMenu); 
 
-        JMenuItem myReservationsMenu = new JMenuItem("Change Reservations");
+        JMenuItem myReservationsMenu = new JMenuItem("Order");
         myReservationsMenu.addActionListener(this);
         menubar.add(myReservationsMenu); 
     }
@@ -105,7 +105,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     private void makeMyReservationsMenu()
     {
         contentPanel.removeAll();
-        myReservationsTab.createTab();
+        myReservationsTab.createTab(mySystem.getOrderlist());
     }
 
     /**
@@ -128,8 +128,13 @@ public class View extends Frame implements ActionListener, ChangeListener
             makeShowsMenu();
         if(event.getActionCommand().equals("Reservations"))
             makeReservationMenu();
-        if(event.getActionCommand().equals("Change Reservations"))
-            makeMyReservationsMenu();
+        if(event.getActionCommand().equals("Order"))
+        {
+            if(customerID >  0)
+                makeMyReservationsMenu();
+            else
+                makeReservationMenu();
+        }
     }
 
     public void stateChanged(ChangeEvent event)
@@ -163,6 +168,7 @@ public class View extends Frame implements ActionListener, ChangeListener
                 makeMyReservationsMenu();
                 break;
             }
+            contentPanel.validate();
         }
     }
 }
