@@ -26,7 +26,7 @@ public final class MyDBSystem{
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         }catch(SQLException e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
         }
     }
 
@@ -40,8 +40,8 @@ public final class MyDBSystem{
             }
             connection = null;
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("Error closing connection.");
+            //             e.printStackTrace();
+            //             System.out.println("Error closing connection.");
         }
     }
 
@@ -79,8 +79,8 @@ public final class MyDBSystem{
             ResultSet rs = statement.executeQuery();
             return rs;
         } catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("owned");     
+            //             e.printStackTrace();
+            //             System.out.println("owned");     
             return null;
         }finally{
             try{
@@ -107,8 +107,8 @@ public final class MyDBSystem{
             }
             statement.executeUpdate();
         }catch(Exception e){
-            e.printStackTrace();
-//             System.out.println("owned");
+//             e.printStackTrace();
+            //             System.out.println("owned");
         }finally{
             try{
                 statement.close();
@@ -128,7 +128,7 @@ public final class MyDBSystem{
             inputMap.put(2, String.valueOf(seatID));
             insertQuery("Reservationygata (CustomerID, SeatID) VALUES (?, ?)", inputMap);
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
         }
     }
 
@@ -142,7 +142,7 @@ public final class MyDBSystem{
             inputMap.put(2, String.valueOf(phone));
             insertQuery("Customersxcaballo (Name, Phone) VALUES (?,?)", inputMap);
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
         }
     }
 
@@ -157,7 +157,7 @@ public final class MyDBSystem{
             inputMap.put(3, String.valueOf(seatCol));
             insertQuery("SeatResarroz (ShowID, SeatRow, SeatCol) VALUES (?, ?, ?)", inputMap);
         }catch(Exception e){
-//             e.printStackTrace();      
+            //             e.printStackTrace();      
         }
     }
 
@@ -178,8 +178,8 @@ public final class MyDBSystem{
             }        
             return sizearray;
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("Theater could not be retrieved");
+            //             e.printStackTrace();
+            //             System.out.println("Theater could not be retrieved");
             return null;
         }
     }    
@@ -197,8 +197,8 @@ public final class MyDBSystem{
             rs.first();
             return rs.getInt("SeatID");
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("SeatID not found/retrieved");
+            //             e.printStackTrace();
+            //             System.out.println("SeatID not found/retrieved");
             return 0;
         }
     }
@@ -214,7 +214,7 @@ public final class MyDBSystem{
             int[][] array2D = create2DArrayofInt(rs, "Seatrow", "Seatcol");
             return array2D;
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             return null;
         }
     }
@@ -226,7 +226,7 @@ public final class MyDBSystem{
             allShows = createArrayofShows(rs);
             return allShows;
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             return null;
         }
     }
@@ -241,7 +241,7 @@ public final class MyDBSystem{
             RelevantShows = createArrayofShows(rs);
             return RelevantShows;
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             return null;
         }
     }
@@ -260,8 +260,8 @@ public final class MyDBSystem{
             }
             return array2D;
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("owned");
+            //             e.printStackTrace();
+            //             System.out.println("owned");
             return null;
         }
     }
@@ -281,8 +281,8 @@ public final class MyDBSystem{
             }
             return Shows;
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("owned");
+            //             e.printStackTrace();
+            //             System.out.println("owned");
             return null;
         }
     }
@@ -296,8 +296,8 @@ public final class MyDBSystem{
             rs.first();
             return rs.getInt("CustomerID");
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("There was no CustomerID retrieved");
+            //             e.printStackTrace();
+            //             System.out.println("There was no CustomerID retrieved");
             return 0;
         }
     }
@@ -308,8 +308,8 @@ public final class MyDBSystem{
             ResultSet rs = statement.executeQuery("SELECT " + selectQuery);
             return rs;
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("There was no ResultSet retrieved");
+            //             e.printStackTrace();
+            //             System.out.println("There was no ResultSet retrieved");
             return null; 
         }
     }
@@ -320,7 +320,7 @@ public final class MyDBSystem{
             inputMap.put(1, String.valueOf(showID));
             return selectQuery("* FROM Showingsbcebolla WHERE ShowID = ?", inputMap);
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             return null;
         }
     }
@@ -332,7 +332,7 @@ public final class MyDBSystem{
             ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatResarroz WHERE ShowID = ? ", inputMap);
             return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             return null;
         }
     }
@@ -346,8 +346,8 @@ public final class MyDBSystem{
             rs.first();
             return rs.getInt("ResID");
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("ResID not found/retrieved");
+            //             e.printStackTrace();
+            //             System.out.println("ResID not found/retrieved");
             return 0;
         }        
     }
@@ -362,8 +362,8 @@ public final class MyDBSystem{
             statement.setInt(2, phone);
             statement.executeUpdate();
         }catch(SQLException e){
-//             e.printStackTrace();        
-//             System.out.println("Customer was not removed from the database");            
+            //             e.printStackTrace();        
+            //             System.out.println("Customer was not removed from the database");            
         }finally{
             try{
                 statement.close();
@@ -382,8 +382,8 @@ public final class MyDBSystem{
             statement.setInt(1, resID);
             statement.executeUpdate();
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("Reservation was not deleted");
+            //             e.printStackTrace();
+            //             System.out.println("Reservation was not deleted");
         }finally{
             try{
                 statement.close();
@@ -402,8 +402,8 @@ public final class MyDBSystem{
             statement.setInt(1, seatResID);
             statement.executeUpdate();
         }catch(SQLException e){
-//             e.printStackTrace();
-//             System.out.println("Seat was not deleted");
+            //             e.printStackTrace();
+            //             System.out.println("Seat was not deleted");
         }finally{
             try{
                 statement.close();
@@ -412,4 +412,33 @@ public final class MyDBSystem{
             }
         }
     }
-}    
+
+    public int[] getSeat(int seatID){
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(seatID));
+            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatResarroz WHERE SeatID = ?", inputMap);
+            int[] seatArray = new int[2];
+            while(rs.next()){
+                seatArray[0] = rs.getInt("Seatrow");
+                seatArray[1] = rs.getInt("Seatcol");
+            }        
+            return seatArray;            
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public int[][] getCurrentReservations(int customerID){
+        try{
+            HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
+            inputMap.put(1, String.valueOf(customerID));
+            ResultSet rs = selectQuery("ShowID, SeatResarroz.SeatID FROM SeatResarroz , Reservationygata WHERE SeatResarroz.SeatID = Reservationygata.SeatID AND CustomerID = ?", inputMap);
+            int[][] array2D = create2DArrayofInt(rs, "ShowID", "SeatID");
+            return array2D;
+        }catch(Exception e){
+            return null;
+        }
+
+    }  
+}
