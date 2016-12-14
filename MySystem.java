@@ -122,10 +122,12 @@ public class MySystem
             int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
             mydb.insertReservation(CustomerID, SeatID);
         }
+        order = null;
     }
 
     /**
      * Removes an entire order.
+     * Needed?
      */  
     public void removeOrder()
     {
