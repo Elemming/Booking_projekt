@@ -170,7 +170,6 @@ public class View extends Frame implements ActionListener, ChangeListener
                 case 3:
                 if(mySystem.getOrder() == null)
                     mySystem.createOrder(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
-                mySystem.addReservation(showsTab.getShowID(), reservationTab.getSeatRow(), reservationTab.getSeatCol());
                 makeMyReservationsMenu();
                 break;
             }
