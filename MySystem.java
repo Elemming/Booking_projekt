@@ -185,8 +185,6 @@ public class MySystem
             createCustomer(name, phone);
             getCustomerID(name, phone);
         }
-        {
-        }
         return mydb.getCustomer(name, phone);
     }
 
@@ -230,7 +228,8 @@ public class MySystem
         String[] ShowInfo =  new String[4]; 
         mydb.getShowfromID(ShowID);
         ResultSet rs = mydb.getShowfromID(ShowID);
-        try {
+        try 
+        {
             while(rs.next()){
                 ShowInfo[0] = rs.getString("Film");
                  ShowInfo[1] = rs.getString("TheaterID");
@@ -238,8 +237,8 @@ public class MySystem
                     ShowInfo[3] = rs.getString("Tid");
             }
         }
-        catch (Exception e) {
-
+        catch (Exception e) 
+        {
         }
         return ShowInfo;
     }
