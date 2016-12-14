@@ -12,6 +12,7 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
     private String[] show;
     private int buttonChoice;
     private Reservation removeRes;
+    private JScrollPane orderScroll;
 
     public MyReservationsTab(JFrame frame)
     {
@@ -28,8 +29,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         orderPanel = new JPanel();
         orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 
+        orderScroll = new JScrollPane(orderPanel);
         contentPanel.add(buttonPanel);
-        contentPanel.add(orderPanel);
+        contentPanel.add(orderScroll);
 
         createTopBox();
 

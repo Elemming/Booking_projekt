@@ -216,11 +216,11 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
             try{
                 String name;
                 int phone;
-                if(!(nameField.getText().endsWith("Name") )|| nameField.getText() != null || nameField.getText() != "")
+                if(!((nameField.getText().endsWith("Name") )|| nameField.getText() == null || nameField.getText() == ""))
                     name = nameField.getText();
                 else
                     throw new Exception("no name");
-                if(phoneField.getText() != null || !(phoneField.getText().startsWith("0")) || phoneField.getText() != "")
+                if(!(phoneField.getText() == null || phoneField.getText().startsWith("0") || phoneField.getText() == ""))
                 {
                     int number = nf.parse(phoneField.getText()).intValue();
                     phone = number;
