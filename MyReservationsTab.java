@@ -91,7 +91,7 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         JLabel seat = new JLabel(reservation.getSeatPlacement());
         resPanel.add(seat);
 
-        ObjektButton button = new ObjektButton();
+        ObjectButton button = new ObjectButton();
         button.setName("Unreserve Button");
         button.setObject(reservation);
         button.addActionListener(this);
@@ -128,9 +128,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
             buttonChoice = 1;
             buttonPressed();
         }
-        if(event.getSource() instanceof ObjektButton)
+        if(event.getSource() instanceof ObjectButton)
         {
-            ObjektButton button = (ObjektButton)event.getSource();
+            ObjectButton button = (ObjectButton)event.getSource();
             removeRes = (Reservation)button.getObject();
             buttonChoice = 3;
             buttonPressed();
