@@ -34,7 +34,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     {
         frame = new JFrame("Booking System");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(820,640);
+        frame.setSize(1280,1024);
 
         contentPanel = frame.getContentPane();
 
@@ -95,13 +95,13 @@ public class View extends Frame implements ActionListener, ChangeListener
         {
             if(showsTab.getShowID() != 0)
             {
-                reservationTab.createTab(mySystem.getTheater());
+                reservationTab.createTab(mySystem.getTheater(), mySystem.getShowingInfo(showsTab.getShowID())[0]);
             }
             else
                 makeShowsMenu();
         }
         else
-            reservationTab.createTab(new Seat[0][0]);
+            reservationTab.createTab(new Seat[0][0], "");
     }
 
     /**
@@ -111,7 +111,6 @@ public class View extends Frame implements ActionListener, ChangeListener
     {
         contentPanel.removeAll();
         myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName());
-        
     }
 
     /**
@@ -158,7 +157,7 @@ public class View extends Frame implements ActionListener, ChangeListener
                 contentPanel.removeAll();
                 customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
                 reservationTab.setCustomerID(customerID);
-                reservationTab.createTab();
+                reservationTab.createTab(mySystem.getTheater(), mySystem.getShowingInfo(showsTab.getShowID())[0]);
                 break;
 
                 case 2: 

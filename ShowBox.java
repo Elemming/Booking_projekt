@@ -28,6 +28,7 @@ public class ShowBox extends JComponent implements ActionListener
     private void addShowBox()
     {
         JPanel showPanel = new JPanel();
+        showPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         showPanel.setLayout(new GridLayout(1, show.length));
         showsPanel.add(showPanel);
         JLabel film = new JLabel(showFilm);

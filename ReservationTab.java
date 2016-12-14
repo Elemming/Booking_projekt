@@ -21,14 +21,14 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         createTab();
     }
 
-    public void createTab(Seat[][] theater)
+    public void createTab(Seat[][] theater, String showName)
     {
         if(customerID == 0)
             createLogInTab();
         else 
         {
             this.theater = theater;
-            createTheaterTab(theater);
+            createTheaterTab(theater, showName);
         }
 
         contentPanel.validate();
@@ -83,11 +83,20 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         logInPanel.add(logInButton);
     }
 
-    public void createTheaterTab(Seat[][] theater)
+    public void createTheaterTab(Seat[][] theater, String showName)
     {
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+        infoPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        
+        JLabel showTitle = new JLabel(showName);
+        infoPanel.add(showTitle);
+        
+        contentPanel.add(infoPanel);
+        
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         createTheater(theater, contentPanel);
-
+        
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);

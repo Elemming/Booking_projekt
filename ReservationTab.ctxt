@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=frame
 comment0.target=ReservationTab(javax.swing.JFrame)
-comment1.params=theater
-comment1.target=void\ createTab(Seat[][])
+comment1.params=theater\ showName
+comment1.target=void\ createTab(Seat[][],\ java.lang.String)
 comment10.params=
 comment10.target=int\ getSeatRow()
 comment11.params=
@@ -28,8 +28,8 @@ comment2.target=void\ createLogInTab()
 comment20.params=
 comment20.target=void\ buttonPressed()
 comment20.text=\r\n\ happens\ when\ the\ button\ is\ pressed\r\n\ \r\n\ copied\ and\ altered\ from\ http\://stackoverflow.com/questions/20153868/using-changelistener-to-fire-changes-in-java-swing\r\n\ 12/8/2016\r\n
-comment3.params=theater
-comment3.target=void\ createTheaterTab(Seat[][])
+comment3.params=theater\ showName
+comment3.target=void\ createTheaterTab(Seat[][],\ java.lang.String)
 comment4.params=theater\ panel
 comment4.target=void\ createTheater(Seat[][],\ java.awt.Container)
 comment5.params=

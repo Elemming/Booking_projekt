@@ -78,6 +78,7 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
     private void createOrderBox(Reservation reservation)
     {
         JPanel resPanel = new JPanel();
+        resPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         resPanel.setLayout(new GridLayout(1, 6));
 
         show = getShow();
@@ -101,7 +102,7 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
 
         orderPanel.add(resPanel);
     }
-
+    
     //small methods
 
     private String[] getShow()
