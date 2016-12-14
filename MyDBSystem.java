@@ -126,7 +126,7 @@ public final class MyDBSystem{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, String.valueOf(customerID));
             inputMap.put(2, String.valueOf(seatID));
-            insertQuery("Reservations (CustomerID, SeatID) VALUES (?, ?)", inputMap);
+            insertQuery("Reservationygata (CustomerID, SeatID) VALUES (?, ?)", inputMap);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -140,7 +140,7 @@ public final class MyDBSystem{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, name);
             inputMap.put(2, String.valueOf(phone));
-            insertQuery("Customers (Name, Phone) VALUES (?,?)", inputMap);
+            insertQuery("Customersxcaballo (Name, Phone) VALUES (?,?)", inputMap);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -155,7 +155,7 @@ public final class MyDBSystem{
             inputMap.put(1, String.valueOf(showID));
             inputMap.put(2, String.valueOf(seatRow));
             inputMap.put(3, String.valueOf(seatCol));
-            insertQuery("SeatReservation (ShowID, SeatRow, SeatCol) VALUES (?, ?, ?)", inputMap);
+            insertQuery("SeatResarroz (ShowID, SeatRow, SeatCol) VALUES (?, ?, ?)", inputMap);
         }catch(Exception e){
             e.printStackTrace();      
         }
@@ -170,7 +170,7 @@ public final class MyDBSystem{
         try{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>(); 
             inputMap.put(1, theaterID);
-            ResultSet rs = selectQuery("R, Col FROM Theaters WHERE TheaterID = ?", inputMap); 
+            ResultSet rs = selectQuery("R, Col FROM Theaterquieros WHERE TheaterID = ?", inputMap); 
             int[] sizearray = new int[2];
             while(rs.next()){
                 sizearray[0] = rs.getInt("R");
@@ -193,7 +193,7 @@ public final class MyDBSystem{
             inputMap.put(1, String.valueOf(showID));        
             inputMap.put(2, String.valueOf(seatRow));
             inputMap.put(3, String.valueOf(seatCol));
-            ResultSet rs = selectQuery("SeatID FROM SeatReservation WHERE ShowID = ? AND Seatrow = ? AND Seatcol = ?", inputMap);
+            ResultSet rs = selectQuery("SeatID FROM SeatResarroz WHERE ShowID = ? AND Seatrow = ? AND Seatcol = ?", inputMap);
             rs.first();
             return rs.getInt("SeatID");
         }catch(SQLException e){
@@ -210,7 +210,7 @@ public final class MyDBSystem{
             inputMap.put(2, film);
             inputMap.put(3, date);
             inputMap.put(4, time);
-            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation , Showings WHERE TheaterID = ? AND Film = ? AND Dato = ? AND Tid = ?", inputMap);
+            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatResarroz , Showings WHERE TheaterID = ? AND Film = ? AND Dato = ? AND Tid = ?", inputMap);
             int[][] array2D = create2DArrayofInt(rs, "Seatrow", "Seatcol");
             return array2D;
         }catch(Exception e){
@@ -222,7 +222,7 @@ public final class MyDBSystem{
     public String[][] getAllShows(){
         try{
             String[][] allShows = null;
-            ResultSet rs = selectQuery("* FROM Showings", null);
+            ResultSet rs = selectQuery("* FROM Showingsbcebolla");
             allShows = createArrayofShows(rs);
             return allShows;
         }catch(Exception e){
@@ -237,7 +237,7 @@ public final class MyDBSystem{
             LocalDate date = LocalDate.now();
             date.toString();
             LocalTime time = LocalTime.now();
-            ResultSet rs = selectQuery("* FROM Showings WHERE Dato >= CURDATE()");
+            ResultSet rs = selectQuery("* FROM Showingsbcebolla WHERE Dato >= CURDATE()");
             RelevantShows = createArrayofShows(rs);
             return RelevantShows;
         }catch(Exception e){
@@ -292,7 +292,7 @@ public final class MyDBSystem{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, name);
             inputMap.put(2, String.valueOf(phone));
-            ResultSet rs = selectQuery("CustomerID FROM Customers WHERE Name = ? AND Phone = ?", inputMap);
+            ResultSet rs = selectQuery("CustomerID FROM Customersxcaballo WHERE Name = ? AND Phone = ?", inputMap);
             rs.first();
             return rs.getInt("CustomerID");
         }catch(SQLException e){
@@ -318,7 +318,7 @@ public final class MyDBSystem{
         try{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, String.valueOf(showID));
-            return selectQuery("* FROM Showings WHERE ShowID = ?", inputMap);
+            return selectQuery("* FROM Showingsbcebolla WHERE ShowID = ?", inputMap);
         }catch(Exception e){
             e.printStackTrace();
             return null;
@@ -329,7 +329,7 @@ public final class MyDBSystem{
         try{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, String.valueOf(showID));
-            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatReservation WHERE ShowID = ? ", inputMap);
+            ResultSet rs = selectQuery("Seatrow, Seatcol FROM SeatResarroz WHERE ShowID = ? ", inputMap);
             return create2DArrayofInt(rs, "Seatrow" , "Seatcol");
         }catch(Exception e){
             e.printStackTrace();
@@ -342,7 +342,7 @@ public final class MyDBSystem{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, String.valueOf(customerID));
             inputMap.put(2, String.valueOf(seatID));
-            ResultSet rs = selectQuery("ResID FROM Reservations WHERE CustomerID = ? AND SeatID = ?", inputMap);
+            ResultSet rs = selectQuery("ResID FROM Reservationygata WHERE CustomerID = ? AND SeatID = ?", inputMap);
             rs.first();
             return rs.getInt("ResID");
         }catch(SQLException e){
@@ -357,7 +357,7 @@ public final class MyDBSystem{
             if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM Customers WHERE Name = ? AND Phone = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Customersxcaballo WHERE Name = ? AND Phone = ?");
             statement.setString(1, name);
             statement.setInt(2, phone);
             statement.executeUpdate();
@@ -378,7 +378,7 @@ public final class MyDBSystem{
             if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM Reservations WHERE ResID = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Reservationygata WHERE ResID = ?");
             statement.setInt(1, resID);
             statement.executeUpdate();
         }catch(SQLException e){
@@ -398,7 +398,7 @@ public final class MyDBSystem{
             if(!connection.isValid(0) || connection.isClosed()){
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM SeatReservation WHERE SeatID = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM SeatResarroz WHERE SeatID = ?");
             statement.setInt(1, seatResID);
             statement.executeUpdate();
         }catch(SQLException e){
