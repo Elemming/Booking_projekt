@@ -205,7 +205,7 @@ public class MySystem
     {
         mydb.closeConnection();
     }
-    
+
     /**
      * Returns an Order.
      */ 
@@ -213,13 +213,48 @@ public class MySystem
     {
         return order;
     }
-    
+
     /**
      * Returns an Order's getOrder() method.
      */
     public ArrayList<Reservation> getOrderlist()
     {
-       return order.getOrder();
+        return order.getOrder();
     }	
+
+    /**
+     * Returns info about a showing in a String array, ShowID being the needed input.
+     */
+    public String[] getShowingInfo (int ShowID)
+    {
+        String[] ShowInfo =  new String[4]; 
+        mydb.getShowfromID(ShowID);
+        ResultSet rs = mydb.getShowfromID(ShowID);
+        try {
+            while(rs.next()){
+                ShowInfo[0] = rs.getString("Film");
+                 ShowInfo[1] = rs.getString("TheaterID");
+                   ShowInfo[2] = rs.getString("Dato");
+                    ShowInfo[3] = rs.getString("Tid");
+            }
+        }
+        catch (Exception e) {
+
+        }
+        return ShowInfo;
+    }
+    
+    /**
+     * Prints the showing info from a ShowID.
+     */
+    public void printShowInfo(int ShowID)
+    {
+       String[] ShowInfo = getShowingInfo(ShowID);
+        for (int i = 0; i < ShowInfo.length; i++)
+        {
+            System.out.println(ShowInfo[i]);
+        }
+        
+    }
 }
 
