@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class MySystem
 {
-    private Order order;
+    private Order order, exOrder;
     private MyDBSystem mydb;
     private Theater theater;
     private Reservation reservation;
@@ -62,6 +62,42 @@ public class MySystem
         createCustomer(name, phone);
         order = new Order(name, phone);
     }
+
+    /**
+     * Takes a name and phone number, calls the database, 
+     * and then creates the exsisting order form the name and phonenumber.
+     */
+    public void createExOrder(String name, int phone)
+    {
+        if( mydb.getCurrentReservations(mydb.getCustomer(name, phone)) == null)
+            exOrder = null;
+        else
+        {
+            exOrder = new Order(name, phone);
+            for(int[] res : mydb.getCurrentReservations(mydb.getCustomer(name, phone)))
+            {
+                Seat seat = new Seat(mydb.getSeat(res[1])[0], mydb.getSeat(res[1])[1]);
+                Reservation reservation = new Reservation(res[0], seat); 
+                exOrder.addReservation(reservation);
+            }
+        }
+    }
+
+    /**
+     * Returns the exsisting order.
+     */
+    public Order getExOrder()
+    {
+        return exOrder;
+    }
+
+    /**
+     * Returns an exsisting Order's getOrder() method.
+     */
+    public ArrayList<Reservation> getExOrderlist()
+    {
+        return exOrder.getOrder();
+    }	
 
     /**
      * Creates a customer in the database if the customer does not already exist.
@@ -234,9 +270,9 @@ public class MySystem
         {
             while(rs.next()){
                 ShowInfo[0] = rs.getString("Film");
-                 ShowInfo[1] = rs.getString("TheaterID");
-                   ShowInfo[2] = rs.getString("Dato");
-                    ShowInfo[3] = rs.getString("Tid");
+                ShowInfo[1] = rs.getString("TheaterID");
+                ShowInfo[2] = rs.getString("Dato");
+                ShowInfo[3] = rs.getString("Tid");
             }
         }
         catch (Exception e) 
@@ -244,18 +280,18 @@ public class MySystem
         }
         return ShowInfo;
     }
-    
+
     /**
      * Prints the showing info from a ShowID.
      */
     public void printShowInfo(int ShowID)
     {
-       String[] ShowInfo = getShowingInfo(ShowID);
+        String[] ShowInfo = getShowingInfo(ShowID);
         for (int i = 0; i < ShowInfo.length; i++)
         {
             System.out.println(ShowInfo[i]);
         }
-        
+
     }
 }
 

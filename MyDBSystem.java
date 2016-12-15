@@ -107,7 +107,7 @@ public final class MyDBSystem{
             }
             statement.executeUpdate();
         }catch(Exception e){
-//             e.printStackTrace();
+            //             e.printStackTrace();
             //             System.out.println("owned");
         }finally{
             try{
@@ -434,6 +434,8 @@ public final class MyDBSystem{
             HashMap<Integer, String> inputMap = new HashMap<Integer, String>();
             inputMap.put(1, String.valueOf(customerID));
             ResultSet rs = selectQuery("ShowID, SeatResarroz.SeatID FROM SeatResarroz , Reservationygata WHERE SeatResarroz.SeatID = Reservationygata.SeatID AND CustomerID = ?", inputMap);
+            if(!rs.next())
+                return null;
             int[][] array2D = create2DArrayofInt(rs, "ShowID", "SeatID");
             return array2D;
         }catch(Exception e){

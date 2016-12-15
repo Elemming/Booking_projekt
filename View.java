@@ -16,7 +16,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     private ShowsTab showsTab; 
     private ReservationTab reservationTab;
     private MyReservationsTab myReservationsTab;
-    private int customerID;
+    private int customerID, exShow;
 
     /**
      * A new View.
@@ -41,11 +41,11 @@ public class View extends Frame implements ActionListener, ChangeListener
         makeMenu();
 
         showsTab = new ShowsTab(frame);
-        
+
         reservationTab = new ReservationTab(frame);
         if(reservationTab.getListeners(ChangeListener.class).length == 0)
             reservationTab.addChangeListener(this);
-        
+
         myReservationsTab = new MyReservationsTab(frame);
         if(myReservationsTab.getListeners(ChangeListener.class).length == 0)
             myReservationsTab.addChangeListener(this);
@@ -110,7 +110,13 @@ public class View extends Frame implements ActionListener, ChangeListener
     private void makeMyReservationsMenu()
     {
         contentPanel.removeAll();
-        myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName());
+        if(mySystem.getExOrder() == null)
+            myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName());
+        else
+        {
+            myReservationsTab.createTab(mySystem.getOrderlist(), reservationTab.getCustomerName(), mySystem.getExOrderlist());
+        exShow = 0;
+        }
     }
 
     /**
@@ -158,6 +164,13 @@ public class View extends Frame implements ActionListener, ChangeListener
                 customerID = mySystem.getCustomerID(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
                 reservationTab.setCustomerID(customerID);
                 reservationTab.createTab(mySystem.getTheater(), mySystem.getShowingInfo(showsTab.getShowID())[0]);
+                try
+                {
+                    mySystem.createExOrder(reservationTab.getCustomerName(), reservationTab.getCustomerPhone());
+                } catch(Exception e)
+                {
+                    //                     System.out.println("mis");
+                }
                 break;
 
                 case 2: 
@@ -176,6 +189,7 @@ public class View extends Frame implements ActionListener, ChangeListener
         }
         if(event.getSource() instanceof MyReservationsTab)
         {
+
             switch (myReservationsTab.getButtonChoice())
             {
                 case 1: 
@@ -184,13 +198,18 @@ public class View extends Frame implements ActionListener, ChangeListener
                 customerID = 0;
                 makeReservationMenu();
                 break;
-                
+
                 case 2:
                 myReservationsTab.setShow(mySystem.getShowingInfo(showsTab.getShowID()));
                 break;
-                
+
                 case 3: 
                 mySystem.removeReservation(myReservationsTab.getRemoveRes());
+                break;
+
+                case 4:
+                myReservationsTab.setShow(mySystem.getShowingInfo(mySystem.getExOrderlist().get(exShow).getShowID()));
+                exShow++;
                 break;
             }
         }

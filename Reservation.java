@@ -28,7 +28,7 @@ public class Reservation
     
     public String getSeatPlacement()
     {
-        return "Row: " + seat.getRownumber() + "\n" + "Number: " + seat.getSeatnumber();
+        return "Row: " + seat.getRownumber() + "  " + "Number: " + seat.getSeatnumber();
     }
     
     /**

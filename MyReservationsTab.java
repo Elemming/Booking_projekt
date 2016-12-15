@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class MyReservationsTab extends Tab implements ActionListener, ChangeListener
 {
-    private JPanel orderPanel, topPanel, buttonPanel;
+    private JPanel orderPanel,exOrderPanel, topPanel, topExPanel, buttonPanel;
     private JButton finishOrder;
     private String customerName;
     private String[] show;
     private int buttonChoice;
     private Reservation removeRes;
-    private JScrollPane orderScroll;
+    private JScrollPane orderScroll, exOrderScroll;
 
     public MyReservationsTab(JFrame frame)
     {
@@ -30,6 +30,10 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 
         orderScroll = new JScrollPane(orderPanel);
+        orderScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        orderScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        orderScroll.setMinimumSize(new Dimension(500, 500));
+        orderScroll.setPreferredSize(new Dimension(500, 500));
         contentPanel.add(buttonPanel);
         contentPanel.add(orderScroll);
 
@@ -41,6 +45,47 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         }
 
         contentPanel.validate();
+    }
+    
+    public void createTab(ArrayList<Reservation> order, String customerName, ArrayList<Reservation> exOrder)
+    {
+        createTab(order, customerName);
+        
+        exOrderPanel = new JPanel();
+        exOrderPanel.setLayout(new BoxLayout(exOrderPanel, BoxLayout.Y_AXIS));
+        
+        
+        exOrderScroll = new JScrollPane(exOrderPanel);
+        exOrderScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        exOrderScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        contentPanel.add(exOrderScroll);
+        
+        JLabel name = new JLabel("Reservations of: " + customerName);
+        exOrderPanel.add(name);
+        
+        topExPanel = new JPanel();
+        topExPanel.setLayout(new GridLayout(1, 6));
+
+        JLabel film = new JLabel("Moive");
+        topExPanel.add(film);
+        JLabel theater = new JLabel("Theater");
+        topExPanel.add(theater);
+        JLabel date = new JLabel("Date");
+        topExPanel.add(date);
+        JLabel time = new JLabel("Time");
+        topExPanel.add(time);
+        JLabel seat = new JLabel("Seat");
+        topExPanel.add(seat);
+
+        JLabel button = new JLabel("Unreserve Button");
+        topExPanel.add(button);
+
+        exOrderPanel.add(topExPanel);
+
+        for(Reservation reservation : exOrder)
+        {
+            createExOrderBox(reservation);
+        }
     }
 
     private void createTopBox()
@@ -81,6 +126,7 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         resPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         resPanel.setLayout(new GridLayout(1, 6));
 
+        buttonChoice = 2;
         show = getShow();
 
         JLabel film = new JLabel(show[0]);
@@ -103,11 +149,39 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         orderPanel.add(resPanel);
     }
     
+    private void createExOrderBox(Reservation reservation)
+    {
+        JPanel resPanel = new JPanel();
+        resPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        resPanel.setLayout(new GridLayout(1, 6));
+
+        buttonChoice = 4;
+        show = getShow();
+
+        JLabel film = new JLabel(show[0]);
+        resPanel.add(film);
+        JLabel theater = new JLabel(show[1]);
+        resPanel.add(theater);
+        JLabel date = new JLabel(show[2]);
+        resPanel.add(date);
+        JLabel time = new JLabel(show[3]);
+        resPanel.add(time);
+        JLabel seat = new JLabel(reservation.getSeatPlacement());
+        resPanel.add(seat);
+
+        ObjectButton button = new ObjectButton();
+        button.setName("Unreserve Button");
+        button.setObject(reservation);
+        button.addActionListener(this);
+        resPanel.add(button);
+
+        exOrderPanel.add(resPanel);
+    }
+    
     //small methods
 
     private String[] getShow()
     {
-        buttonChoice = 2;
         buttonPressed();
         return show;
     }
