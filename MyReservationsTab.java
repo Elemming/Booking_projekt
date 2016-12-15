@@ -4,6 +4,13 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.ArrayList;
 
+/**
+ * The order tab.
+ * Crates a List of the prepared reservations and exsiting reservations if the are some.
+ * 
+ * @author Emil 
+ * @version 1.0
+ */
 public class MyReservationsTab extends Tab implements ActionListener, ChangeListener
 {
     private JPanel orderPanel,exOrderPanel, topPanel, topExPanel, buttonPanel;
@@ -14,11 +21,22 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
     private Reservation removeRes;
     private JScrollPane orderScroll, exOrderScroll;
 
+    /**
+     * Initializes the MyReservationsTab by calling the super constructer.
+     * 
+     * @param needs a JFrame for the super.
+     */
     public MyReservationsTab(JFrame frame)
     {
         super(frame);
     }
 
+    /**
+     * Creates the standart tab with all the pending reservations to the given customer.
+     * 
+     * @param   An Arraylist of reservations
+     *          the customers name
+     */
     public void createTab(ArrayList<Reservation> order, String customerName)
     {
         this.customerName = customerName;
@@ -47,6 +65,13 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         contentPanel.validate();
     }
     
+    /**
+     * Calls the standart tab creations and adds a scroll panel with the exsisting order.
+     * 
+     * @param   An Arraylist of reservations
+     *          the customers name
+     *          An Arraylist of exsisting orders
+     */
     public void createTab(ArrayList<Reservation> order, String customerName, ArrayList<Reservation> exOrder)
     {
         createTab(order, customerName);
@@ -88,6 +113,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         }
     }
 
+    /**
+     * makes the top of the tab.
+     */
     private void createTopBox()
     {
         //Creats the overview and buttons
@@ -120,6 +148,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         orderPanel.add(topPanel);
     }
 
+    /**
+     * makes the scroll part of the current reservation box
+     */
     private void createOrderBox(Reservation reservation)
     {
         JPanel resPanel = new JPanel();
@@ -149,6 +180,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         orderPanel.add(resPanel);
     }
     
+    /**
+     * creates the panel with the scroll panel of exsisting Reservations
+     */
     private void createExOrderBox(Reservation reservation)
     {
         JPanel resPanel = new JPanel();
@@ -180,17 +214,30 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
     
     //small methods
 
+    /**
+     * gets the show info as a string array
+     * 
+     * @return  show info as string[]
+     */
     private String[] getShow()
     {
         buttonPressed();
         return show;
     }
 
+    /**
+     * set the show array field to the given show array.
+     */
     public void setShow(String[] show)
     {
         this.show = show;
     }
     
+    /**
+     * gets the Reservation that is about to be removed.
+     * 
+     * @return  Reservation taget for removel
+     */
     public Reservation getRemoveRes()
     {
         return removeRes;
@@ -198,6 +245,9 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
 
     //event Handeling
 
+    /**
+     * makes buttons do stuff depending on their name
+     */
     public void actionPerformed(ActionEvent event)
     {
         if(event.getSource().equals(finishOrder))
@@ -214,16 +264,27 @@ public class MyReservationsTab extends Tab implements ActionListener, ChangeList
         }
     }
 
+    /**
+     * is just here to implement changelistener
+     */
     public void stateChanged(ChangeEvent event)
     {
 
     }
 
+    /**
+     * does so other classes can detect changes in this class
+     */
     public void addChangeListener(ChangeListener changeListener) 
     {
         listenerList.add(ChangeListener.class, changeListener);
     }
 
+    /**
+     * returns the chosen integer that will decide what buttons do in other classes
+     * 
+     * @return int reprsenting the button of choice
+     */
     public int getButtonChoice()
     {
         return buttonChoice;

@@ -4,6 +4,13 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.text.*;
 
+/**
+ * The Resevation tab.
+ * Creates a log in tab or a theater tab for reservtion.
+ * 
+ * @author Emil 
+ * @version 1.0
+ */
 public class ReservationTab extends Tab implements ActionListener, ChangeListener
 {
     private String customerName;
@@ -14,6 +21,11 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
     private NumberFormat nf;
     private Seat[][] theater;
 
+    /**
+     * Initializes the Resevation tab by calling the super constructer.
+     * 
+     * @param needs a JFrame for the super.
+     */
     public ReservationTab(JFrame frame)
     {
         super(frame);
@@ -21,6 +33,12 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         createTab();
     }
 
+    /**
+     * decides if the system needs a user or it can go strait to the theater tab and then creats the needed tab.
+     * 
+     * @param   needs a double Array of Seats (if not yet eksisting can do with a new double array of empty seats)
+     *          a show name (if not eksisting can do with a empty String)
+     */
     public void createTab(Seat[][] theater, String showName)
     {
         if(customerID == 0)
@@ -34,6 +52,9 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         contentPanel.validate();
     }
 
+    /**
+     * Creats the log in paneland adds it to the main panel.
+     */
     public void createLogInTab()
     {
         //Ceates Panels        
@@ -83,20 +104,26 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         logInPanel.add(logInButton);
     }
 
+    /**
+     * creates the theater to the given show.
+     * 
+     * @param   double array of seats
+     *          name of the show
+     */
     public void createTheaterTab(Seat[][] theater, String showName)
     {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
         infoPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        
+
         JLabel showTitle = new JLabel(showName);
         infoPanel.add(showTitle);
-        
+
         contentPanel.add(infoPanel);
-        
+
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         createTheater(theater, contentPanel);
-        
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -112,7 +139,10 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         contentPanel.add(buttonPanel);
     }
 
-    public void createTheater(Seat[][] theater, Container panel)
+    /**
+     * creates the theater panel to the theater tab.
+     */
+    private void createTheater(Seat[][] theater, Container panel)
     {
         row = -1;
 
@@ -139,6 +169,9 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         panel.add(theaterPanel);
     }
 
+    /**
+     * picks the seat then clicked
+     */
     private void pickSeat()
     throws Exception
     {
@@ -153,36 +186,72 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
 
     //return methods
 
+    /**
+     * sets custemer ID to given ID
+     * 
+     * @param   int customer ID
+     */
     public void setCustomerID(int ID)
     {
         customerID = ID;
     }
 
+    /**
+     * returns the customers ID
+     * 
+     * @return  int customer ID
+     */
     public int getCustomerID()
     {
         return customerID;
     }
 
+    /**
+     * returns the customers name
+     * 
+     * @return  String customer name
+     */
     public String getCustomerName()
     {
         return customerName;
     }
 
+    /**
+     * returns the customers phone number an eigth digit
+     * 
+     * @return  int customer phone number
+     */
     public int getCustomerPhone()
     {
         return customerPhone;
     }
 
+    /**
+     * returns the seats row
+     * 
+     * @return  int row
+     */
     public int getSeatRow()
     {
         return row;
     }
 
+    /**
+     * returns the seats colum
+     * 
+     * @return  int colum
+     */
     public int getSeatCol()
     {
         return col;
     }
 
+    /**
+     * get the longest seat row in the given theater
+     * 
+     * @param   double array of seats
+     * @return  int length of the longest row
+     */
     private int getMaxLength(Seat[][] theater)
     {
         int max = 0;
@@ -197,18 +266,33 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         return max;
     }
 
+    /**
+     * get the first int # from a string like: #, #
+     * 
+     * @param   String in the form: #, #
+     * @return  int seat row
+     */
     public int getRow(String placement)
     {
         String[] rowCol = placement.split(",");
         return Integer.parseInt(rowCol[0].trim());
     }
 
+    /**
+     * get the last int # from a string like: #, #
+     * 
+     * @param   String in the form: #, #
+     * @return  int seat colum
+     */
     private int getCol(String placement)
     {
         String[] rowCol = placement.split(",");
         return Integer.parseInt(rowCol[1].trim());
     }
-    
+
+    /**
+     * logs the Current customer out
+     */
     public void logOut()
     {
         customerName = null;
@@ -218,6 +302,9 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
 
     //Event stuff
 
+    /**
+     * makes stuff hapen then butons pressed.
+     */
     public void actionPerformed(ActionEvent event)
     {
         if(event.getSource().equals(logInButton))
@@ -305,16 +392,27 @@ public class ReservationTab extends Tab implements ActionListener, ChangeListene
         }
     }
 
+    /**
+     * imported for the changelistener
+     */
     public void stateChanged(ChangeEvent event)
     {
 
     }
 
+    /**
+     * so other classes can detckt changes in this object.
+     */
     public void addChangeListener(ChangeListener changeListener) 
     {
         listenerList.add(ChangeListener.class, changeListener);
     }
 
+    /**
+     * returns the chosen integer that will decide what buttons do in other classes
+     * 
+     * @return int reprsenting the button of choice
+     */
     public int getButtonChoice()
     {
         return buttonChoice;

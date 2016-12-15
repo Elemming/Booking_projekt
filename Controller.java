@@ -22,7 +22,7 @@ public class Controller
     }
 
     /**
-     * Makes the system run
+     * Makes the system run, and ends the System then it is closed.
      */
     public void run()
     {

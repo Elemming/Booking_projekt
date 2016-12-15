@@ -10,7 +10,7 @@ public class Seat
     /**
      * Creates a Seat.
      */
-    public Seat(int seatnumber, int rownumber)
+    public Seat(int rownumber, int seatnumber)
     {
         this.seatnumber = seatnumber;
         this.rownumber = rownumber;

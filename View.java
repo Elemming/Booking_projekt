@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 /**
- * Makes a Frame with menu at top.
+ * The Main Class for the Gui and the one that controls the restand has connection to the main system.
  * 
  * @author Emil 
- * @version 0.1
+ * @version 1.0
  */
 public class View extends Frame implements ActionListener, ChangeListener
 {
@@ -28,7 +28,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     }
 
     /**
-     * Makes the GUI. 
+     * Creates the first frame and makes the rest of the gui. 
      */
     private void makeFrame()
     {
@@ -55,7 +55,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     }
 
     /**
-     * Makes the menu bar.
+     * Makes the menu bar at the top of the gui.
      */
     private void makeMenu()
     {
@@ -76,7 +76,7 @@ public class View extends Frame implements ActionListener, ChangeListener
     }
 
     /**
-     * makes the show menu tab.
+     * Makes the list of shows then you click the show menu button at the top.
      */
     private void makeShowsMenu()
     {
@@ -86,7 +86,8 @@ public class View extends Frame implements ActionListener, ChangeListener
     }
 
     /**
-     * makes the reservation menu tab.
+     * Makes the reservation menu tab. 
+     * Decides if you have log in wth a customer first, and then makes a theater.
      */
     private void makeReservationMenu()
     {
@@ -105,7 +106,8 @@ public class View extends Frame implements ActionListener, ChangeListener
     }
 
     /**
-     * makes the myreservation menu tab.
+     * Makes the order menu tab.
+     * It's a tab with the curret order and old reservations if any
      */
     private void makeMyReservationsMenu()
     {
@@ -121,6 +123,8 @@ public class View extends Frame implements ActionListener, ChangeListener
 
     /**
      * Returns if the window has been closed.
+     * 
+     * @return  boolean
      */
     public boolean isClosed()
     {
@@ -132,6 +136,7 @@ public class View extends Frame implements ActionListener, ChangeListener
 
     /**
      * Makes the buttons work.
+     * Checks all the buttons and calles methods depending on the buttons name.
      */
     public void actionPerformed(ActionEvent event)
     {
@@ -148,6 +153,9 @@ public class View extends Frame implements ActionListener, ChangeListener
         }
     }
 
+    /**
+     * keeps track of changes in the other classes of the gui and reacts according to the changes.
+     */
     public void stateChanged(ChangeEvent event)
     {
         if(event.getSource() instanceof ShowsTab)

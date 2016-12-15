@@ -237,7 +237,7 @@ public final class MyDBSystem{
             LocalDate date = LocalDate.now();
             date.toString();
             LocalTime time = LocalTime.now();
-            ResultSet rs = selectQuery("* FROM Showingsbcebolla WHERE Dato >= CURDATE()");
+            ResultSet rs = selectQuery("* FROM Showingsbcebolla WHERE Dato >= CURDATE() ORDER BY Dato, film, tid");
             RelevantShows = createArrayofShows(rs);
             return RelevantShows;
         }catch(Exception e){

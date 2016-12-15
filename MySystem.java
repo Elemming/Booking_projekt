@@ -190,20 +190,54 @@ public class MySystem
      */
     public void removeReservation(Reservation reservation)
     {   
-        String name = order.getName();
-        int phone = order.getPhone();
-        int CustomerID = mydb.getCustomer(name, phone);
-        order.getOrder().remove(reservation);
-        int ShowID = reservation.getShowID();
-        Seat seat = reservation.getSeat();
-        int SeatCol = seat.getSeatnumber();
-        int SeatRow = seat.getRownumber();
-        int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
-        int ResID = mydb.getResID(CustomerID, SeatID);
-        mydb.deleteSeatReservation(SeatID);
-        mydb.deleteReservation(ResID);
-        seat.unreserveSeat();  
-    } 
+        boolean o = false;
+        boolean oEx =false;
+
+        for(Reservation res : getOrderlist())
+        {
+            if(res.equals(reservation))
+                o=true;
+        }
+        for(Reservation res : getExOrderlist())
+        {
+            if(res.equals(reservation))
+                oEx=true;
+        }
+
+        if(o)
+        {
+            String name = order.getName();
+            int phone = order.getPhone();
+            int CustomerID = mydb.getCustomer(name, phone);
+            order.getOrder().remove(reservation);
+            int ShowID = reservation.getShowID();
+            Seat seat = reservation.getSeat();
+            int SeatCol = seat.getSeatnumber();
+            int SeatRow = seat.getRownumber();
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            int ResID = mydb.getResID(CustomerID, SeatID);
+            mydb.deleteSeatReservation(SeatID);
+            mydb.deleteReservation(ResID);
+            seat.unreserveSeat();  
+        }
+        
+        if(oEx)
+        {
+            String name = exOrder.getName();
+            int phone = exOrder.getPhone();
+            int CustomerID = mydb.getCustomer(name, phone);
+            exOrder.getOrder().remove(reservation);
+            int ShowID = reservation.getShowID();
+            Seat seat = reservation.getSeat();
+            int SeatCol = seat.getSeatnumber();
+            int SeatRow = seat.getRownumber();
+            int SeatID = mydb.getSeatID(ShowID, SeatRow, SeatCol);
+            int ResID = mydb.getResID(CustomerID, SeatID);
+            mydb.deleteSeatReservation(SeatID);
+            mydb.deleteReservation(ResID);
+            seat.unreserveSeat();  
+        }
+    }
 
     /**
      * Unadds/deselects an reservation already added to the order.

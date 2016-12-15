@@ -3,12 +3,21 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+/**
+ * a class that makes a panel with a show
+ */
 public class ShowBox extends JComponent implements ActionListener
 {
     private JPanel showsPanel;
     private String[] show;
     private String showFilm, showDate, showTheater, showTime;
 
+    /**
+     * makes a panel in the given JPanel (sets up fields)
+     * 
+     * @param a JPanel to put the new panel
+     *        a String array that desribes a show
+     */
     public ShowBox(JPanel panel, String[] show)
     {
         showsPanel = panel;
@@ -20,11 +29,19 @@ public class ShowBox extends JComponent implements ActionListener
         addShowBox();
     }
 
+    /**
+     * gets the panels show ID
+     * 
+     * @return show id
+     */
     public int getShowID()
     {
         return Integer.parseInt(show[0]);
     }
 
+    /**
+     * makes a panel in the given JPanel
+     */
     private void addShowBox()
     {
         JPanel showPanel = new JPanel();
@@ -44,11 +61,17 @@ public class ShowBox extends JComponent implements ActionListener
         showPanel.add(button);
     }
 
+    /**
+     * happens when its button is clicked
+     */
     public void actionPerformed(ActionEvent event)
     {
         buttonPressed();
     }
 
+    /**
+     * makes it possible to detckt changes in the panel
+     */
     public void addChangeListener(ChangeListener listener) 
     {
         listenerList.add(ChangeListener.class, listener);
